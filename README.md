@@ -20,9 +20,9 @@ If you don't know what `layman` is then please read the [documentation][docs-lay
 2. Modify `/etc/layman/layman.cfg`:
 
         overlays  : http://www.gentoo.org/proj/en/overlays/repositories.xml
-                    https://raw.github.com/frace/kodi-overlay/master/repositories.xml
+                    https://raw.github.com/gsra99/guru-overlay/master/repositories.xml
 
 3. `layman --list`
-4. `layman --add kodi-overlay`
+4. `layman --add guru-overlay`
 
 [docs-layman]: http://www.gentoo.org/proj/en/overlays/userguide.xml
