@@ -10,7 +10,7 @@ There are two easy ways to get the overlay onto your system:
 4. `git clone git://github.com/gsra99/guru-overlay.git`
 5. Modify `/etc/make.conf`:
 
-        PORTDIR_OVERLAY="/usr/local/portage/kodi-overlay/"
+        PORTDIR_OVERLAY="/usr/local/portage/guru-overlay/"
 
 
 ### 2. Layman
