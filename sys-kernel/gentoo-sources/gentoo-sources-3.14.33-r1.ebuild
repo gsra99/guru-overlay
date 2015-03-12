@@ -20,7 +20,7 @@ SRC_URI="${KERNEL_URI} ${GENPATCHES_URI} ${ARCH_URI}"
 PATCHES="${FILESDIR}/ath9k_11n_disable.patch"
 
 src_prepare () {
-	epatch "${FILESDIR}/ath9k_11n_disable.patch"
+	epatch -p1 "${FILESDIR}/ath9k_11n_disable.patch"
 }
 
 pkg_postinst() {
