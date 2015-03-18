@@ -1,4 +1,3 @@
-hello
 # guru-overlay
 ## Get it!
 There are two easy ways to get the overlay onto your system:
