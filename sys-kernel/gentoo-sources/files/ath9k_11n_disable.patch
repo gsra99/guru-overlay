@@ -1,16 +1,16 @@
 --- a/drivers/net/wireless/ath/ath9k/init.c
 +++ b/drivers/net/wireless/ath/ath9k/init.c
-@@ -53,6 +53,10 @@
- module_param_named(btcoex_enable, ath9k_btcoex_enable, int, 0444);
- MODULE_PARM_DESC(btcoex_enable, "Enable wifi-BT coexistence");
+@@ -50,6 +50,10 @@
+ module_param_named(blink, led_blink, int, 0444);
+ MODULE_PARM_DESC(blink, "Enable LED blink on activity");
  
 +int ath9k_modparam_disable_11n;
 +module_param_named(11n_disable, ath9k_modparam_disable_11n, int, 0444);
 +MODULE_PARM_DESC(11n_disable, "disable 11n functionality");
 +
- static int ath9k_bt_ant_diversity;
- module_param_named(bt_ant_diversity, ath9k_bt_ant_diversity, int, 0444);
- MODULE_PARM_DESC(bt_ant_diversity, "Enable WLAN/BT RX antenna diversity");
+ static int ath9k_btcoex_enable;
+ module_param_named(btcoex_enable, ath9k_btcoex_enable, int, 0444);
+ MODULE_PARM_DESC(btcoex_enable, "Enable wifi-BT coexistence");
 @@ -266,7 +270,11 @@
  	u8 tx_streams, rx_streams;
  	int i, max_streams;
