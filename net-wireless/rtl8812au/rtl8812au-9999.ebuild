@@ -4,7 +4,7 @@
 
 EAPI=5
 
-inherit git-r3 linux-info
+inherit git-r3 linux-info linux-mod
 
 DESCRIPTION=""
 HOMEPAGE=""
