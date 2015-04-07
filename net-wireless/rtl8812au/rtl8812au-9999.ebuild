@@ -23,6 +23,11 @@ src_prepare() {
 	epatch -p1 "${FILESDIR}/rtl8812au.patch"
 }
 
+pkg_setup() {
+        linux-mod_pkg_setup
+        kernel_is -gt 3 13 && die "kernel higher than 3.13 is not supported"
+}
+
 src_compile() {
 	set_arch_to_kernel
 	KSRC="${KV_DIR}" KVER="${KV_FULL}" emake
