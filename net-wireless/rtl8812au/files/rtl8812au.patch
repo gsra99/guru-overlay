@@ -1,0 +1,11 @@
+--- a/include/rtw_efuse.h	2015-04-07 02:13:57.000000000 +0100
++++ b/include/rtw_efuse.h	2015-04-07 02:06:59.000000000 +0100
+@@ -48,7 +48,7 @@
+ 	TYPE_EFUSE_CONTENT_LEN_BANK			= 6,
+ };
+ 
+-#define		EFUSE_MAX_MAP_LEN		256
++#define		EFUSE_MAX_MAP_LEN		512
+ #define		EFUSE_MAX_HW_SIZE		512
+ #define		EFUSE_MAX_SECTION_BASE	16
+ 
