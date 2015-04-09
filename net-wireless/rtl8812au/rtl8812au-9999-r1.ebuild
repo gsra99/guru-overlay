@@ -4,7 +4,7 @@
 
 EAPI=5
 
-inherit git-r3 linux-info linux-mod
+inherit git-r3 linux-info linux-mod subversion eutils
 
 DESCRIPTION=""
 HOMEPAGE=""
