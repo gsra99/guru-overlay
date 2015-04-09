@@ -23,8 +23,8 @@ RDEPEND="${DEPEND}"
 src_unpack() {
 	git-2_src_unpack
 	S="${WORKDIR}/patches"
-	EGIT_REPO_URI="${PATCHES_URI}"
-	git-2_src_unpack
+	SRC_URI="${PATCHES_URI}"
+	src_unpack
 }
 
 src_prepare() {
