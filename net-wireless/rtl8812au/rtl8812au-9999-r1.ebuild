@@ -21,14 +21,21 @@ DEPEND=""
 RDEPEND="${DEPEND}"
 
 src_unpack() {
-#	git-2_src_unpack
-	unpack ${A}
+	git-2_src_unpack
 }
 
 src_prepare() {
 	S="${WORKDIR}/${P}"
 	cd "${S}"
-	EPATCH_OPTS="-p1" epatch "${WORKDIR}/rtl8812au-auto-th-rtl8812au-4.3.2_11100.20140411-0.20140901.7"/*.patch
+	S="${WORKDIR}/rtl8812au-auto-th-rtl8812au-4.3.2_11100.20140411-0.20140901.7"
+	EPATCH_OPTS="-p1"
+		epatch "${S}/linux-3.11.patch"
+		epatch "${S}/disable-debug.patch"
+		epatch "${S}/enable-cfg80211-support.patch"
+		epatch "${S}/update-cfg80211-support.patch"
+		epatch "${S}/warnings.patch"
+		epatch "${S}/gcc-4.9.patch"
+		epatch "${S}/linux-3.18.patch"
 }
 
 pkg_setup() {
