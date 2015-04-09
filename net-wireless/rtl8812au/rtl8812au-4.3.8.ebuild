@@ -9,9 +9,10 @@ inherit linux-info linux-mod eutils versionator
 DESCRIPTION=""
 HOMEPAGE=""
 PATCH_VERSION="7"
-MY_PV="$(get_version_component_range 1-2).2"
-SRC_URI="https://github.com/gsra99/${PN}/archive/${PV}.tar.gz
-	 https://github.com/pld-linux/${PN}/archive/auto/th/${PN}-${MY_PV}_11100.20140411-0.20140901.${PATCH_VERSION}.tar.gz"
+MY_PV1="v${PV}_12175.20140902"
+MY_PV2="$(get_version_component_range 1-2).2"
+SRC_URI="https://github.com/gsra99/${PN}/archive/${MY_PV1}.tar.gz
+	 https://github.com/pld-linux/${PN}/archive/auto/th/${PN}-${MY_PV2}_11100.20140411-0.20140901.${PATCH_VERSION}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"

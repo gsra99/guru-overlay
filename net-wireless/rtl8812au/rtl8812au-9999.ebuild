@@ -4,12 +4,12 @@
 
 EAPI=5
 
-inherit git-r3 linux-info linux-mod
+inherit git-r3 git-2 linux-info linux-mod eutils
 
 DESCRIPTION=""
 HOMEPAGE=""
-EGIT_REPO_URI="https://github.com/abperiasamy/rtl8812AU_8821AU_linux.git"
-PATCHES="${FILESDIR}/rtl8812au.patch"
+EGIT_REPO_URI="https://github.com/austinmarton/rtl8812au_linux.git"
+SRC_URI="https://github.com/pld-linux/rtl8812au/archive/auto/th/rtl8812au-4.3.2_11100.20140411-0.20140901.7.tar.gz"
 
 LICENSE=""
 SLOT="0"
@@ -19,13 +19,28 @@ IUSE=""
 DEPEND=""
 RDEPEND="${DEPEND}"
 
+src_unpack() {
+	git-2_src_unpack
+}
+
 src_prepare() {
-	epatch -p1 "${FILESDIR}/rtl8812au.patch"
+	S="${WORKDIR}/${P}"
+	cd "${S}"
+	EPATCH_SOURCE="${WORKDIR}/rtl8812au-auto-th-rtl8812au-4.3.2_11100.20140411-0.20140901.7"
+	EPATCH_OPTS="-p1"
+		epatch "linux-3.11.patch"
+		epatch "disable-debug.patch"
+		epatch "enable-cfg80211-support.patch"
+		epatch "update-cfg80211-support.patch"
+		epatch "warnings.patch"
+		epatch "gcc-4.9.patch"
+		epatch "linux-3.18.patch"
+		epatch "${FILESDIR}/TRENDnet.patch"
 }
 
 pkg_setup() {
         linux-mod_pkg_setup
-        kernel_is -gt 3 13 && die "kernel higher than 3.13 is not supported"
+        kernel_is -gt 3 18 && die "kernel higher than 3.18 is not supported"
 }
 
 src_compile() {
@@ -36,6 +51,5 @@ src_compile() {
 src_install() {
 	insinto "/lib/modules/${KV_FULL}/kernel/drivers/net/wireless/"
 	doins 8812au.ko
-	#emake MODDESTDIR="${ED}/lib/modules/${KV_FULL}/kernel/drivers/net/wireless/" install
 }
 
