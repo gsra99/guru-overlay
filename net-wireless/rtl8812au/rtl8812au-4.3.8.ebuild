@@ -31,13 +31,9 @@ src_unpack() {
 src_prepare() {
 	EPATCH_SOURCE="${WORKDIR}/${PN}-auto-th-${MY_PV2}.${PATCH_VERSION}"
 	EPATCH_OPTS="-p1"
-#		epatch "linux-3.11.patch"
 		epatch "disable-debug.patch"
 		epatch "enable-cfg80211-support.patch"
-#		epatch "update-cfg80211-support.patch"
-		epatch "${FILESDIR}/warnings.patch"
 		epatch "gcc-4.9.patch"
-		epatch "${FILESDIR}/linux-3.18.patch"
 		epatch "${FILESDIR}/TRENDnet.patch"
 }
 
