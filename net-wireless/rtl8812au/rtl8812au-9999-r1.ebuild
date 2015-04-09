@@ -9,7 +9,7 @@ inherit git-r3 git-2 linux-info linux-mod eutils
 DESCRIPTION=""
 HOMEPAGE=""
 EGIT_REPO_URI="https://github.com/austinmarton/rtl8812au_linux.git"
-PATCHES_URI="https://github.com/pld-linux/rtl8812au/archive/auto/th/rtl8812au-4.3.2_11100.20140411-0.20140901.7.tar.gz"
+SRC_URI="https://github.com/pld-linux/rtl8812au/archive/auto/th/rtl8812au-4.3.2_11100.20140411-0.20140901.7.tar.gz"
 #PATCHES="${FILESDIR}/rtl8812au.patch"
 
 LICENSE=""
@@ -23,7 +23,6 @@ RDEPEND="${DEPEND}"
 src_unpack() {
 	git-2_src_unpack
 	S="${WORKDIR}/patches"
-	SRC_URI="${PATCHES_URI}"
 	unpack ${A}
 }
 
