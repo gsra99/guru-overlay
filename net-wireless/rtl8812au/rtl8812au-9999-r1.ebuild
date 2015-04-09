@@ -4,7 +4,7 @@
 
 EAPI=5
 
-inherit git-r3 linux-info linux-mod subversion eutils
+inherit git-r3 git-2 linux-info linux-mod eutils
 
 DESCRIPTION=""
 HOMEPAGE=""
@@ -21,10 +21,10 @@ DEPEND=""
 RDEPEND="${DEPEND}"
 
 src_unpack() {
-	git_src_unpack
+	git-2_src_unpack
 	S="${WORKDIR}/patches"
-	ESVN_REPO_URI="${PATCHES_URI}"
-	subversion_src_unpack
+	EGIT_REPO_URI="${PATCHES_URI}"
+	git-2_src_unpack
 }
 
 src_prepare() {
