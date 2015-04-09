@@ -9,10 +9,12 @@ inherit linux-info linux-mod eutils versionator
 DESCRIPTION=""
 HOMEPAGE=""
 PATCH_VERSION="7"
-MY_PV1="v${PV}_12175.20140902"
+MY_PV1="${PV}_12175.20140902"
 MY_PV2="$(get_version_component_range 1-2).2"
-SRC_URI="https://github.com/gsra99/${PN}/archive/${MY_PV1}.tar.gz
-	 https://github.com/pld-linux/${PN}/archive/auto/th/${PN}-${MY_PV2}_11100.20140411-0.20140901.${PATCH_VERSION}.tar.gz"
+MY_PV3="${PN}-${MY_PV2}_11100.20140411-0.20140901"
+SRC_URI="https://github.com/gsra99/${PN}/archive/v${MY_PV1}.tar.gz
+	 
+https://github.com/pld-linux/${PN}/archive/auto/th/${MY_PV3}.${PATCH_VERSION}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -27,9 +29,10 @@ src_unpack() {
 }
 
 src_prepare() {
-	S="${WORKDIR}/${P}"
+	S="${WORKDIR}/${MY_PV1}"
 	cd "${S}"
-	EPATCH_SOURCE="${WORKDIR}/${PN}-auto-th-${PN}-${MY_PV}_11100.20140411-0.20140901.${PATCH_VERSION}"
+
+	EPATCH_SOURCE="${WORKDIR}/${PN}-auto-th-${MY_PV3}.${PATCH_VERSION}"
 	EPATCH_OPTS="-p1"
 #		epatch "linux-3.11.patch"
 		epatch "disable-debug.patch"
