@@ -20,9 +20,18 @@ IUSE=""
 DEPEND=""
 RDEPEND="${DEPEND}"
 
-#src_prepare() {
-#	epatch -p1 "${FILESDIR}/rtl8812au.patch"
-#}
+src_unpack() {
+	git_src_unpack
+	S="${WORKDIR}/patches"
+	ESVN_REPO_URI="${PATCHES_URI}"
+	subversion_src_unpack
+}
+
+src_prepare() {
+	S="${WORKDIR}/${P}"
+	cd "${S}"
+	EPATCH_OPTS="-p1" epatch "${WORKDIR}/patches"/*.patch
+}
 
 pkg_setup() {
         linux-mod_pkg_setup
