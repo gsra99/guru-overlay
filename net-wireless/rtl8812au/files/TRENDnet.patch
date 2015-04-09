@@ -1,0 +1,10 @@
+--- a/os_dep/linux/usb_intf.c	2015-04-09 02:35:41.000000000 +0100
++++ b/os_dep/linux/usb_intf.c	2015-04-09 02:34:58.000000000 +0100
+@@ -304,6 +304,7 @@
+ 	{USB_DEVICE(0x13B1, 0x003F),.driver_info = RTL8812}, /* Linksys WUSB6300 */
+ 	{USB_DEVICE(0x148F, 0x9097),.driver_info = RTL8812}, /* Amped Wireless ACA1 */
+ 	{USB_DEVICE(0x0411, 0x025D),.driver_info = RTL8821}, /* BUFFALO WI-U3-866D */
++	{USB_DEVICE(0x20f4, 0x805b),.driver_info = RTL8812}, /* TRENDnet - */
+ #endif
+ 
+ #ifdef CONFIG_RTL8821A
