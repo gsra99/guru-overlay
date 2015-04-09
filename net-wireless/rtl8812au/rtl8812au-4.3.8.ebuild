@@ -29,8 +29,6 @@ src_unpack() {
 }
 
 src_prepare() {
-#	cd "${S}"
-
 	EPATCH_SOURCE="${WORKDIR}/${PN}-auto-th-${MY_PV2}.${PATCH_VERSION}"
 	EPATCH_OPTS="-p1"
 #		epatch "linux-3.11.patch"
