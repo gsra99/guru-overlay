@@ -24,7 +24,7 @@ src_unpack() {
 	git-2_src_unpack
 	S="${WORKDIR}/patches"
 	SRC_URI="${PATCHES_URI}"
-	src_unpack
+	unpack ${A}
 }
 
 src_prepare() {
