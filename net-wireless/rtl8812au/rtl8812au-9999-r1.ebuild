@@ -26,15 +26,15 @@ src_unpack() {
 src_prepare() {
 	S="${WORKDIR}/${P}"
 	cd "${S}"
-	PATCHES="${WORKDIR}/rtl8812au-auto-th-rtl8812au-4.3.2_11100.20140411-0.20140901.7"
+	EPATCH_SOURCE="${WORKDIR}/rtl8812au-auto-th-rtl8812au-4.3.2_11100.20140411-0.20140901.7"
 	EPATCH_OPTS="-p1"
-		epatch "${PATCHES}/linux-3.11.patch"
-		epatch "${PATCHES}/disable-debug.patch"
-		epatch "${PATCHES}/enable-cfg80211-support.patch"
-		epatch "${PATCHES}/update-cfg80211-support.patch"
-		epatch "${PATCHES}/warnings.patch"
-		epatch "${PATCHES}/gcc-4.9.patch"
-		epatch "${PATCHES}/linux-3.18.patch"
+		epatch "linux-3.11.patch"
+		epatch "disable-debug.patch"
+		epatch "enable-cfg80211-support.patch"
+		epatch "update-cfg80211-support.patch"
+		epatch "warnings.patch"
+		epatch "gcc-4.9.patch"
+		epatch "linux-3.18.patch"
 		epatch "${FILESDIR}/TRENDnet.patch"
 }
 
