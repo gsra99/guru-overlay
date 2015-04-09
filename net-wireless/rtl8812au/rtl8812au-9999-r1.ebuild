@@ -22,14 +22,13 @@ RDEPEND="${DEPEND}"
 
 src_unpack() {
 	git-2_src_unpack
-	S="${WORKDIR}/patches"
 	unpack ${A}
 }
 
 src_prepare() {
 	S="${WORKDIR}/${P}"
 	cd "${S}"
-	EPATCH_OPTS="-p1" epatch "${WORKDIR}/patches"/*.patch
+	EPATCH_OPTS="-p1" epatch "${WORKDIR}/rtl8812au-auto-th-rtl8812au-4.3.2_11100.20140411-0.20140901.7"/*.patch
 }
 
 pkg_setup() {
