@@ -28,7 +28,7 @@ src_unpack() {
 }
 
 src_prepare() {
-	S="${WORKDIR}/${PN}-${MY_PV1}"
+	S="${WORKDIR}/rtl8812au-${MY_PV1}"
 	cd "${S}"
 
 	EPATCH_SOURCE="${WORKDIR}/${PN}-auto-th-${MY_PV3}.${PATCH_VERSION}"
