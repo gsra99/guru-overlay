@@ -10,12 +10,11 @@ DESCRIPTION=""
 HOMEPAGE=""
 PATCH_VERSION="7"
 MY_PV1="${PV}_12175.20140902"
-MY_PV2="$(get_version_component_range 1-2).2"
-MY_PV3="${PN}-${MY_PV2}_11100.20140411-0.20140901"
+MY_PV2="${PN}-$(get_version_component_range 1-2).2_11100.20140411-0.20140901"
 MY_P="${PN}-${MY_PV1}"
 S="${WORKDIR}/${MY_P}"
 SRC_URI="https://github.com/gsra99/${PN}/archive/v${MY_PV1}.tar.gz
-	 https://github.com/pld-linux/${PN}/archive/auto/th/${MY_PV3}.${PATCH_VERSION}.tar.gz"
+	 https://github.com/pld-linux/${PN}/archive/auto/th/${MY_PV2}.${PATCH_VERSION}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -30,10 +29,9 @@ src_unpack() {
 }
 
 src_prepare() {
-#	S="${WORKDIR}/${MY_P}"
-	cd "${S}"
+#	cd "${S}"
 
-	EPATCH_SOURCE="${WORKDIR}/${PN}-auto-th-${MY_PV3}.${PATCH_VERSION}"
+	EPATCH_SOURCE="${WORKDIR}/${PN}-auto-th-${MY_PV2}.${PATCH_VERSION}"
 	EPATCH_OPTS="-p1"
 #		epatch "linux-3.11.patch"
 		epatch "disable-debug.patch"
