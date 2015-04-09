@@ -30,7 +30,7 @@ src_prepare() {
 	cd "${S}"
 	EPATCH_SOURCE="${WORKDIR}/${PN}-auto-th-${PN}-${MY_PV}_11100.20140411-0.20140901.${PATCH_VERSION}"
 	EPATCH_OPTS="-p1"
-		epatch "linux-3.11.patch"
+#		epatch "linux-3.11.patch"
 		epatch "disable-debug.patch"
 		epatch "enable-cfg80211-support.patch"
 		epatch "update-cfg80211-support.patch"
