@@ -34,10 +34,10 @@ src_prepare() {
 #		epatch "linux-3.11.patch"
 		epatch "disable-debug.patch"
 		epatch "enable-cfg80211-support.patch"
-#		epatch "update-cfg80211-support.patch"
-#		epatch "warnings.patch"
+#		epatch "${FILESDIR}/update-cfg80211-support.patch"
+		epatch "${FILESDIR}/warnings.patch"
 		epatch "gcc-4.9.patch"
-#		epatch "linux-3.18.patch"
+		epatch "${FILESDIR}/linux-3.18.patch"
 		epatch "${FILESDIR}/TRENDnet.patch"
 }
 
