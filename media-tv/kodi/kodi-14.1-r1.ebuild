@@ -17,6 +17,7 @@ case ${PV} in
 	EGIT_REPO_URI="git://github.com/xbmc/xbmc.git"
 	inherit git-2
 	;;
+
 *|*_p*)
 	MY_PV=${PV/_p/_r}
 	MY_P="${PN}-${MY_PV}"
