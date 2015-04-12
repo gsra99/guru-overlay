@@ -11,10 +11,11 @@ HOMEPAGE=""
 PATCH_VERSION="7"
 MY_PV1="${PV}_12175.20140902"
 MY_PV2="${PN}-$(get_version_component_range 1-2).2_11100.20140411-0.20140901"
-MY_P="${PN}-${MY_PV1}"
+MY_P="rtl8812AU_linux_v${MY_PV1}"
 S="${WORKDIR}/${MY_P}"
 MODULE_NAMES="8812au(net/wireless:${S})"
-SRC_URI="https://github.com/gsra99/${PN}/archive/v${MY_PV1}.tar.gz -> ${P}.tar.gz
+RESTRICT="mirror"
+SRC_URI="http://www.netis-systems.com/Files/others/WF2190/netis%20WF2190%20Driver%20for%20Linux.zip -> ${P}.zip
 	 https://github.com/pld-linux/${PN}/archive/auto/th/${MY_PV2}.${PATCH_VERSION}.tar.gz -> ${P}-patches.tar.gz"
 
 LICENSE="GPL-2"
@@ -27,6 +28,7 @@ RDEPEND="${DEPEND}"
 
 src_unpack() {
 	unpack ${A}
+	unpack ./RTL8812AU_linux_v${MY_PV1}/driver/${MY_P}.tar.gz
 }
 
 src_prepare() {
