@@ -20,7 +20,7 @@ SRC_URI="http://www.netis-systems.com/Files/others/WF2190/netis%20WF2190%20Drive
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="amd64 x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND=""
