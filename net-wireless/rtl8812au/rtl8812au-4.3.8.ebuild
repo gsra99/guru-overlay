@@ -48,8 +48,7 @@ src_compile() {
 }
 
 src_install() {
-	insinto "/lib/modules/${KV_FULL}/kernel/drivers/net/wireless/"
+	insinto "/lib/modules/${KV_FULL}/net/wireless/"
 	doins 8812au.ko
 	#emake MODDESTDIR="${ED}/lib/modules/${KV_FULL}/kernel/drivers/net/wireless/" install
 }
-
