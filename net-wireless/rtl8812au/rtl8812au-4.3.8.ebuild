@@ -48,7 +48,6 @@ src_compile() {
 }
 
 src_install() {
-	#insinto "/lib/modules/${KV_FULL}/net/wireless/"
-	#doins 8812au.ko
-	linux-mod_src_install
+	insinto "/lib/modules/${KV_FULL}/net/wireless/"
+	doins 8812au.ko
 }
