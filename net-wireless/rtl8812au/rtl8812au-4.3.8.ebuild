@@ -49,7 +49,7 @@ src_compile() {
 }
 
 src_install() {
-	#insinto "/lib/modules/${KV_FULL}/net/wireless/"
+	#insinto "/lib/modules/${KV_FULL}/kernel/drivers/net/wireless/"
 	#doins 8812au.ko
 	linux-mod_src_install
 }
