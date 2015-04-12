@@ -11,7 +11,7 @@ HOMEPAGE=""
 PATCH_VERSION="7"
 MY_PV1="${PV}_11100.20140411"
 MY_PV2="${PN}-$(get_version_component_range 1-2).2_11100.20140411-0.20140901"
-MY_P="rtl8812AU-${MY_PV1}"
+MY_P="rtl8812AU_linux_v${MY_PV1}"
 S="${WORKDIR}/${MY_P}"
 MODULE_NAMES="8812au(net/wireless:${S})"
 RESTRICT="mirror"
@@ -28,7 +28,7 @@ RDEPEND="${DEPEND}"
 
 src_unpack() {
 	unpack ${A}
-	unpack ./RTL8812AU_linux_v${MY_PV1}/driver/rtl8812AU_linux_v${MY_PV1}.tar.gz
+	unpack ./RTL8812AU_linux_v${MY_PV1}/driver/${MY_P}.tar.gz
 }
 
 src_prepare() {
