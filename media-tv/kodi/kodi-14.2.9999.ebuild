@@ -9,15 +9,25 @@ inherit eutils python-single-r1 multiprocessing autotools
 
 CODENAME="Helix"
 case ${PV} in
-%9999)
+9999)
 	EGIT_REPO_URI="git://github.com/xbmc/xbmc.git"
-	EGIT_BRANCH="Helix"
-	inherit git-r3
+
+	if [ "${PV%.9999}" != "${PV}" ] ; then
+	EGIT_BRANCH="${CODENAME}"
 	KEYWORDS="~amd64 ~x86"
+	fi
+
+	inherit git-r3
 
 	#S=${WORKDIR}/xbmc-${PV}-${CODENAME}
 	;;
 esac
+
+#if [ "${PV%9999}" = "${PV}" ] ; then
+#	KEYWORDS="~amd64 ~x86"
+#	else
+#	KEYWORDS=""
+#fi
 
 DESCRIPTION="Kodi is a free and open source media-player and entertainment hub"
 HOMEPAGE="http://kodi.tv/"
