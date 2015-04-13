@@ -22,12 +22,6 @@ case ${PV} in
 	;;
 esac
 
-if [ "${PV%.9999}" = "${PV}" ] ; then
-	KEYWORDS="~amd64 ~x86"
-	else
-	KEYWORDS=""
-fi
-
 DESCRIPTION="Kodi is a free and open source media-player and entertainment hub"
 HOMEPAGE="http://kodi.tv/"
 
