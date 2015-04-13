@@ -12,8 +12,9 @@ case ${PV} in
 *|*_p*)
 	EGIT_REPO_URI="git://github.com/xbmc/xbmc.git"
 	EGIT_BRANCH="${CODENAME}"
-	inherit git-r3
+	inherit git-r3 versionator
 	KEYWORDS="~amd64 ~x86"
+	MY_PV=$(get_version_component_range 3)
 	;;
 esac
 
@@ -118,7 +119,7 @@ DEPEND="${COMMON_DEPEND}
 	test? ( dev-cpp/gtest )"
 # Force java for latest git version to avoid having to hand maintain the
 # generated addons package. #488118
-[[ ${PV} == "14.2.9999" ]] && DEPEND+=" virtual/jre"
+[[ ${MY_PV} == "9999" ]] && DEPEND+=" virtual/jre"
 
 CONFIG_CHECK="~IP_MULTICAST"
 
@@ -132,7 +133,7 @@ pkg_setup() {
 }
 
 src_unpack() {
-	[[ ${PV} == "14.2.9999" ]] && git-r3_src_unpack || default
+	[[ ${MY_PV} == "9999" ]] && git-r3_src_unpack || default
 }
 
 src_prepare() {
@@ -152,7 +153,7 @@ src_prepare() {
 	multijob_finish
 	elibtoolize
 
-	[[ ${PV} == "14.2.9999" ]] && emake -f codegenerator.mk
+	[[ ${MY_PV} == "9999" ]] && emake -f codegenerator.mk
 
 	# Disable internal func checks as our USE/DEPEND
 	# stuff handles this just fine already #408395
