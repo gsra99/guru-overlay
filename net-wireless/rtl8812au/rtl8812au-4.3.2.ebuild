@@ -16,7 +16,7 @@ S="${WORKDIR}/${MY_P}"
 MODULE_NAMES="8812au(net/wireless:${S})"
 RESTRICT="mirror"
 SRC_URI="ftp://ftp2.dlink.com/PRODUCTS/DWA-182/REVC/DWA-182_REVC_DRIVER_${PV}_LINUX.ZIP -> ${PF}.zip
-	 https://github.com/pld-linux/${PN}/archive/auto/th/${MY_PV2}.${PATCH_VERSION}.tar.gz -> ${P}-patches.tar.gz"
+	 https://github.com/pld-linux/${PN}/archive/auto/th/${MY_PV2}.${PATCH_VERSION}.tar.gz -> ${PN}_patches-${PV}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
