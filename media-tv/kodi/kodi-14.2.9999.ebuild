@@ -22,7 +22,7 @@ case ${PV} in
 	;;
 esac
 
-if [ "${PV%9999}" = "${PV}" ] ; then
+if [ "${PV%.9999}" = "${PV}" ] ; then
 	KEYWORDS="~amd64 ~x86"
 	else
 	KEYWORDS=""
