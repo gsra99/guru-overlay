@@ -14,7 +14,6 @@ case ${PV} in
 
 	if [ "${PV%.9999}" != "${PV}" ] ; then
 	EGIT_BRANCH="${CODENAME}"
-	KEYWORDS="~amd64 ~x86"
 	fi
 
 	inherit git-r3
@@ -23,11 +22,11 @@ case ${PV} in
 	;;
 esac
 
-#if [ "${PV%9999}" = "${PV}" ] ; then
-#	KEYWORDS="~amd64 ~x86"
-#	else
-#	KEYWORDS=""
-#fi
+if [ "${PV%9999}" = "${PV}" ] ; then
+	KEYWORDS="~amd64 ~x86"
+	else
+	KEYWORDS=""
+fi
 
 DESCRIPTION="Kodi is a free and open source media-player and entertainment hub"
 HOMEPAGE="http://kodi.tv/"
@@ -130,7 +129,7 @@ DEPEND="${COMMON_DEPEND}
 	test? ( dev-cpp/gtest )"
 # Force java for latest git version to avoid having to hand maintain the
 # generated addons package. #488118
-[[ ${PV} == "%9999" ]] && DEPEND+=" virtual/jre"
+[[ ${PV} == "9999" ]] && DEPEND+=" virtual/jre"
 
 CONFIG_CHECK="~IP_MULTICAST"
 
@@ -144,7 +143,7 @@ pkg_setup() {
 }
 
 src_unpack() {
-	[[ ${PV} == "%9999" ]] && git-r3_src_unpack || default
+	[[ ${PV} == "9999" ]] && git-r3_src_unpack || default
 }
 
 src_prepare() {
@@ -164,7 +163,7 @@ src_prepare() {
 	multijob_finish
 	elibtoolize
 
-	[[ ${PV} == "%9999" ]] && emake -f codegenerator.mk
+	[[ ${PV} == "9999" ]] && emake -f codegenerator.mk
 
 	# Disable internal func checks as our USE/DEPEND
 	# stuff handles this just fine already #408395
@@ -193,7 +192,7 @@ src_configure() {
 	# No configure flage for this #403561
 	export ac_cv_lib_bluetooth_hci_devid=$(usex bluetooth)
 	# Requiring java is asine #434662
-	[[ ${PV} != "%9999" ]] && export ac_cv_path_JAVA_EXE=$( which $(usex java java true) )
+	[[ ${PV} != "9999" ]] && export ac_cv_path_JAVA_EXE=$( which $(usex java java true) )
 
 	econf \
 		--docdir=/usr/share/doc/${PF} \
