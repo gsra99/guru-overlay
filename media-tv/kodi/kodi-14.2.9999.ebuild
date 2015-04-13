@@ -124,6 +124,7 @@ DEPEND="${COMMON_DEPEND}
 # Force java for latest git version to avoid having to hand maintain the
 # generated addons package. #488118
 [[ ${PV} == "9999" ]] && DEPEND+=" virtual/jre"
+[[ ${PV} == "%9999" ]] && DEPEND+=" virtual/jre"
 
 CONFIG_CHECK="~IP_MULTICAST"
 
@@ -138,11 +139,12 @@ pkg_setup() {
 
 src_unpack() {
 	[[ ${PV} == "9999" ]] && git-r3_src_unpack || default
+	[[ ${PV} == "%9999" ]] && git-r3_src_unpack || default
 }
 
 src_prepare() {
-	#epatch "${FILESDIR}"/${PN}-9999-no-arm-flags.patch #400617
-	#epatch "${FILESDIR}"/${PN}-9999-texturepacker.patch
+	[[ ${PV} == "9999" ]] && epatch "${FILESDIR}"/${PN}-9999-no-arm-flags.patch #400617
+	[[ ${PV} == "9999" ]] && epatch "${FILESDIR}"/${PN}-9999-texturepacker.patch
 
 	# some dirs ship generated autotools, some dont
 	multijob_init
@@ -158,6 +160,7 @@ src_prepare() {
 	elibtoolize
 
 	[[ ${PV} == "9999" ]] && emake -f codegenerator.mk
+	[[ ${PV} == "%9999" ]] && emake -f codegenerator.mk
 
 	# Disable internal func checks as our USE/DEPEND
 	# stuff handles this just fine already #408395
