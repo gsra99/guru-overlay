@@ -13,8 +13,8 @@ case ${PV} in
 	EGIT_REPO_URI="git://github.com/xbmc/xbmc.git"
 	EGIT_BRANCH="${CODENAME}"
 	inherit git-r3 versionator
-	KEYWORDS="~amd64 ~x86"
 	MY_PV=$(get_version_component_range 3)
+	KEYWORDS="~amd64 ~x86"
 	;;
 esac
 
