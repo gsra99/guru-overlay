@@ -10,6 +10,7 @@ DESCRIPTION=""
 HOMEPAGE=""
 RESTRICT="mirror"
 ESVN_REPO_URI="http://iwleeprom.googlecode.com/svn/branches/atheros/"
+ESVN_PATCHES=""${FILESDIR}/makefile.patch"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -18,3 +19,7 @@ IUSE=""
 
 DEPEND=""
 RDEPEND="${DEPEND}"
+
+src_prepare {
+	epatch -p1 "${FILESDIR}/makefile.patch"
+}
