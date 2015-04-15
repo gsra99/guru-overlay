@@ -19,6 +19,10 @@ IUSE=""
 DEPEND=""
 RDEPEND="${DEPEND}"
 
-src_prepare {
-	epatch "${FILESDIR}"/makefile.patch
+src_unpack() {
+	subversion_src_unpack
+}
+
+src_prepare() {
+	epatch -p1 "${FILESDIR}/makefile.patch"
 }
