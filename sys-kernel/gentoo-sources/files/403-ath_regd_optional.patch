@@ -1,3 +1,18 @@
+--- a/drivers/net/wireless/ath/Kconfig	2013-06-30 23:13:29.000000000 +0100
++++ b/drivers/net/wireless/ath/Kconfig	2015-04-16 08:25:16.000000000 +0100
+@@ -19,6 +19,12 @@
+ 
+ if ATH_CARDS
+ 
++config ATH_USER_REGD
++	bool "Do not enforce EEPROM regulatory restrictions"
++	---help---
++	Select this option if you want the driver to respect the user's decision about
++	regulatory settings.
++
+ config ATH_DEBUG
+ 	bool "Atheros wireless debugging"
+ 	---help---
 --- a/drivers/net/wireless/ath/regd.c
 +++ b/drivers/net/wireless/ath/regd.c
 @@ -200,6 +200,10 @@ ath_reg_apply_beaconing_flags(struct wip
@@ -43,4 +58,3 @@
 +
  	wiphy->reg_notifier = reg_notifier;
  	wiphy->flags |= WIPHY_FLAG_STRICT_REGULATORY;
- 
