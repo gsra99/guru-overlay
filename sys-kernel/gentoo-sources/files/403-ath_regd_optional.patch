@@ -10,7 +10,6 @@
  config ATH_DEBUG
  	bool "Atheros wireless debugging"
  	---help---
-
 --- a/.local-symbols
 +++ b/.local-symbols
 @@ -89,6 +89,7 @@ RTL8187_LEDS=
