@@ -1,14 +1,3 @@
---- a/drivers/net/wireless/ath/Kconfig
-+++ b/drivers/net/wireless/ath/Kconfig
-@@ -22,6 +22,9 @@
- if ATH_CARDS
- 
-+config ATH_USER_REGD
-+	bool "Do not enforce EEPROM regulatory restrictions"
-+
- config ATH_DEBUG
- 	bool "Atheros wireless debugging"
- 	---help---
 --- a/drivers/net/wireless/ath/regd.c
 +++ b/drivers/net/wireless/ath/regd.c
 @@ -200,6 +200,10 @@ ath_reg_apply_beaconing_flags(struct wip
