@@ -27,7 +27,11 @@ src_prepare() {
 	epatch -p1 "${FILESDIR}/makefile.patch"
 }
 
-src_compile () {
-	addpredict /usr/sbin
-	#addpredict /usr/share/man/man8
+src_install () {
+	local i
+	for i in iwleeprom ; do
+		doman ${i}/${i}.8.
+		dosbin ${i}/${i}
+	done
+	fperms u+s-w /usr/sbin/iwleeprom
 }
