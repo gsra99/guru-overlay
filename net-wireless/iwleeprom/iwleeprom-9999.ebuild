@@ -26,3 +26,8 @@ src_unpack() {
 src_prepare() {
 	epatch -p1 "${FILESDIR}/makefile.patch"
 }
+
+src_test () {
+	# Tests don't even remotely work inside portage
+	true
+}

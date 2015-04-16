@@ -5,15 +5,3 @@
 +SBINDIR=/usr/sbin
  MANDIR=/usr/share/man/man8
  OBJDIR=obj
- 
-@@ -33,8 +33,8 @@
- 		rm -rf $(OBJDIR)
- 
- install: all
--		install -m 4755 iwleeprom $(SBINDIR)
--		install -m 644 iwleeprom.8.gz $(MANDIR)
-+		install -m 0755 iwleeprom $(SBINDIR)
-+		install -m 0644 iwleeprom.8.gz $(MANDIR)
- 
- uninstall:
- 		rm -f $(SBINDIR)/iwleeprom
