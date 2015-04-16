@@ -21,6 +21,6 @@ DEPEND="app-arch/unrar"
 RDEPEND="${DEPEND}"
 
 src_unpack() {
-	unrar -x "${A}" "${WORKDIR}"
+	unrar "${A}" "${WORKDIR}"
 	cd "${S}/src"
 }
