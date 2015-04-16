@@ -28,5 +28,5 @@ src_prepare() {
 }
 
 src_install () {
-	addpredict /usr/sbin/iwleeprom
+	addwrite /usr/sbin/iwleeprom
 }
