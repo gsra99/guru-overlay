@@ -114,6 +114,10 @@ DEPEND="${COMMON_DEPEND}
 	dev-util/gperf
 	X? ( x11-proto/xineramaproto )
 	dev-util/cmake
+	texturepacker? (
+		media-libs/libsdl
+		media-libs/sdl-image
+	)
 	x86? ( dev-lang/nasm )
 	java? ( virtual/jre )
 	test? ( dev-cpp/gtest )"
