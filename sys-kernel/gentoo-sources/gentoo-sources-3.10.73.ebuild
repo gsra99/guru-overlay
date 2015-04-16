@@ -21,7 +21,7 @@ PATCHES="${FILESDIR}/ath9k_11n_disable.patch"
 
 src_prepare () {
 	epatch -p1 "${FILESDIR}/ath9k_11n_disable.patch"
-	epatch -p1 "${FILESDIR}/403-ath_regd_optional.patch"
+	epatch -p1 "${FILESDIR}/combined.patch"
 	epatch -p1 "${FILESDIR}/403-world_regd_fixup.patch"
 }
 
