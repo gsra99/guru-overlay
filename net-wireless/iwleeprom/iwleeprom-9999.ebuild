@@ -27,7 +27,6 @@ src_prepare() {
 	epatch -p1 "${FILESDIR}/makefile.patch"
 }
 
-src_test () {
-	# Tests don't even remotely work inside portage
-	true
+src_install () {
+	addpredict /usr/sbin
 }
