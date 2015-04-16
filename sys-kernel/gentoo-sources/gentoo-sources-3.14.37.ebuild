@@ -20,8 +20,8 @@ SRC_URI="${KERNEL_URI} ${GENPATCHES_URI} ${ARCH_URI}"
 
 src_prepare () {
 	epatch -p1 "${FILESDIR}/ath9k_11n_disable.patch"
-	epatch -p1 "${FILESDIR}/403-ath_regd_optional.patch"
-	epatch -p1 "${FILESDIR}/403-world_regd_fixup.patch"
+	epatch -p1 "${FILESDIR}/kernel-3.10-ath_regd_optional.patch"
+	epatch -p1 "${FILESDIR}/kernel-3.14-world_regd_fixup.patch"
 }
 
 pkg_postinst() {

@@ -21,8 +21,8 @@ PATCHES="${FILESDIR}/ath9k_11n_disable.patch"
 
 src_prepare () {
 	epatch -p1 "${FILESDIR}/ath9k_11n_disable.patch"
-	epatch -p1 "${FILESDIR}/403-ath_regd_optional.patch"
-	epatch -p1 "${FILESDIR}/404-world_regd_fixup.patch"
+	epatch -p1 "${FILESDIR}/kernel-3.10-ath_regd_optional.patch"
+	epatch -p1 "${FILESDIR}/kernel-3.10-world_regd_fixup.patch"
 }
 
 pkg_postinst() {
