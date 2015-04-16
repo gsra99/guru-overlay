@@ -23,13 +23,8 @@ src_unpack() {
 	subversion_src_unpack
 }
 
-src_prepare() {
-	epatch -p1 "${FILESDIR}/makefile.patch"
-}
-
 src_install () {
 	doman ${S}/${PN}.8.gz
 	dosbin ${S}/${PN}
-	#fperms u+s-w /usr/sbin/iwleeprom
 	fperms 4755 /usr/sbin/iwleeprom
 }

@@ -1,7 +1,0 @@
---- a/Makefile	2015-04-15 17:53:36.000000000 +0100
-+++ b/Makefile	2015-04-15 21:08:22.000000000 +0100
-@@ -1,4 +1,4 @@
--SBINDIR=/usr/local/sbin
-+SBINDIR=/usr/sbin
- MANDIR=/usr/share/man/man8
- OBJDIR=obj
