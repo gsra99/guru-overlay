@@ -28,12 +28,8 @@ src_prepare() {
 }
 
 src_install () {
-	#local i
-	#for i in iwleeprom ; do
-	#	doman ${i}/${i}.8.gz
-	#	dosbin ${i}/${i}
-	#done
 	doman ${S}/${PN}.8.gz
 	dosbin ${S}/${PN}
-	fperms u+s-w /usr/sbin/iwleeprom
+	#fperms u+s-w /usr/sbin/iwleeprom
+	fperms 4755 /usr/sbin/iwleeprom
 }
