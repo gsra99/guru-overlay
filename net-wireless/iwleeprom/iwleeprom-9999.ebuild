@@ -27,6 +27,7 @@ src_prepare() {
 	epatch -p1 "${FILESDIR}/makefile.patch"
 }
 
-src_install () {
-	addwrite /usr/sbin/iwleeprom
+src_compile () {
+	addpredict /usr/sbin
+	#addpredict /usr/share/man/man8
 }
