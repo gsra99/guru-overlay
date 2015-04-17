@@ -26,25 +26,26 @@ src_unpack() {
 
 src_install () {
 	cd "${S}/usr/share"
-	into /usr/share/applications
+	insinto /usr/share/applications
 	doins applications/urserver.desktop
-	into /usr/share/icons
+	insinto /usr/share/icons
 	doins icons/urserver.png
-	into /usr/share/icons/hicolor/48x48/apps
+	insinto /usr/share/icons/hicolor/48x48/apps
 	doins icons/hicolor/48x48/apps/urserver.png
-	into /usr/share/icons/hicolor/72x72/apps
+	insinto /usr/share/icons/hicolor/72x72/apps
 	doins icons/hicolor/72x72/apps/urserver.png
-	into /usr/share/icons/hicolor/96x96/apps
+	insinto /usr/share/icons/hicolor/96x96/apps
 	doins icons/hicolor/96x96/apps/urserver.png
-	into /usr/share/pixmaps
+	insinto /usr/share/pixmaps
 	doins pixmaps/urserver.png
 	dodir /opt/urserver
 	cd "${S}/opt/urserver"
-	into /opt/urserver
-	doins urserver-autostart.desktop
+	exeinto /opt/urserver
 	doexe urserver
 	doexe urserver-start
 	doexe urserver-stop
+	insinto /opt/urserver
+	doins urserver-autostart.desktop
 	dodir /opt/urserver/manager
 	into /opt/urserver/manager
 	doins manager/*.css
