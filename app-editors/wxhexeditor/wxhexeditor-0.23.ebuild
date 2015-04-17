@@ -32,10 +32,6 @@ pkg_pretend() {
 		|| die "${PN} uses OpenMP libraries. Please use an OpenMP-capable compiler."
 }
 
-src_unpack () {
-	unpack ${A}
-}
-
 #src_prepare() {
 	# parts sent upstream : https://sourceforge.net/p/wxhexeditor/patches/8/
 	#epatch "${FILESDIR}"/${P}-makefile.patch
