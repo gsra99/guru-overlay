@@ -23,3 +23,15 @@ src_unpack() {
 	rpm_src_unpack ${A}
 	cd "${S}"
 }
+
+src_install () {
+	insinto /opt
+	doins urserver
+	insinto /usr/share
+	doins applications/urserver.desktop
+	doins icons/urserver.png
+	doins icons/hicolor/48x48/apps/urserver.png
+	doins icons/hicolor/72x72/apps/urserver.png
+	doins icons/hicolor/96x96/apps/urserver.png
+	doins pixmaps/urserver.png
+}
