@@ -35,8 +35,3 @@ pkg_pretend() {
 src_compile () {
 	emake OPTFLAGS="-fopenmp"
 }
-
-#src_prepare() {
-	# parts sent upstream : https://sourceforge.net/p/wxhexeditor/patches/8/
-	#epatch "${FILESDIR}"/${P}-makefile.patch
-#}
