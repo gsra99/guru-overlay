@@ -4,7 +4,7 @@
 
 EAPI=5
 
-inherit git-r3 git-2 linux-info linux-mod eutils
+inherit git-r3 linux-info linux-mod eutils
 
 DESCRIPTION=""
 HOMEPAGE=""
@@ -20,7 +20,7 @@ DEPEND=""
 RDEPEND="${DEPEND}"
 
 src_unpack() {
-	git-2_src_unpack
+	git-r3_src_unpack
 }
 
 src_prepare() {
