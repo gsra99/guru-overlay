@@ -12,7 +12,7 @@ MY_PN="wxHexEditor"
 
 DESCRIPTION="A cross-platform hex editor designed specially for large files"
 HOMEPAGE="http://wxhexeditor.sourceforge.net/"
-SRC_URI="http://sourceforge.net/projects/${PN}/files/${MY_PN}/v${PV}%20Beta/${MY_PN}-v${PV}-src.tar.bz2/download"
+SRC_URI="http://sourceforge.net/projects/${PN}/files/${MY_PN}/v${PV}%20Beta/${MY_PN}-v${PV}-src.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
