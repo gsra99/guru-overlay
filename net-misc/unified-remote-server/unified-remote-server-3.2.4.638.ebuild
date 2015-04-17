@@ -25,9 +25,6 @@ src_unpack() {
 }
 
 src_install () {
-	cd "${S}/opt"
-	insinto /opt
-	doins urserver
 	cd "${S}/usr/share"
 	insinto /usr/share
 	doins applications/urserver.desktop
@@ -36,4 +33,16 @@ src_install () {
 	doins icons/hicolor/72x72/apps/urserver.png
 	doins icons/hicolor/96x96/apps/urserver.png
 	doins pixmaps/urserver.png
+	dodir /opt/urserver
+	cd "${S}/opt/urserver"
+	insinto /opt/urserver
+	doins urserver
+	doins urserver-autostart.desktop
+	doins urserver-start
+	doins urserver-stop
+	dodir /opt/urserver/manager
+	insinto /opt/urserver/manager
+	doins manager/*.css
+	doins manager/*.html
+	doins manager/*.js
 }
