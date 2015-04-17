@@ -187,7 +187,7 @@ src_install () {
 	dodir /opt/urserver/remotes/Main/MPC-HC
 	doins remotes/Main/MPC-HC/*
 	dodir /opt/urserver/remotes/Main/MPlayerX
-	doins remotes/Main/MPlayer/*
+	doins remotes/Main/MPlayerX/*
 	dodir /opt/urserver/remotes/Main/MusicBee
 	doins remotes/Main/MusicBee/*
 	dodir /opt/urserver/remotes/Main/Netflix
