@@ -47,7 +47,7 @@ src_install () {
 	insinto /opt/urserver
 	doins urserver-autostart.desktop
 	dodir /opt/urserver/manager
-	into /opt/urserver/manager
+	insinto /opt/urserver/manager
 	doins manager/*.css
 	doins manager/*.html
 	doins manager/*.js
