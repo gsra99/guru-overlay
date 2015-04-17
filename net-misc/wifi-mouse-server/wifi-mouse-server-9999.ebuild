@@ -28,6 +28,6 @@ src_configure () {
 	cmake-utils_src_configure -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
 }
 
-src_compile () {
-	cmake-utils_src_compile ..
-}
+#src_compile () {
+#	cmake-utils_src_compile ..
+#}
