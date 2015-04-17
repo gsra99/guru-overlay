@@ -213,7 +213,7 @@ src_install () {
 	dodir /opt/urserver/remotes/Main/Power
 	doins remotes/Main/Power/*
 	dodir /opt/urserver/remotes/Main/"PowerPoint Advanced"
-	doins remotes/Main/"PowerPoint Advnaced"/*
+	doins remotes/Main/"PowerPoint Advanced"/*
 	dodir /opt/urserver/remotes/Main/"PowerPoint Basic"
 	doins remotes/Main/"PowerPoint Basic"/*
 	dodir /opt/urserver/remotes/Main/"Quicktime Player"
