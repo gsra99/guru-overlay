@@ -44,6 +44,9 @@ src_install () {
 	doexe urserver
 	doexe urserver-start
 	doexe urserver-stop
+	dosym /opt/urserver/urserver /usr/bin/urserver
+	dosym /opt/urserver/urserver-start /usr/bin/urserver-start
+	dosym /opt/urserver/urserver-stop /usr/bin/urserver-stop
 	insinto /opt/urserver
 	doins urserver-autostart.desktop
 	dodir /opt/urserver/manager
