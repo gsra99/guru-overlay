@@ -216,8 +216,8 @@ src_install () {
 	doins remotes/Main/"PowerPoint Advanced"/*
 	dodir /opt/urserver/remotes/Main/"PowerPoint Basic"
 	doins remotes/Main/"PowerPoint Basic"/*
-	dodir /opt/urserver/remotes/Main/"Quicktime Player"
-	doins remotes/Main/"Quicktime Player"/*
+	dodir /opt/urserver/remotes/Main/"QuickTime Player"
+	doins remotes/Main/"QuickTime Player"/*
 	dodir /opt/urserver/remotes/Main/Safari
 	doins remotes/Main/Safari/*
 	dodir /opt/urserver/remotes/Main/Screen
