@@ -25,8 +25,10 @@ src_unpack() {
 }
 
 src_install () {
+	cd "${S}/opt"
 	insinto /opt
 	doins urserver
+	cd "${S}/usr/share"
 	insinto /usr/share
 	doins applications/urserver.desktop
 	doins icons/urserver.png
