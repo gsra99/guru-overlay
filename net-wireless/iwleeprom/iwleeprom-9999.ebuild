@@ -9,7 +9,7 @@ inherit subversion eutils
 DESCRIPTION=""
 HOMEPAGE=""
 RESTRICT="mirror"
-ESVN_REPO_URI="http://iwleeprom.googlecode.com/svn/branches/atheros/"
+ESVN_REPO_URI="https://code.google.com/p/${PN}/source/browse/#svn%2Fbranches%2Fatheros"
 
 LICENSE="GPL-2"
 SLOT="0"
