@@ -19,10 +19,17 @@ DESCRIPTION="Full sources including the Gentoo patchset for the ${KV_MAJOR}.${KV
 SRC_URI="${KERNEL_URI} ${GENPATCHES_URI} ${ARCH_URI}"
 
 src_prepare () {
-	epatch -p1 "${FILESDIR}/ath9k_11n_disable.patch"
-	epatch -p1 "${FILESDIR}/kernel-3.10-ath_regd_optional.patch"
-	epatch -p1 "${FILESDIR}/kernel-3.14-world_regd_fixup.patch"
-	epatch -p1 "${FILESDIR}/increase_ath_tx_power.patch"
+	EPATCH_SOURCE="${FILESDIR}"
+	EPATCH_OPTS="-p1"
+	epatch "303-ath9k-add-DFS-support-for-extension-channel.patch"
+	epatch "304-ath9k-allow-40MHz-radar-detection-width.patch"
+	epatch "ath9k_11n_disable.patch"
+	epatch "402-ath_regd_optional.patch"
+	epatch "403-world_regd_fixup.patch"
+	#epatch "increase_ath_tx_power.patch"
+	epatch "405-ath_regd_us.patch"
+	epatch "406-ath_relax_default_regd.patch"
+	epatch "522-mac80211_configure_antenna_gain.patch"
 }
 
 pkg_postinst() {
