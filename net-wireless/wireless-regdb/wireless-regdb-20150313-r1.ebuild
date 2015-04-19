@@ -23,7 +23,7 @@ src_prepare() {
 }
 
 src_compile() {
-	einfo "Recompiling regulatory.bin from db.txt would break CRDA verify. Installing unmodified binary version."
+	einfo "Recompiling regulatory.bin from db.txt will break CRDA verification."
 	emake
 }
 
