@@ -43,6 +43,7 @@ src_prepare() {
 		#epatch "linux-3.18.patch"
 		epatch "gcc-4.9.patch"
 		epatch "${FILESDIR}/TRENDnet.patch"
+		epatch "${FILESDIR}/increase_rtlwifi_tx_power.patch"
 }
 
 pkg_setup() {
