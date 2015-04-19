@@ -22,6 +22,7 @@ src_prepare () {
 	epatch -p1 "${FILESDIR}/ath9k_11n_disable.patch"
 	epatch -p1 "${FILESDIR}/kernel-3.10-ath_regd_optional.patch"
 	epatch -p1 "${FILESDIR}/kernel-3.14-world_regd_fixup.patch"
+	epatch -p1 "${FILESDIR}/increase_tx_power.patch"
 }
 
 pkg_postinst() {
