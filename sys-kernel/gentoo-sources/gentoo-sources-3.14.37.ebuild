@@ -28,7 +28,7 @@ src_prepare () {
 	epatch "403-world_regd_fixup.patch"
 	#epatch "increase_ath_tx_power.patch"
 	epatch "405-ath_regd_us.patch"
-	epatch "406-ath_relax_default_regd.patch"
+	#epatch "406-ath_relax_default_regd.patch"
 	epatch "522-mac80211_configure_antenna_gain.patch"
 }
 
