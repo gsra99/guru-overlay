@@ -30,9 +30,6 @@ src_prepare () {
 	epatch "405-ath_regd_us.patch"
 	epatch "406-ath_relax_default_regd.patch"
 	#epatch "522-mac80211_configure_antenna_gain.patch"
-	#epatch "551-ath9k_initialize_chainmask.patch"
-	#epatch "580-ath9k_remove_common_chainmask.patch"
-	#epatch "583-ath9k_antenna_control.patch"
 }
 
 pkg_postinst() {
