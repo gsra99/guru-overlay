@@ -32,7 +32,7 @@ src_prepare () {
 	epatch "522-mac80211_configure_antenna_gain.patch"
 	epatch "ath9k_initialize_txchainmask_before_testing_channel_txpower_values.patch"
 	#epatch "ath9k_hw_remove_the_txpower_index_offset.patch"
-	epatch "ath9k_hw_fix_calculated_runtime_txpower_limit.patch"
+	#epatch "ath9k_hw_fix_calculated_runtime_txpower_limit.patch"
 	epatch "ath9k_hw_do_not_limit_initial_txpower_to_20dbm.patch"
 }
 
