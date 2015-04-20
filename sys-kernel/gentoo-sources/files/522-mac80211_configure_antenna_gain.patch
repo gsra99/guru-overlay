@@ -130,9 +130,10 @@
 --- a/net/wireless/nl80211.c
 +++ b/net/wireless/nl80211.c
 @@ -395,6 +395,7 @@ static const struct nla_policy nl80211_p
- 	[NL80211_ATTR_USER_PRIO] = { .type = NLA_U8 },
- 	[NL80211_ATTR_ADMITTED_TIME] = { .type = NLA_U16 },
- 	[NL80211_ATTR_SMPS_MODE] = { .type = NLA_U8 },
+ 	[NL80211_ATTR_VENDOR_DATA] = { .type = NLA_BINARY },
+ 	[NL80211_ATTR_QOS_MAP] = { .type = NLA_BINARY,
+ 				   .len = IEEE80211_QOS_MAP_LEN_MAX 
+},
 +	[NL80211_ATTR_WIPHY_ANTENNA_GAIN] = { .type = NLA_U32 },
  };
  
