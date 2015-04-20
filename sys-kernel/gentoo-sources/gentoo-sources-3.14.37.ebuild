@@ -31,9 +31,6 @@ src_prepare () {
 	epatch "406-ath_relax_default_regd.patch"
 	epatch "522-mac80211_configure_antenna_gain.patch"
 	epatch "551-ath9k_initialize_chainmask.patch"
-	#epatch "ath9k_hw_remove_the_txpower_index_offset.patch"
-	#epatch "ath9k_hw_fix_calculated_runtime_txpower_limit.patch"
-	#epatch "ath9k_hw_do_not_limit_initial_txpower_to_20dbm.patch"
 	epatch "580-ath9k_remove_common_chainmask.patch"
 	#epatch "583-ath9k_antenna_control.patch"
 }
