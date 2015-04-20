@@ -21,7 +21,7 @@ SRC_URI="${KERNEL_URI} ${GENPATCHES_URI} ${ARCH_URI}"
 src_prepare () {
 	EPATCH_SOURCE="${FILESDIR}"
 	EPATCH_OPTS="-p1"
-	epatch "303-ath9k-add-DFS-support-for-extension-channel.patch"
+	#epatch "303-ath9k-add-DFS-support-for-extension-channel.patch"
 	epatch "304-ath9k-allow-40MHz-radar-detection-width.patch"
 	epatch "ath9k_11n_disable.patch"
 	epatch "402-ath_regd_optional.patch"
