@@ -21,6 +21,7 @@ SRC_URI="${KERNEL_URI} ${GENPATCHES_URI} ${ARCH_URI}"
 src_prepare() {
 	EPATCH_SOURCE="${FILESDIR}"
 	EPATCH_OPTS="-p1"
+		epatch "302-ath9k-restart-only-triggering-DFS-detector-line.patch"
 		epatch "303-ath9k-add-DFS-support-for-extension-channel.patch"
 		epatch "304-ath9k-allow-40MHz-radar-detection-width.patch"
 		epatch "402-ath_regd_optional.patch"
