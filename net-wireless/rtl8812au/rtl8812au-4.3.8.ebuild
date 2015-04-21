@@ -51,7 +51,7 @@ src_prepare() {
 
 pkg_setup() {
         linux-mod_pkg_setup
-        kernel_is -gt 3 18 && die "kernel higher than 3.18 is not supported"
+        kernel_is -gt 3 15 && die "kernel higher than 3.15 is not supported"
 }
 
 src_compile() {
