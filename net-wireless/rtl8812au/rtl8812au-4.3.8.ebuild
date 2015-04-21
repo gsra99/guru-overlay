@@ -41,9 +41,8 @@ src_prepare() {
 		#epatch "update-cfg80211-support.patch"
 		#epatch "warnings.patch"
 		#epatch "linux-3.18.patch"
-		# check gcc version >= 4.9.X
-		#if [[ $(gcc-major-version) -eq 4 ]] && [[ $(gcc-minor-version) -eq 9 ]]; then
-		if [[ $(gcc-version) -ge 4.9 ]]; then
+		# check gcc version = 4.9.X
+		if [[ $(gcc-major-version) -eq 4 ]] && [[ $(gcc-minor-version) -eq 9 ]]; then
 			epatch "gcc-4.9.patch"
 		fi
 		epatch "${FILESDIR}/TRENDnet.patch"
