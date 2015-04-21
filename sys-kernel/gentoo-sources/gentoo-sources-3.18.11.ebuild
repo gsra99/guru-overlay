@@ -27,7 +27,7 @@ src_prepare() {
 		epatch "402-ath_regd_optional.patch"
 		epatch "403-world_regd_fixup.patch"
 		epatch "405-ath_regd_us.patch"
-		epatch "406-ath_relax_default_regd.patch"
+		epatch "406-ath_relax_default_regd-3.14.patch"
 		epatch "500-ath9k_eeprom_debugfs.patch"
 		epatch "522-mac80211_configure_antenna_gain.patch"
 }
