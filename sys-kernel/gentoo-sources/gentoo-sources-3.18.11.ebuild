@@ -21,6 +21,15 @@ SRC_URI="${KERNEL_URI} ${GENPATCHES_URI} ${ARCH_URI}"
 src_prepare() {
 	EPATCH_SOURCE="${FILESDIR}"
 	EPATCH_OPTS="-p1"
+		epatch "010-disable_rfkill.patch"
+		epatch "303-ath9k-add-DFS-support-for-extension-channel.patch"
+		epatch "304-ath9k-allow-40MHz-radar-detection-width.patch"
+		epatch "402-ath_regd_optional.patch"
+		epatch "403-world_regd_fixup.patch"
+		epatch "405-ath_regd_us.patch"
+		epatch "406-ath_relax_default_regd.patch"
+		epatch "500-ath9k_eeprom_debugfs.patch"
+		epatch "522-mac80211_configure_antenna_gain.patch"
 }
 
 pkg_postinst() {

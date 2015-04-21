@@ -22,12 +22,12 @@ src_prepare () {
 	EPATCH_SOURCE="${FILESDIR}"
 	EPATCH_OPTS="-p1"
 	epatch "ath9k_11n_disable.patch"
-	epatch "402-ath_regd_optional.patch"
+	epatch "402-ath_regd_optional@43210.patch"
 	epatch "403-world_regd_fixup.patch"
 	#epatch "increase_ath_tx_power.patch"
 	epatch "405-ath_regd_us.patch"
 	epatch "406-ath_relax_default_regd.patch"
-	#epatch "522-mac80211_configure_antenna_gain.patch"
+	#epatch "522-mac80211_configure_antenna_gain@43342.patch"
 }
 
 pkg_postinst() {
