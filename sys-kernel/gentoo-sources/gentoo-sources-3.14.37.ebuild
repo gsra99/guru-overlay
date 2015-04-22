@@ -27,7 +27,6 @@ src_prepare () {
 	#epatch "increase_ath_tx_power.patch"
 	epatch "405-ath_regd_us-r42952.patch"
 	epatch "406-ath_relax_default_regd-r45252.patch"
-	epatch "522-mac80211_configure_antenna_gain-r43342a.patch"
 }
 
 pkg_postinst() {
