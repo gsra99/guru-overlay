@@ -24,9 +24,9 @@ src_prepare () {
 	epatch "ath9k_11n_disable.patch"
 	epatch "402-ath_regd_optional-r43210.patch"
 	epatch "403-world_regd_fixup-r42952.patch"
-	epatch "increase_ath_tx_power.patch"
 	epatch "405-ath_regd_us-r42952.patch"
 	epatch "406-ath_relax_default_regd-r45252.patch"
+	epatch "increase_max_power.patch"
 }
 
 pkg_postinst() {
