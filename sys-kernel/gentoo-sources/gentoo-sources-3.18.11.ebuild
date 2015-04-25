@@ -30,7 +30,7 @@ src_prepare() {
 		epatch "406-ath_relax_default_regd-r45252.patch"
 		epatch "500-ath9k_eeprom_debugfs-r43208.patch"
 		epatch "522-mac80211_configure_antenna_gain-r43342.patch"
-		epatch "increase_max_power.patch"
+		epatch "increase_max_power-3.18.patch"
 }
 
 pkg_postinst() {

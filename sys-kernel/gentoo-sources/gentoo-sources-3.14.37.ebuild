@@ -26,7 +26,7 @@ src_prepare () {
 	epatch "403-world_regd_fixup-r42952.patch"
 	epatch "405-ath_regd_us-r42952.patch"
 	epatch "406-ath_relax_default_regd-r45252.patch"
-	epatch "increase_max_power.patch"
+	epatch "increase_max_power-3.14.patch"
 }
 
 pkg_postinst() {
