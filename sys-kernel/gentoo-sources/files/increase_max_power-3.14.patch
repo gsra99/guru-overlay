@@ -1,0 +1,37 @@
+--- a/drivers/net/wireless/ath/ath9k/init.c	2015-04-25 09:47:41.000000000 +0100
++++ b/drivers/net/wireless/ath/ath9k/init.c	2015-04-25 09:52:35.000000000 +0100
+@@ -68,14 +68,14 @@
+ 	.band = IEEE80211_BAND_2GHZ, \
+ 	.center_freq = (_freq), \
+ 	.hw_value = (_idx), \
+-	.max_power = 20, \
++	.max_power = 30, \
+ }
+ 
+ #define CHAN5G(_freq, _idx) { \
+ 	.band = IEEE80211_BAND_5GHZ, \
+ 	.center_freq = (_freq), \
+ 	.hw_value = (_idx), \
+-	.max_power = 20, \
++	.max_power = 30, \
+ }
+ 
+ /* Some 2 GHz radios are actually tunable on 2312-2732
+--- a/drivers/net/wireless/ath/regd.c	2015-04-25 09:51:00.000000000 +0100
++++ b/drivers/net/wireless/ath/regd.c	2015-04-25 09:53:28.000000000 +0100
+@@ -33,12 +33,12 @@
+  */
+ 
+ /* Only these channels all allow active scan on all world regulatory domains */
+-#define ATH9K_2GHZ_CH01_11	REG_RULE(2412-10, 2462+10, 40, 0, 20, 0)
++#define ATH9K_2GHZ_CH01_11	REG_RULE(2412-10, 2462+10, 40, 0, 30, 0)
+ 
+ /* We enable active scan on these a case by case basis by regulatory domain */
+-#define ATH9K_2GHZ_CH12_13	REG_RULE(2467-10, 2472+10, 40, 0, 20,\
++#define ATH9K_2GHZ_CH12_13	REG_RULE(2467-10, 2472+10, 40, 0, 30,\
+ 					 NL80211_RRF_NO_IR)
+-#define ATH9K_2GHZ_CH14		REG_RULE(2484-10, 2484+10, 40, 0, 20,\
++#define ATH9K_2GHZ_CH14		REG_RULE(2484-10, 2484+10, 40, 0, 30,\
+ 					 NL80211_RRF_NO_IR | \
+ 					 NL80211_RRF_NO_OFDM)
+ 
