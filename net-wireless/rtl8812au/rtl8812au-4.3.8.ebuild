@@ -48,7 +48,7 @@ src_prepare() {
 
 pkg_setup() {
         linux-mod_pkg_setup
-        kernel_is -gt 3 14 && die "kernel higher than 3.14 is not supported"
+        kernel_is -gt 4 0 && die "kernel higher than 4.0 is not supported"
 }
 
 src_compile() {
