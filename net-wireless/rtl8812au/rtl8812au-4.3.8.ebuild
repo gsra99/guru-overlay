@@ -40,15 +40,13 @@ src_prepare() {
 		if [[ $(gcc-major-version) -eq 4 ]] && [[ $(gcc-minor-version) -eq 9 ]]; then
 			epatch "gcc-4.9.patch"
 		fi
-		epatch "${FILESDIR}/RTL8812AU-kernel-3.18.patch"
-		epatch "linux-4.0.patch"
 		epatch "${FILESDIR}/TRENDnet.patch"
 		#epatch "${FILESDIR}/increase_rtlwifi_tx_power.patch"
 }
 
 pkg_setup() {
         linux-mod_pkg_setup
-        kernel_is -gt 4 0 && die "kernel higher than 4.0 is not supported"
+        kernel_is -gt 3 17 && die "kernel higher than 3.17 is not supported"
 }
 
 src_compile() {
