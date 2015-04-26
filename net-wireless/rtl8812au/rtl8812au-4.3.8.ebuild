@@ -8,7 +8,7 @@ inherit linux-info linux-mod eutils versionator
 
 DESCRIPTION=""
 HOMEPAGE=""
-PATCH_VERSION="7"
+PATCH_VERSION="8"
 MY_PV1="${PV}_12175.20140902"
 MY_PV2="${PN}-$(get_version_component_range 1-2).2_11100.20140411-0.20140901"
 MY_P="rtl8812AU_linux_v${MY_PV1}"
@@ -16,8 +16,8 @@ S="${WORKDIR}/${MY_P}"
 MODULE_NAMES="8812au(net/wireless:${S})"
 RESTRICT="mirror"
 SRC_URI="http://www.comfast.cn/upload/%E8%BD%AF%E4%BB%B6%E9%A9%B1%E5%8A%A8/%E7%BD%91%E5%8D%A1%E7%B1%BB/8812AU%20912%E3%80%817500AC/linux/RTL8812AU_linux_v${MY_PV1}.zip -> ${PF}.zip
-	 mirror://www.netis-systems.com/Files/others/WF2190/netis%20WF2190%20Driver%20for%20Linux.zip -> ${PF}.zip
-	 https://github.com/pld-linux/${PN}/archive/auto/th/${MY_PV2}.${PATCH_VERSION}.tar.gz -> ${PN}_patches-${PV}.tar.gz"
+	 https://github.com/pld-linux/${PN}/archive/auto/th/${MY_PV2}.${PATCH_VERSION}.tar.gz -> ${PN}-4.3.2_patches-v${PATCH_VERSION}.tar.gz"
+MIRROR_URI="http://www.netis-systems.com/Files/others/WF2190/netis%20WF2190%20Driver%20for%20Linux.zip -> ${PF}.zip"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -35,16 +35,13 @@ src_unpack() {
 src_prepare() {
 	EPATCH_SOURCE="${WORKDIR}/${PN}-auto-th-${MY_PV2}.${PATCH_VERSION}"
 	EPATCH_OPTS="-p1"
-		#epatch "linux-3.11.patch"
 		epatch "disable-debug.patch"
 		epatch "enable-cfg80211-support.patch"
-		#epatch "update-cfg80211-support.patch"
-		#epatch "warnings.patch"
-		#epatch "linux-3.18.patch"
-		# check gcc version = 4.9.X
 		if [[ $(gcc-major-version) -eq 4 ]] && [[ $(gcc-minor-version) -eq 9 ]]; then
 			epatch "gcc-4.9.patch"
 		fi
+		epatch "${FILESDIR}/linux-3.18.patch"
+		epatch "linux-4.0.patch"
 		epatch "${FILESDIR}/TRENDnet.patch"
 		#epatch "${FILESDIR}/increase_rtlwifi_tx_power.patch"
 }

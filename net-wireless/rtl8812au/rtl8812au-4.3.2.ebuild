@@ -8,7 +8,7 @@ inherit linux-info linux-mod eutils versionator
 
 DESCRIPTION=""
 HOMEPAGE=""
-PATCH_VERSION="7"
+PATCH_VERSION="8"
 MY_PV1="${PV}_11100.20140411"
 MY_PV2="${PN}-$(get_version_component_range 1-2).2_11100.20140411-0.20140901"
 MY_P="rtl8812AU_linux_v${MY_PV1}"
@@ -16,7 +16,7 @@ S="${WORKDIR}/${MY_P}"
 MODULE_NAMES="8812au(net/wireless:${S})"
 RESTRICT="mirror"
 SRC_URI="ftp://ftp2.dlink.com/PRODUCTS/DWA-182/REVC/DWA-182_REVC_DRIVER_${PV}_LINUX.ZIP -> ${PF}.zip
-	 https://github.com/pld-linux/${PN}/archive/auto/th/${MY_PV2}.${PATCH_VERSION}.tar.gz -> ${PN}_patches-${PV}.tar.gz"
+	 https://github.com/pld-linux/${PN}/archive/auto/th/${MY_PV2}.${PATCH_VERSION}.tar.gz -> ${PN}-4.3.2_patches-v${PATCH_VERSION}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -43,6 +43,7 @@ src_prepare() {
                         epatch "gcc-4.9.patch"
                 fi
 		epatch "linux-3.18.patch"
+		epatch "linux-4.0.patch"
 		epatch "${FILESDIR}/TRENDnet.patch"
 }
 
