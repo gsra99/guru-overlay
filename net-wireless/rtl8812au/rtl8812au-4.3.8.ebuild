@@ -40,7 +40,7 @@ src_prepare() {
 		if [[ $(gcc-major-version) -eq 4 ]] && [[ $(gcc-minor-version) -eq 9 ]]; then
 			epatch "gcc-4.9.patch"
 		fi
-		epatch "${FILESDIR}/linux-3.18.patch"
+		epatch "${FILESDIR}/RTL8812AU-kernel-3.18.patch"
 		epatch "linux-4.0.patch"
 		epatch "${FILESDIR}/TRENDnet.patch"
 		#epatch "${FILESDIR}/increase_rtlwifi_tx_power.patch"
