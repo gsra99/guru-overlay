@@ -175,8 +175,13 @@ src_prepare() {
 		epatch "${FILESDIR}"/${PN}-337.12-pax-constify.patch
 	fi
 
-	epatch -p1 "${FILESDIR}/linux-3.19.patch"
-	epatch -p1 "${FILESDIR}/linux-4.0.patch"
+	if kernel_is -eq 3 19 ; then
+		epatch -p1 "${FILESDIR}/linux-3.19.patch"
+	fi
+
+	if kernel_is -eq 4 0 ; then
+		epatch -p1 "${FILESDIR}/linux-4.0.patch"
+	fi
 
 	# Allow user patches so they can support RC kernels and whatever else
 	epatch_user
