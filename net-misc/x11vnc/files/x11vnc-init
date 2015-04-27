@@ -8,7 +8,7 @@ depend() {
 start() {
 	ebegin "Starting x11vnc"
 	start-stop-daemon -S -q -x /usr/local/sbin/x11vnc-start \
-	-m -p /var/run/x11vnc.pid
+	-m -p /var/run/x11vnc.pid -n x11vnc
 	eend $?
 }
 
