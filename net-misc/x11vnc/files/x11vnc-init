@@ -5,9 +5,16 @@ depend() {
 	after xdm
 }
 
+checkconfig() {
+	if [ -z "$OPTS" ]; then
+	eerror "You must set config options in /etc/conf.d/x11vnc first"
+	return 1
+	fi
+}
+
 start() {
 	ebegin "Starting x11vnc"
-	start-stop-daemon -S -q -x /usr/local/sbin/x11vnc-start -n x11vnc
+	start-stop-daemon -S -q -n x11vnc -x /usr/bin/x11vnc -- $OPTS
 	eend $?
 }
 
