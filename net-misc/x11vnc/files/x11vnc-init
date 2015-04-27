@@ -7,13 +7,13 @@ depend() {
 
 start() {
 	ebegin "Starting x11vnc"
-	start-stop-daemon --start --quiet --exec /usr/local/sbin/x11vnc-start \
-	--pidfile /var/run/x11vnc.pid
+	start-stop-daemon -S -q -x /usr/local/sbin/x11vnc-start \
+	-m -p /var/run/x11vnc.pid
 	eend $?
 }
 
 stop() {
 	ebegin "Stopping x11vnc"
-	start-stop-daemon --stop --quiet --pidfile /var/run/x11vnc.pid
+	start-stop-daemon -K -q -n x11vnc
 	eend $?
 }
