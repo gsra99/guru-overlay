@@ -1,0 +1,5 @@
+OPTS="-auth /var/run/lightdm/root/:0 -nocursor -rfbauth /etc/x11vnc/passwd \
+-forever -bg -rfbport 5900 -o /var/log/x11vnc.log -allow 172.16.0. \
+-display :0 -repeat"
+
+rc_need="!net xl2tpd"
