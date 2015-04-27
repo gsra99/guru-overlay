@@ -1,0 +1,26 @@
+#!/sbin/runscript
+
+depend() {
+	need net xdm
+	after xdm
+}
+
+checkconfig() {
+	if [ -z "$OPTS" ]; then
+	eerror "You must set config options in /etc/conf.d/x11vnc first"
+	return 1
+	fi
+}
+
+start() {
+	ebegin "Starting x11vnc"
+	start-stop-daemon -S -q -b -m -p /var/run/x11vnc.pid \
+	-x /usr/bin/x11vnc
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping x11vnc"
+	start-stop-daemon -K -q -n x11vnc
+	eend $?
+}
