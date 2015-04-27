@@ -6,7 +6,8 @@ depend() {
 }
 
 checkconfig() {
-	if [ -z "$OPTS" ]; then
+	if [ -z "$AUTH" ] || [ -z "$RFBAUTH" ] || [ -z "$RFBPORT" ] || \
+	[ -z "$LOGFILE" ] || [ -z "$IP_ADDRESS" ]; then
 	eerror "You must set config options in /etc/conf.d/x11vnc first"
 	return 1
 	fi
