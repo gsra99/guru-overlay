@@ -1,0 +1,19 @@
+#!/sbin/runscript
+
+depend() {
+	need net
+	after xdm
+}
+
+start() {
+	ebegin "Starting my_service"
+	start-stop-daemon --start --quiet --exec /usr/local/sbin/x11vnc-start \
+	--pidfile /var/run/x11vnc.pid
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping my_service"
+	start-stop-daemon --stop --quiet --pidfile /var/run/x11vnc.pid
+	eend $?
+}
