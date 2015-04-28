@@ -7,7 +7,8 @@ depend() {
 
 checkconfig() {
 	if [ -z "$AUTH" ] || [ -z "$RFBAUTH" ] || [ -z "$RFBPORT" ] || \
-	[ -z "$LOGFILE" ] || [ -z "$IP_ADDRESS" ]; then
+	[ -z "$LOGFILE" ] || [ -z "$IP_ADDRESS" ] || [ -z "$DISPLAY" ] \
+	[ -z "$CURSOR" ] || [ -z "$KEYBOARD_REPEAT" ]; then
 	eerror "You must set config options in /etc/conf.d/x11vnc first"
 	return 1
 	fi
@@ -15,7 +16,8 @@ checkconfig() {
 
 start() {
 	ebegin "Starting x11vnc"
-	start-stop-daemon -S -q -n x11vnc -x /usr/bin/x11vnc -- $OPTS
+	start-stop-daemon -S -q -b -n x11vnc \
+	-x /usr/bin/x11vnc -- $OPTS -forever -bg
 	eend $?
 }
 
