@@ -4,10 +4,9 @@ RFBPORT="5900"
 LOGFILE="/var/log/x11vnc.log"
 IP_ADDRESS="172.16.0."
 DISPLAY="0"
-CURSOR="nocursor"
-KEYBOARD_REPEAT="repeat"
+EXTRA_OPTIONS="-nocursor -repeat"
 
-OPTS="-auth $AUTH -rfbauth $RFBAUTH -rfbport $RFBPORT -o $LOGFILE \
--allow $IP_ADDRESS -display :$DISPLAY -$CURSOR -$KEYBOARD_REPEAT"
+OPTIONS="-auth $AUTH -rfbauth $RFBAUTH -rfbport $RFBPORT -o $LOGFILE \
+-allow $IP_ADDRESS -display :$DISPLAY $EXTRA_OPTIONS"
 
 rc_need="!net xl2tpd"
