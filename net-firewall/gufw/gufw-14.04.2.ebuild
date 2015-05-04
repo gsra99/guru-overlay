@@ -3,7 +3,7 @@
 # $Header: /var/cvsroot/gentoo-x86/net-firewall/ufw/ufw-0.34_pre805.ebuild,v 1.2 2013/05/20 09:05:50 lxnay Exp $
 
 EAPI=5
-PYTHON_COMPAT=( python2_{6,7} )
+PYTHON_COMPAT=( python2_7 )
 
 inherit versionator distutils-r1
 
@@ -24,7 +24,7 @@ DEPEND=">=net-firewall/ufw-0.33-r2
 	>=x11-themes/gnome-icon-theme-symbolic-3.6.2
 	sys-auth/polkit
 	dev-python/python-distutils-extra
-	=dev-lang/python-2*[ipv6]"
+	dev-lang/python:2.7[ipv6]"
 RDEPEND="$DEPEND"
 
 S="${WORKDIR}/gui-ufw-${PV}"
