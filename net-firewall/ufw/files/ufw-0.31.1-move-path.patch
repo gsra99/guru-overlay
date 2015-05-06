@@ -138,17 +138,17 @@ diff -Naur ufw-0.31.orig/src/backend_iptables.py ufw-0.31/src/backend_iptables.p
  import sys
  import time
  
--from ufw.common import UFWError, UFWRule, config_dir, state_dir
-+from ufw.common import UFWError, UFWRule, config_dir, state_dir, share_dir
+-from ufw.common import UFWError, UFWRule
++from ufw.common import UFWError, UFWRule, share_dir
  from ufw.util import warn, debug, msg, cmd, cmd_pipe
  import ufw.backend
  
 @@ -40,7 +40,7 @@
-         files['rules6'] = os.path.join(state_dir, 'user6.rules')
-         files['before6_rules'] = os.path.join(config_dir, 'ufw/before6.rules')
-         files['after6_rules'] = os.path.join(config_dir, 'ufw/after6.rules')
--        files['init'] = os.path.join(state_dir, 'ufw-init')
-+        files['init'] = os.path.join(share_dir, 'ufw-init')
+                                               'ufw/before6.rules')
+         files['after6_rules'] = os.path.join(ufw.common.config_dir,
+                                              'ufw/after6.rules')
+-        files['init'] = os.path.join(ufw.common.state_dir, 'ufw-init')
++        files['init'] = os.path.join(ufw.common.share_dir, 'ufw-init')
  
          ufw.backend.UFWBackend.__init__(self, "iptables", dryrun, files)
  
@@ -167,7 +167,7 @@ diff -Naur ufw-0.31.orig/src/ufw-init ufw-0.31/src/ufw-init
      echo "Could not find $s (aborting)"
      exit 1
 @@ -56,7 +56,7 @@
-     flush_builtins || exit "$?"
+     fi
      ;;
  *)
 -    echo "Usage: #STATE_PREFIX#/ufw-init {start|stop|restart|force-reload|force-stop|flush-all|status}"
