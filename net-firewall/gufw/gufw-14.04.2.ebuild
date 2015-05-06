@@ -17,7 +17,7 @@ SLOT="0"
 KEYWORDS="amd64 x86"
 IUSE=""
 
-DEPEND=">=net-firewall/ufw-0.33-r2
+DEPEND=">=net-firewall/ufw-0.34_pre805-r1
 	dev-python/netifaces
 	>=net-libs/webkit-gtk-2.2.5:3[introspection]
 	x11-libs/gtk+:3[introspection]
