@@ -37,6 +37,8 @@ PATCHES=(
 	"${FILESDIR}"/${P}-bash-completion.patch
 )
 
+S=${WORKDIR}/ufw-0.34~rc
+
 pkg_pretend() {
 	local CONFIG_CHECK="~PROC_FS
 		~NETFILTER_XT_MATCH_COMMENT ~NETFILTER_XT_MATCH_HL
