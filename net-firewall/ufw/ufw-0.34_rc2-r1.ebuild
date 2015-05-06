@@ -32,9 +32,9 @@ PATCHES=(
 	# Move files away from /lib/ufw.
 	"${FILESDIR}"/${PN}-0.31.1-move-path.patch
 	# Remove shebang modification.
-	"${FILESDIR}"/${P}-shebang.patch
+	"${FILESDIR}"/${PN}-0.34_pre805-shebang.patch
 	# Fix bash completions, bug #526300
-	"${FILESDIR}"/${P}-bash-completion.patch
+	"${FILESDIR}"/${PN}-0.34_pre805-bash-completion.patch
 )
 
 S=${WORKDIR}/ufw-0.34~rc
