@@ -34,9 +34,9 @@ src_prepare() {
 	EPATCH_OPTS="-p1"
 		epatch "disable-debug.patch"
 		#if [[ $(gcc-major-version) -eq 4 ]] && [[ $(gcc-minor-version) -eq 9 ]]; then
-			epatch "gcc-4.9.patch"
+			epatch "${FILESDIR}/gcc-4.9.patch"
 		#fi
-		#epatch "linux-4.0.patch"
+		epatch "linux-4.0.patch"
 		epatch "${FILESDIR}/TRENDnet.patch"
 }
 
