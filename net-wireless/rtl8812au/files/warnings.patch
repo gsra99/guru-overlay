@@ -1,0 +1,139 @@
+diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/core/rtw_sta_mgt.c rtl8812au/core/rtw_sta_mgt.c
+--- rtl8812AU_linux_v4.3.8_12175.20140902/core/rtw_sta_mgt.c	2014-09-02 15:01:52.000000000 +0100
++++ rtl8812au/core/rtw_sta_mgt.c	2015-05-09 22:56:07.000000000 +0100
+@@ -712,7 +712,7 @@
+ }
+ 
+ /* any station allocated can be searched by hash list */
+-struct sta_info *rtw_get_stainfo(struct sta_priv *pstapriv, u8 *hwaddr)
++struct sta_info *rtw_get_stainfo(struct sta_priv *pstapriv, const u8 *hwaddr)
+ {
+ 
+ 	_irqL	 irqL;
+@@ -723,7 +723,7 @@
+ 	
+ 	u32	index;
+ 
+-	u8 *addr;
++	const u8 *addr;
+ 
+ 	u8 bc_addr[ETH_ALEN] = {0xff,0xff,0xff,0xff,0xff,0xff};
+ 
+Only in rtl8812au: .git
+diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/include/osdep_service.h rtl8812au/include/osdep_service.h
+--- rtl8812AU_linux_v4.3.8_12175.20140902/include/osdep_service.h	2014-09-02 15:01:52.000000000 +0100
++++ rtl8812au/include/osdep_service.h	2015-05-09 22:56:07.000000000 +0100
+@@ -256,8 +256,8 @@
+ extern void*	rtw_malloc2d(int h, int w, size_t size);
+ extern void	rtw_mfree2d(void *pbuf, int h, int w, int size);
+ 
+-extern void	_rtw_memcpy(void* dec, void* sour, u32 sz);
+-extern int	_rtw_memcmp(void *dst, void *src, u32 sz);
++extern void	_rtw_memcpy(void* dec, const void* sour, u32 sz);
++extern int	_rtw_memcmp(const void *dst, const void *src, u32 sz);
+ extern void	_rtw_memset(void *pbuf, int c, u32 sz);
+ 
+ extern void	_rtw_init_listhead(_list *list);
+diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/include/sta_info.h rtl8812au/include/sta_info.h
+--- rtl8812AU_linux_v4.3.8_12175.20140902/include/sta_info.h	2014-09-02 15:01:52.000000000 +0100
++++ rtl8812au/include/sta_info.h	2015-05-09 22:56:07.000000000 +0100
+@@ -443,7 +443,7 @@
+ };
+ 
+ 
+-__inline static u32 wifi_mac_hash(u8 *mac)
++__inline static u32 wifi_mac_hash(const u8 *mac)
+ {
+         u32 x;
+ 
+@@ -471,7 +471,7 @@
+ extern struct sta_info *rtw_alloc_stainfo(struct	sta_priv *pstapriv, u8 *hwaddr);
+ extern u32	rtw_free_stainfo(_adapter *padapter , struct sta_info *psta);
+ extern void rtw_free_all_stainfo(_adapter *padapter);
+-extern struct sta_info *rtw_get_stainfo(struct sta_priv *pstapriv, u8 *hwaddr);
++extern struct sta_info *rtw_get_stainfo(struct sta_priv *pstapriv, const u8 *hwaddr);
+ extern u32 rtw_init_bcmc_stainfo(_adapter* padapter);
+ extern struct sta_info* rtw_get_bcmc_stainfo(_adapter* padapter);
+ extern u8 rtw_access_ctrl(_adapter *padapter, u8 *mac_addr);
+diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/include/wifi.h rtl8812au/include/wifi.h
+--- rtl8812AU_linux_v4.3.8_12175.20140902/include/wifi.h	2014-09-02 15:01:52.000000000 +0100
++++ rtl8812au/include/wifi.h	2015-05-09 22:56:07.000000000 +0100
+@@ -431,7 +431,7 @@
+ 		(addr[4] == 0xff) && (addr[5] == 0xff) )  ? _TRUE : _FALSE \
+ )
+ 
+-__inline static int IS_MCAST(unsigned char *da)
++__inline static int IS_MCAST(const unsigned char *da)
+ {
+ 	if ((*da) & 0x01)
+ 		return _TRUE;
+diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/os_dep/linux/ioctl_cfg80211.c rtl8812au/os_dep/linux/ioctl_cfg80211.c
+--- rtl8812AU_linux_v4.3.8_12175.20140902/os_dep/linux/ioctl_cfg80211.c	2014-09-02 15:01:52.000000000 +0100
++++ rtl8812au/os_dep/linux/ioctl_cfg80211.c	2015-05-09 22:56:07.000000000 +0100
+@@ -1712,7 +1712,7 @@
+ 
+ static int cfg80211_rtw_get_station(struct wiphy *wiphy,
+ 				    struct net_device *ndev,
+-				    u8 *mac, struct station_info *sinfo)
++				    const u8 *mac, struct station_info *sinfo)
+ {
+ 	int ret = 0;
+ 	_adapter *padapter = (_adapter *)rtw_netdev_priv(ndev);
+@@ -4158,7 +4158,7 @@
+ #endif //(LINUX_VERSION_CODE < KERNEL_VERSION(3,4,0))
+ 
+ static int	cfg80211_rtw_add_station(struct wiphy *wiphy, struct net_device *ndev,
+-			       u8 *mac, struct station_parameters *params)
++			       const u8 *mac, struct station_parameters *params)
+ {
+ 	DBG_871X(FUNC_NDEV_FMT"\n", FUNC_NDEV_ARG(ndev));
+ 	
+@@ -4166,7 +4166,7 @@
+ }
+ 
+ static int	cfg80211_rtw_del_station(struct wiphy *wiphy, struct net_device *ndev,
+-			       u8 *mac)
++			       const u8 *mac)
+ {
+ 	int ret=0;	
+ 	_irqL irqL;
+@@ -4257,7 +4257,7 @@
+ }
+ 
+ static int	cfg80211_rtw_change_station(struct wiphy *wiphy, struct net_device *ndev,
+-				  u8 *mac, struct station_parameters *params)
++				  const u8 *mac, struct station_parameters *params)
+ {
+ 	DBG_871X(FUNC_NDEV_FMT"\n", FUNC_NDEV_ARG(ndev));
+ 	
+@@ -4266,7 +4266,8 @@
+ 
+ struct sta_info *rtw_sta_info_get_by_idx(const int idx, struct sta_priv *pstapriv)
+ 
+-{
++{
++
+ 	_list	*phead, *plist;
+ 	struct sta_info *psta = NULL;
+ 	int i = 0;
+diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/os_dep/osdep_service.c rtl8812au/os_dep/osdep_service.c
+--- rtl8812AU_linux_v4.3.8_12175.20140902/os_dep/osdep_service.c	2014-09-02 15:01:52.000000000 +0100
++++ rtl8812au/os_dep/osdep_service.c	2015-05-09 22:56:07.000000000 +0100
+@@ -804,7 +804,7 @@
+ 	rtw_mfree((u8 *)pbuf, h*sizeof(void*) + w*h*size);
+ }
+ 
+-void _rtw_memcpy(void* dst, void* src, u32 sz)
++void _rtw_memcpy(void* dst, const void* src, u32 sz)
+ {
+ 
+ #if defined (PLATFORM_LINUX)|| defined (PLATFORM_FREEBSD)
+@@ -821,7 +821,7 @@
+ 
+ }
+ 
+-int	_rtw_memcmp(void *dst, void *src, u32 sz)
++int	_rtw_memcmp(const void *dst, const void *src, u32 sz)
+ {
+ 
+ #if defined (PLATFORM_LINUX)|| defined (PLATFORM_FREEBSD)
