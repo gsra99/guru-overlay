@@ -12,7 +12,7 @@ PATCH_VERSION="8"
 MY_PV="${PN}-4.3.2_11100.20140411-0.20140901"
 MODULE_NAMES="8812au(net/wireless:${S})"
 S="${WORKDIR}/${P}"
-EGIT_REPO_URI="https://github.com/Grawp/rtl8812au.git"
+EGIT_REPO_URI="https://github.com/gsra99/rtl8812au.git"
 SRC_URI="https://github.com/pld-linux/${PN}/archive/auto/th/${MY_PV}.${PATCH_VERSION}.tar.gz -> ${PN}-4.3.2_patches-v${PATCH_VERSION}.tar.gz"
 
 LICENSE=""
