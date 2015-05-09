@@ -4,12 +4,16 @@
 
 EAPI=5
 
-inherit git-r3 linux-info linux-mod eutils
+inherit git-r3 linux-info linux-mod eutils versionator
 
 DESCRIPTION=""
 HOMEPAGE=""
-EGIT_REPO_URI="https://github.com/austinmarton/rtl8812au_linux.git"
-SRC_URI="https://github.com/pld-linux/rtl8812au/archive/auto/th/rtl8812au-4.3.2_11100.20140411-0.20140901.7.tar.gz"
+PATCH_VERSION="8"
+MY_PV="${PN}-4.3.2_11100.20140411-0.20140901"
+MODULE_NAMES="8812au(net/wireless:${S})"
+S="${WORKDIR}/${P}"
+EGIT_REPO_URI="https://github.com/Grawp/rtl8812au.git"
+SRC_URI="https://github.com/pld-linux/${PN}/archive/auto/th/${MY_PV}.${PATCH_VERSION}.tar.gz -> ${PN}-4.3.2_patches-v${PATCH_VERSION}.tar.gz"
 
 LICENSE=""
 SLOT="0"
@@ -24,17 +28,15 @@ src_unpack() {
 }
 
 src_prepare() {
-	S="${WORKDIR}/${P}"
 	cd "${S}"
-	EPATCH_SOURCE="${WORKDIR}/rtl8812au-auto-th-rtl8812au-4.3.2_11100.20140411-0.20140901.7"
+	EPATCH_SOURCE="${WORKDIR}/${PN}-auto-th-${MY_PV}.${PATCH_VERSION}"
 	EPATCH_OPTS="-p1"
-		epatch "linux-3.11.patch"
 		epatch "disable-debug.patch"
 		epatch "enable-cfg80211-support.patch"
-		epatch "update-cfg80211-support.patch"
-		epatch "warnings.patch"
-		epatch "gcc-4.9.patch"
-		epatch "linux-3.18.patch"
+		if [[ $(gcc-major-version) -eq 4 ]] && [[ $(gcc-minor-version) -eq 9 ]]; then
+			epatch "gcc-4.9.patch"
+		fi
+		epatch "linux-4.0.patch"
 		epatch "${FILESDIR}/TRENDnet.patch"
 }
 
@@ -49,7 +51,7 @@ src_compile() {
 }
 
 src_install() {
-	insinto "/lib/modules/${KV_FULL}/kernel/drivers/net/wireless/"
-	doins 8812au.ko
+	#insinto "/lib/modules/${KV_FULL}/kernel/drivers/net/wireless/"
+	#doins 8812au.ko
+	linux-mod_src_install
 }
-
