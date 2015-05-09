@@ -33,7 +33,6 @@ src_prepare() {
 	EPATCH_SOURCE="${WORKDIR}/${PN}-auto-th-${MY_PV}.${PATCH_VERSION}"
 	EPATCH_OPTS="-p1"
 		epatch "disable-debug.patch"
-		epatch "enable-cfg80211-support.patch"
 		if [[ $(gcc-major-version) -eq 4 ]] && [[ $(gcc-minor-version) -eq 9 ]]; then
 			epatch "gcc-4.9.patch"
 		fi
