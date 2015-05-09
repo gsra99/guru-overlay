@@ -37,10 +37,13 @@ src_prepare() {
 	EPATCH_SOURCE="${WORKDIR}/${PN}-auto-th-${MY_PV2}.${PATCH_VERSION}"
 	EPATCH_OPTS="-p1"
 		epatch "disable-debug.patch"
-		epatch "${FILESDIR}/rtl8812au.patch"
+		epatch "enable-cfg80211-support.patch"
+		#epatch "${FILESDIR}/rtl8812au.patch"
+		epatch "${FILESDIR}/warnings.patch"
 		if [[ $(gcc-major-version) -eq 4 ]] && [[ $(gcc-minor-version) -eq 9 ]]; then
 			epatch "${FILESDIR}/gcc-4.9.patch"
 		fi
+		epatch "${FILESDIR}/linux-3.18.patch"
 		epatch "${FILESDIR}/linux-4.0.patch"
 		epatch "${FILESDIR}/TRENDnet.patch"
 		#epatch "${FILESDIR}/increase_rtlwifi_tx_power.patch"
