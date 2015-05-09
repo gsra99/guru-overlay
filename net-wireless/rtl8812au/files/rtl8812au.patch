@@ -1,6 +1,6 @@
 diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/core/rtw_debug.c rtl8812au/core/rtw_debug.c
 --- rtl8812AU_linux_v4.3.8_12175.20140902/core/rtw_debug.c	2014-09-02 15:01:52.000000000 +0100
-+++ rtl8812au/core/rtw_debug.c	2015-05-09 22:24:52.000000000 +0100
++++ rtl8812au/core/rtw_debug.c	2015-05-09 22:56:07.000000000 +0100
 @@ -63,7 +63,7 @@
  void dump_drv_version(void *sel)
  {
@@ -12,7 +12,7 @@ diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/core/rtw_debug.c rtl8812au/core/r
  void dump_log_level(void *sel)
 diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/core/rtw_sta_mgt.c rtl8812au/core/rtw_sta_mgt.c
 --- rtl8812AU_linux_v4.3.8_12175.20140902/core/rtw_sta_mgt.c	2014-09-02 15:01:52.000000000 +0100
-+++ rtl8812au/core/rtw_sta_mgt.c	2015-05-09 22:24:52.000000000 +0100
++++ rtl8812au/core/rtw_sta_mgt.c	2015-05-09 22:56:07.000000000 +0100
 @@ -712,7 +712,7 @@
  }
  
@@ -34,7 +34,7 @@ diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/core/rtw_sta_mgt.c rtl8812au/core
 Only in rtl8812au: .git
 diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/include/autoconf.h rtl8812au/include/autoconf.h
 --- rtl8812AU_linux_v4.3.8_12175.20140902/include/autoconf.h	2014-09-02 15:01:52.000000000 +0100
-+++ rtl8812au/include/autoconf.h	2015-05-09 22:24:52.000000000 +0100
++++ rtl8812au/include/autoconf.h	2015-05-09 22:56:07.000000000 +0100
 @@ -36,11 +36,11 @@
  #define PLATFORM_LINUX	1
  
@@ -52,7 +52,7 @@ diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/include/autoconf.h rtl8812au/incl
  	#define CONFIG_SET_SCAN_DENY_TIMER
 diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/include/osdep_service.h rtl8812au/include/osdep_service.h
 --- rtl8812AU_linux_v4.3.8_12175.20140902/include/osdep_service.h	2014-09-02 15:01:52.000000000 +0100
-+++ rtl8812au/include/osdep_service.h	2015-05-09 22:24:52.000000000 +0100
++++ rtl8812au/include/osdep_service.h	2015-05-09 22:56:07.000000000 +0100
 @@ -256,8 +256,8 @@
  extern void*	rtw_malloc2d(int h, int w, size_t size);
  extern void	rtw_mfree2d(void *pbuf, int h, int w, int size);
@@ -66,7 +66,7 @@ diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/include/osdep_service.h rtl8812au
  extern void	_rtw_init_listhead(_list *list);
 diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/include/sta_info.h rtl8812au/include/sta_info.h
 --- rtl8812AU_linux_v4.3.8_12175.20140902/include/sta_info.h	2014-09-02 15:01:52.000000000 +0100
-+++ rtl8812au/include/sta_info.h	2015-05-09 22:24:52.000000000 +0100
++++ rtl8812au/include/sta_info.h	2015-05-09 22:56:07.000000000 +0100
 @@ -443,7 +443,7 @@
  };
  
@@ -87,7 +87,7 @@ diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/include/sta_info.h rtl8812au/incl
  extern u8 rtw_access_ctrl(_adapter *padapter, u8 *mac_addr);
 diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/include/wifi.h rtl8812au/include/wifi.h
 --- rtl8812AU_linux_v4.3.8_12175.20140902/include/wifi.h	2014-09-02 15:01:52.000000000 +0100
-+++ rtl8812au/include/wifi.h	2015-05-09 22:24:52.000000000 +0100
++++ rtl8812au/include/wifi.h	2015-05-09 22:56:07.000000000 +0100
 @@ -431,7 +431,7 @@
  		(addr[4] == 0xff) && (addr[5] == 0xff) )  ? _TRUE : _FALSE \
  )
@@ -99,7 +99,7 @@ diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/include/wifi.h rtl8812au/include/
  		return _TRUE;
 diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/os_dep/linux/ioctl_cfg80211.c rtl8812au/os_dep/linux/ioctl_cfg80211.c
 --- rtl8812AU_linux_v4.3.8_12175.20140902/os_dep/linux/ioctl_cfg80211.c	2014-09-02 15:01:52.000000000 +0100
-+++ rtl8812au/os_dep/linux/ioctl_cfg80211.c	2015-05-09 22:24:52.000000000 +0100
++++ rtl8812au/os_dep/linux/ioctl_cfg80211.c	2015-05-09 22:56:07.000000000 +0100
 @@ -1712,7 +1712,7 @@
  
  static int cfg80211_rtw_get_station(struct wiphy *wiphy,
@@ -109,50 +109,7 @@ diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/os_dep/linux/ioctl_cfg80211.c rtl
  {
  	int ret = 0;
  	_adapter *padapter = (_adapter *)rtw_netdev_priv(ndev);
-@@ -1752,16 +1752,32 @@
- 			goto exit;
- 		}
- 
-+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4,0,0))
-+		sinfo->filled |= BIT(NL80211_STA_INFO_SIGNAL);
-+#else
- 		sinfo->filled |= STATION_INFO_SIGNAL;
-+#endif
- 		sinfo->signal = translate_percentage_to_dbm(padapter->recvpriv.signal_strength);
- 
-+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4,0,0))
-+		sinfo->filled |= BIT(NL80211_STA_INFO_TX_BITRATE);
-+#else
- 		sinfo->filled |= STATION_INFO_TX_BITRATE;
-+#endif
- 		sinfo->txrate.legacy = rtw_get_cur_max_rate(padapter);
- 
-+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4,0,0))
-+		sinfo->filled |= BIT(NL80211_STA_INFO_RX_PACKETS);
-+#else
- 		sinfo->filled |= STATION_INFO_RX_PACKETS;
-+#endif
- 		sinfo->rx_packets = sta_rx_data_pkts(psta);
- 
-+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4,0,0))
-+		sinfo->filled |= BIT(NL80211_STA_INFO_TX_PACKETS);
-+#else
- 		sinfo->filled |= STATION_INFO_TX_PACKETS;
-+#endif
- 		sinfo->tx_packets = psta->sta_stats.tx_pkts;
- 
- 	}
-@@ -3483,7 +3499,9 @@
- 			ie_offset = _REASOCREQ_IE_OFFSET_;
- 	
- 		sinfo.filled = 0;
-+#if (LINUX_VERSION_CODE < KERNEL_VERSION(4,0,0))
- 		sinfo.filled = STATION_INFO_ASSOC_REQ_IES;
-+#endif
- 		sinfo.assoc_req_ies = pmgmt_frame + WLAN_HDR_A3_LEN + ie_offset;
- 		sinfo.assoc_req_ies_len = frame_len - WLAN_HDR_A3_LEN - ie_offset;
- 		cfg80211_new_sta(ndev, GetAddr2Ptr(pmgmt_frame), &sinfo, GFP_ATOMIC);
-@@ -4158,7 +4176,7 @@
+@@ -4158,7 +4158,7 @@
  #endif //(LINUX_VERSION_CODE < KERNEL_VERSION(3,4,0))
  
  static int	cfg80211_rtw_add_station(struct wiphy *wiphy, struct net_device *ndev,
@@ -161,7 +118,7 @@ diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/os_dep/linux/ioctl_cfg80211.c rtl
  {
  	DBG_871X(FUNC_NDEV_FMT"\n", FUNC_NDEV_ARG(ndev));
  	
-@@ -4166,7 +4184,7 @@
+@@ -4166,7 +4166,7 @@
  }
  
  static int	cfg80211_rtw_del_station(struct wiphy *wiphy, struct net_device *ndev,
@@ -170,7 +127,7 @@ diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/os_dep/linux/ioctl_cfg80211.c rtl
  {
  	int ret=0;	
  	_irqL irqL;
-@@ -4257,7 +4275,7 @@
+@@ -4257,7 +4257,7 @@
  }
  
  static int	cfg80211_rtw_change_station(struct wiphy *wiphy, struct net_device *ndev,
@@ -179,7 +136,7 @@ diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/os_dep/linux/ioctl_cfg80211.c rtl
  {
  	DBG_871X(FUNC_NDEV_FMT"\n", FUNC_NDEV_ARG(ndev));
  	
-@@ -4266,7 +4284,8 @@
+@@ -4266,7 +4266,8 @@
  
  struct sta_info *rtw_sta_info_get_by_idx(const int idx, struct sta_priv *pstapriv)
  
@@ -191,7 +148,7 @@ diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/os_dep/linux/ioctl_cfg80211.c rtl
  	int i = 0;
 diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/os_dep/linux/ioctl_cfg80211.h rtl8812au/os_dep/linux/ioctl_cfg80211.h
 --- rtl8812AU_linux_v4.3.8_12175.20140902/os_dep/linux/ioctl_cfg80211.h	2014-09-02 15:01:52.000000000 +0100
-+++ rtl8812au/os_dep/linux/ioctl_cfg80211.h	2015-05-09 22:24:52.000000000 +0100
++++ rtl8812au/os_dep/linux/ioctl_cfg80211.h	2015-05-09 22:56:07.000000000 +0100
 @@ -146,8 +146,10 @@
  #define rtw_cfg80211_rx_mgmt(adapter, freq, sig_dbm, buf, len, gfp) cfg80211_rx_mgmt((adapter)->pnetdev, freq, sig_dbm, buf, len, gfp)
  #elif (LINUX_VERSION_CODE < KERNEL_VERSION(3,12,0))
@@ -204,24 +161,9 @@ diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/os_dep/linux/ioctl_cfg80211.h rtl
  #endif
  
  #if (LINUX_VERSION_CODE < KERNEL_VERSION(3,4,0))  && !defined(COMPAT_KERNEL_RELEASE)
-diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/os_dep/linux/rtw_android.c rtl8812au/os_dep/linux/rtw_android.c
---- rtl8812AU_linux_v4.3.8_12175.20140902/os_dep/linux/rtw_android.c	2014-09-02 15:01:52.000000000 +0100
-+++ rtl8812au/os_dep/linux/rtw_android.c	2015-05-09 22:24:52.000000000 +0100
-@@ -342,7 +342,11 @@
- {
- 	int cmd_num;
- 	for(cmd_num=0 ; cmd_num<ANDROID_WIFI_CMD_MAX; cmd_num++)
-+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4,0,0))
-+		if(0 == strncasecmp(cmdstr , android_wifi_cmd_str[cmd_num], strlen(android_wifi_cmd_str[cmd_num])) )
-+#else
- 		if(0 == strnicmp(cmdstr , android_wifi_cmd_str[cmd_num], strlen(android_wifi_cmd_str[cmd_num])) )
-+#endif
- 			break;
- 
- 	return cmd_num;
 diff -ur rtl8812AU_linux_v4.3.8_12175.20140902/os_dep/osdep_service.c rtl8812au/os_dep/osdep_service.c
 --- rtl8812AU_linux_v4.3.8_12175.20140902/os_dep/osdep_service.c	2014-09-02 15:01:52.000000000 +0100
-+++ rtl8812au/os_dep/osdep_service.c	2015-05-09 22:24:52.000000000 +0100
++++ rtl8812au/os_dep/osdep_service.c	2015-05-09 22:56:07.000000000 +0100
 @@ -804,7 +804,7 @@
  	rtw_mfree((u8 *)pbuf, h*sizeof(void*) + w*h*size);
  }
