@@ -31,7 +31,7 @@ src_unpack() {
 src_prepare() {
 	cd "${S}"
 	EPATCH_SOURCE="${WORKDIR}/${PN}-auto-th-${MY_PV}.${PATCH_VERSION}"
-	EPATCH_OPTS="-p1 -l --binary"
+	EPATCH_OPTS="-p1 --ignore-all-space --binary"
 		epatch "disable-debug.patch"
 		if [[ $(gcc-major-version) -eq 4 ]] && [[ $(gcc-minor-version) -eq 9 ]]; then
 			epatch "${FILESDIR}/gcc-4.9.patch"
