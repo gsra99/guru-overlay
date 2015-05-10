@@ -16,7 +16,7 @@ S="${WORKDIR}/${MY_P}"
 MODULE_NAMES="8812au(net/wireless:${S})"
 RESTRICT="mirror"
 SRC_URI="http://www.netis-systems.com/Files/others/WF2190/netis%20WF2190%20Driver%20for%20Linux.zip -> ${PF}.zip"
-EGIT_REPO_URI="https://github.com/gsra99/rtl8812au_patches.git"
+EGIT_REPO_URI="https://github.com/gsra99/rtl8812au_patches.git -> ${PN}-${PV}_patches"
 MIRROR_URI="http://www.comfast.cn/upload/%E8%BD%AF%E4%BB%B6%E9%A9%B1%E5%8A%A8/%E7%BD%91%E5%8D%A1%E7%B1%BB/8812AU%20912%E3%80%817500AC/linux/RTL8812AU_linux_v${MY_PV1}.zip -> ${PF}.zip
 	    http://www.netis-systems.com/Files/others/WF2190/netis%20WF2190%20Driver%20for%20Linux.zip -> ${PF}.zip"
 
@@ -35,7 +35,7 @@ src_unpack() {
 }
 
 src_prepare() {
-	EPATCH_SOURCE="${WORKDIR}/rtl8812au_patches"
+	EPATCH_SOURCE="${WORKDIR}/${PN}-${PV}_patches"
 	EPATCH_OPTS="-p1"
 		epatch "disable-debug.patch"
 		epatch "enable-cfg80211-support.patch"
