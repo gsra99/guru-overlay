@@ -42,10 +42,11 @@ src_prepare() {
 		epatch "warnings.patch"
 		if [[ $(gcc-major-version) -eq 4 ]] && [[ $(gcc-minor-version) -eq 9 ]]; then
 			epatch "gcc-4.9.patch"
+		else
+			epatch "reproducible-builds.patch"
 		fi
 		epatch "linux-3.18.patch"
 		epatch "linux-4.0.patch"
-		epatch "reproducible-builds.patch"
 		epatch "${FILESDIR}/TRENDnet.patch"
 		#epatch "${FILESDIR}/increase_rtlwifi_tx_power.patch"
 }
