@@ -23,6 +23,6 @@ RDEPEND="app-shells/bash
 
 
 src_install() {
-	exeinto /usr/bin/
+	exeinto /usr/sbin/
 	newexe "${S}"/mkstage4.sh mkstage4
 }
