@@ -14,7 +14,7 @@ EGIT_REPO_URI="https://github.com/TheChymera/${PN}.git"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND=""
@@ -23,6 +23,6 @@ RDEPEND="app-shells/bash
 
 
 src_install() {
-	exeinto /usr/bin/ 
+	exeinto /usr/bin/
 	newexe "${S}"/mkstage4.sh mkstage4
 }
