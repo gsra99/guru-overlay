@@ -10,7 +10,7 @@ RESTRICT="strip"
 
 DESCRIPTION="Bash Utility for Creating Stage 4 Tarballs"
 HOMEPAGE="https://github.com/TheChymera/${PN}"
-EGIT_REPO_URI="https://github.com/TheChymera/${PN}.git"
+EGIT_REPO_URI="https://github.com/gsra99/mkstage4.git"
 
 LICENSE="GPL-3"
 SLOT="0"
