@@ -8,14 +8,15 @@ inherit flag-o-matic linux-info multilib toolchain-funcs wxwidgets eutils pax-ut
 
 DESCRIPTION="Free open-source disk encryption software"
 HOMEPAGE="http://www.truecrypt.org/"
-SRC_URI="${P}.tar.gz
-	${P}-pkcs11.h"
+SRC_URI="https://www.grc.com/misc/truecrypt/TrueCrypt%207.1a%20Source.tar.gz -> ${P}.tar.gz
+	http://git.gnupg.org/cgi-bin/gitweb.cgi?p=scute.git;a=blob_plain;f=src/pkcs11.h;h=03e904b763d84cd738b83a14bff8b97637fbd740;hb=HEAD -> ${P}-pkcs11.h"
 
 LICENSE="truecrypt-3.0"
 SLOT="0"
 KEYWORDS="-* ~amd64 ~ppc ~x86"
 IUSE="X +asm"
-RESTRICT="mirror fetch bindist"
+#RESTRICT="mirror fetch bindist"
+RESTRICT="mirror bindist"
 
 RDEPEND=">=sys-fs/lvm2-2.02.45
 	sys-fs/fuse
@@ -27,16 +28,16 @@ DEPEND="${RDEPEND}
 S="${WORKDIR}/${P}-source"
 
 #See bug 241650.
-pkg_nofetch() {
-	elog "Please download the source archive \"TrueCrypt ${PV} Source.tar.gz\" from:"
-	elog "http://www.truecrypt.org/downloads2"
-	elog "Then put the file in ${DISTDIR}/${P}.tar.gz"
+#pkg_nofetch() {
+	#elog "Please download the source archive \"TrueCrypt ${PV} Source.tar.gz\" from:"
+	#elog "http://www.truecrypt.org/downloads2"
+	#elog "Then put the file in ${DISTDIR}/${P}.tar.gz"
 
 	# until we support restricted fetch per URI
-	elog ""
-	elog "Please execute:"
-	elog "curl 'http://git.gnupg.org/cgi-bin/gitweb.cgi?p=scute.git;a=blob_plain;f=src/pkcs11.h;hb=38bdba0bb1ab93950489c645938c93ed577f9139' > ${DISTDIR}/${P}-pkcs11.h"
-}
+	#elog ""
+	#elog "Please execute:"
+	#elog "curl 'http://git.gnupg.org/cgi-bin/gitweb.cgi?p=scute.git;a=blob_plain;f=src/pkcs11.h;hb=38bdba0bb1ab93950489c645938c93ed577f9139' > ${DISTDIR}/${P}-pkcs11.h"
+#}
 
 pkg_setup() {
 	local CONFIG_CHECK="~BLK_DEV_DM ~DM_CRYPT ~FUSE_FS ~CRYPTO ~CRYPTO_XTS"
