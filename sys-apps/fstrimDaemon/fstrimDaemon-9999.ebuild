@@ -25,11 +25,8 @@ src_prepare() {
 src_install() {
 	exeinto /usr/sbin
 	newexe "${S}"/usr/sbin/${PN}.sh ${PN}
-	#fperms 755 /usr/sbin/${PN}
 	doconfd "${S}"/etc/conf.d/${PN}
 	doinitd "${S}"/etc/init.d/${PN}
-	#fperms 755 /etc/init.d/${PN}
 	insinto /usr/lib/systemd/system
 	doins "${S}"/usr/lib/systemd/system/${PN}.service
-	#fperms 755 /usr/lib/systemd/system/${PN}.service
 }
