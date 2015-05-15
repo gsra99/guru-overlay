@@ -1,7 +1,11 @@
---- a/etc/conf.d/fstrimDaemon.old	2015-05-15 13:32:23.000000000 +0100
-+++ b/etc/conf.d/fstrimDaemon		2015-05-15 13:36:28.000000000 +0100
-@@ -36,4 +36,4 @@
- LOG="/var/log/fstrimeDaemon.log"
+--- fstrimDaemon/etc/conf.d/fstrimDaemon.old	2015-05-15 13:32:23.000000000 +0100
++++ fstrimDaemon/etc/conf.d/fstrimDaemon	2015-05-15 15:06:58.000000000 +0100
+@@ -33,7 +33,7 @@
+ PID="/var/run/fstrimDaemon.pid"
+ 
+ # Here Daemon logs
+-LOG="/var/log/fstrimeDaemon.log"
++LOG="/var/log/fstrimDaemon.log"
  
  # The main daemon script i.e. fstrim-sleep loop
 -DAEMON="/usr/sbin/fstrimDaemon.sh"
