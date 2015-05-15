@@ -23,12 +23,13 @@ src_prepare() {
 }
 
 src_install() {
-	dosbin "${S}"/usr/sbin/${PN}.sh ${PN}
+	exeinto /usr/sbin
+	newexe "${S}"/usr/sbin/${PN}.sh ${PN}
 	fperms 755 /usr/sbin/${PN}
-	doconfd etc/conf.d/${PN}
+	doconfd "${S}"etc/conf.d/${PN}
 	doinitd etc/init.d/${PN}
 	fperms 755 /etc/init.d/${PN}
 	insinto /usr/lib/systemd/system
-	doins usr/lib/systemd/system/${PN}.service /usr/lib/systemd/system/${PN}.service
+	doins "${S}"/usr/lib/systemd/system/${PN}.service
 	#fperms 755 /usr/lib/systemd/system/${PN}.service
 }
