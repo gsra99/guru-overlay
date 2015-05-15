@@ -20,6 +20,8 @@ DEPEND="x11-libs/libX11
 	x11-libs/gtk+:2"
 RDEPEND="${DEPEND}"
 
+BUILD_DIR="${S}/build"
+
 src_unpack() {
 	git-r3_src_unpack
 }

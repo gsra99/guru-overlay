@@ -24,6 +24,8 @@ DEPEND="x11-libs/libX11
 	x11-libs/libXt"
 RDEPEND="${DEPEND}"
 
+BUILD_DIR="${S}/build"
+
 src_unpack() {
 	git-r3_src_unpack
 }
