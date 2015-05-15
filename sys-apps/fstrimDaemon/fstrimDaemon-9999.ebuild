@@ -19,7 +19,7 @@ DEPEND=""
 RDEPEND="sys-apps/util-linux"
 
 src_prepare() {
-	epatch -p1 "${FILESDIR}/fstrimDaemon-conf.d.patch"
+	epatch -p1 "${FILESDIR}/${PN}-conf.d.patch"
 }
 
 src_install() {
