@@ -30,5 +30,5 @@ src_install() {
 	fperms 755 /etc/init.d/${PN}
 	insinto /usr/lib/systemd/system
 	doins usr/lib/systemd/system/${PN}.service /usr/lib/systemd/system/${PN}.service
-	fperms 755 /usr/lib/systemd/system/${PN}.service
+	#fperms 755 /usr/lib/systemd/system/${PN}.service
 }
