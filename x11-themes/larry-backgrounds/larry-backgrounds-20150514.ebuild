@@ -29,10 +29,10 @@ SRC_URI="
 	${web_home}/abducted/gentoo-abducted-1280x1024.png
 	${web_home}/abducted/gentoo-abducted-1600x1200.png
 	${web_home}/abducted/gentoo-abducted-1680x1050.png
-	${web_home}/gentoo-larry-bg/gentoo-larry-bg-4-3.svg
-	${web_home}/gentoo-larry-bg/gentoo-larry-bg-5-4.svg
-	${web_home}/gentoo-larry-bg/gentoo-larry-bg-16-10.svg
-	${web_home}/gentoo-larry-bg/gentoo-larry-bg-16-9.svg
+	${web_home}/gentoo-larry-bg/gentoo-larry-bg-4-3.svg -> gentoo-larry-bg-4:3.svg
+	${web_home}/gentoo-larry-bg/gentoo-larry-bg-5-4.svg -> gentoo-larry-bg-5:4.svg
+	${web_home}/gentoo-larry-bg/gentoo-larry-bg-16-10.svg -> gentoo-larry-bg-16:10.svg
+	${web_home}/gentoo-larry-bg/gentoo-larry-bg-16-9.svg -> gentoo-larry-bg-16:9.svg
 	${web_home}/gentoo-larry-bg/gentoo-larry-bg-800x600.png
 	${web_home}/gentoo-larry-bg/gentoo-larry-bg-1024x768.png
 	${web_home}/gentoo-larry-bg/gentoo-larry-bg-1152x864.png
@@ -75,7 +75,7 @@ src_install() {
 	dosym ../../${share_home}/gentoo-abducted-1680x1050.png ${backdrops}/gentoo-abducted-8:5.png || die
 	#dosym ../../${share_home}/larry-cave-cow-1600x1200.jpg ${backdrops}/larry-cave-cow-4:3.jpg || die
 	#dosym ../../${share_home}/larry-cave-cow-1280x1024.jpg ${backdrops}/larry-cave-cow-5:4.jpg || die
-	for ratio in 4-3 5-4 16-10 16-9 ; do
+	for ratio in 4:3 5:4 16:10 16:9 ; do
 		dosym ../../${share_home}/gentoo-larry-bg-${ratio}.svg ${backdrops}/gentoo-larry-bg-${ratio}.svg || die
 	done
 }
