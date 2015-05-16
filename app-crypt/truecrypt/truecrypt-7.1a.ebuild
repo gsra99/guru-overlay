@@ -8,7 +8,7 @@ inherit flag-o-matic linux-info multilib toolchain-funcs wxwidgets eutils pax-ut
 
 DESCRIPTION="Free open-source disk encryption software"
 HOMEPAGE="http://www.truecrypt.org/"
-SRC_URI="https://www.grc.com/misc/truecrypt/TrueCrypt%207.1a%20Source.tar.gz -> ${P}.tar.gz
+SRC_URI="https://www.grc.com/misc/${PN}/TrueCrypt%207.1a%20Source.tar.gz -> ${P}.tar.gz
 	http://git.gnupg.org/cgi-bin/gitweb.cgi?p=scute.git;a=blob_plain;f=src/pkcs11.h;h=03e904b763d84cd738b83a14bff8b97637fbd740;hb=HEAD -> ${P}-pkcs11.h"
 
 LICENSE="truecrypt-3.0"

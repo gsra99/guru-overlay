@@ -8,7 +8,7 @@ inherit flag-o-matic linux-info multilib toolchain-funcs wxwidgets eutils pax-ut
 
 DESCRIPTION="Free open-source disk encryption software"
 HOMEPAGE="http://veracrypt.codeplex.com/"
-SRC_URI="http://sourceforge.net/projects/veracrypt/files/VeraCrypt%201.0f-2/veracrypt_1.0f-2_Source.tar.bz2/download -> ${PF}.tar.bz2"
+SRC_URI="http://sourceforge.net/projects/veracrypt/files/VeraCrypt%20${PV}-2/${PN}_${PV}-2_Source.tar.bz2/download -> ${PF}.tar.bz2"
 
 LICENSE="truecrypt-3.0"
 SLOT="0"
