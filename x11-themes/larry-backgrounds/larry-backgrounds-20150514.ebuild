@@ -9,7 +9,7 @@ HOMEPAGE="https://www.gentoo.org/inside-gentoo/artwork/#wallpapers"
 web_home='https://www.gentoo.org/assets/img/wallpaper'
 SRC_URI="
 	${web_home}/gentoo-cow/gentoo-cow-gdm-remake-1920x1080.png
-	${web_home}/gentoo-cow/gentoo-cow-gdm-remake.svg
+	${web_home}/gentoo-cow/gentoo-cow-gdm-remake.svg -> gentoo-cow-gdm-remake-all_ratios.svg
 	${web_home}/gentoo-cow/gentoo-cow-gdm-remake-800x600.png
 	${web_home}/gentoo-cow/gentoo-cow-gdm-remake-1024x768.png
 	${web_home}/gentoo-cow/gentoo-cow-gdm-remake-1152x864.png
