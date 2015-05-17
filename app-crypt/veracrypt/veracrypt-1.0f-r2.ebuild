@@ -51,12 +51,12 @@ src_install() {
 	dobin Main/veracrypt
 	dodoc Readme.txt "Release/Setup Files/VeraCrypt User Guide.pdf"
 	exeinto "/$(get_libdir)/rcscripts/addons"
-	newexe "${FILESDIR}/${PN}-stop.sh" "${PN}-stop.sh"
+	newexe "${FILESDIR}/${PN}-stop.sh" ${PN}-stop.sh
 
 	newinitd "${FILESDIR}/${PN}.init" ${PN}
 
 	if use X; then
-		newicon Resources/Icons/VeraCrypt-48x48.xpm VeraCrypt-16x16.xpm
+		newicon Resources/Icons/VeraCrypt-48x48.xpm ${PN}.xpm
 		make_desktop_entry ${PN} "VeraCrypt" ${PN} "System"
 	fi
 
