@@ -46,6 +46,7 @@ DEPEND="${RDEPEND}
 "
 
 S="${WORKDIR}/${PN}-${PV}"
+BUILD_DIR="${S}/build"
 
 src_configure() {
 	mycmakeargs=(
@@ -53,7 +54,7 @@ src_configure() {
 		`use desktop_manager && echo "-Denable-desktop-manager=ON" || echo "-Denable-desktop-manager=OFF"`
 		`use egl && echo "-Denable-egl-support=ON" || echo "-Denable-egl-support=OFF"`
 	)
-	cmake-utils_src_configure
+	cmake-utils_src_configure .. -DCMAKE_INSTALL_PREFIX=/usr
 }
 
 pkg_postinst() {
