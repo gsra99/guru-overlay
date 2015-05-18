@@ -63,7 +63,7 @@ src_install() {
 	pax-mark -m "${D}/usr/bin/veracrypt"
 
 	insinto /etc/sudoers.d
-	newins "${FILESDIR}/${PN}.sudoers" ${PN}
+	doins "${FILESDIR}/${PN}.sudoers"
 }
 
 pkg_postinst() {
