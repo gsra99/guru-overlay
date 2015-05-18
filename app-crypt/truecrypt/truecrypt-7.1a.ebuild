@@ -49,6 +49,8 @@ pkg_setup() {
 	else
 		need-wxwidgets base-unicode
 	fi
+
+	enewgroup truecrypt
 }
 
 src_prepare() {
@@ -111,8 +113,6 @@ src_install() {
 }
 
 pkg_postinst() {
-	enewgroup truecrypt
-
 	elog "There is now an init script for TrueCrypt for Baselayout-2."
 	elog "If you are a baselayout-2 user and you would like the TrueCrypt"
 	elog "mappings removed on shutdown in order to prevent other file systems"

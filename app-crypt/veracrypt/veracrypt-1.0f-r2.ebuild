@@ -37,6 +37,8 @@ pkg_setup() {
 	else
 		need-wxwidgets base-unicode
 	fi
+
+	enewgroup veracrypt
 }
 
 src_compile() {
@@ -67,8 +69,6 @@ src_install() {
 }
 
 pkg_postinst() {
-	enewgroup veracrypt
-
 	elog "There is now an init script for VeraCrypt for Baselayout-2."
 	elog "If you are a baselayout-2 user and you would like the VeraCrypt"
 	elog "mappings removed on shutdown in order to prevent other file systems"
