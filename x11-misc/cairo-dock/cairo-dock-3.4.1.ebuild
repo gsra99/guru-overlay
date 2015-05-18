@@ -16,7 +16,7 @@ SRC_URI="https://github.com/Cairo-Dock/${MY_PN}/archive/${PV}.tar.gz -> ${PN}-${
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="crypt xcomposite desktop_manager gtk3 egl"
+IUSE="crypt xcomposite desktop_manager gtk3 +egl"
 
 RDEPEND="
 	dev-libs/dbus-glib
@@ -37,7 +37,7 @@ RDEPEND="
 		x11-libs/libXinerama
 		x11-libs/libXtst
 	)
-	x11-libs/mesa[egl?]
+	media-libs/mesa[egl?]
 "
 DEPEND="${RDEPEND}
 	dev-util/intltool
