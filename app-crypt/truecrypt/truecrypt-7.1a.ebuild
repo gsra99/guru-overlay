@@ -4,7 +4,7 @@
 
 EAPI="4"
 
-inherit flag-o-matic linux-info multilib toolchain-funcs wxwidgets eutils pax-utils
+inherit flag-o-matic linux-info multilib toolchain-funcs wxwidgets eutils pax-utils user
 
 DESCRIPTION="Free open-source disk encryption software"
 HOMEPAGE="http://www.truecrypt.org/"
@@ -105,9 +105,14 @@ src_install() {
 	fi
 
 	pax-mark -m "${D}/usr/bin/truecrypt"
+
+	insinto /etc/sudoers.d
+	newins "${FILESDIR}/${PN}.sudoers" ${PN}
 }
 
 pkg_postinst() {
+	enewgroup truecrypt
+
 	elog "There is now an init script for TrueCrypt for Baselayout-2."
 	elog "If you are a baselayout-2 user and you would like the TrueCrypt"
 	elog "mappings removed on shutdown in order to prevent other file systems"
