@@ -1,2 +1,2 @@
-# Users in the veracrypt group are allowed to run veracrypt as root.
+## Users in the veracrypt group are allowed to run veracrypt as root.
 %veracrypt ALL=(root) NOPASSWD:/usr/bin/veracrypt
