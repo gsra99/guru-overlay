@@ -23,7 +23,7 @@ RDEPEND="app-arch/makeself
 	app-admin/sudo"
 DEPEND="${RDEPEND}"
 
-S="${WORKDIR}/${P}/src"
+S="${WORKDIR}/src"
 
 #See bug 241650.
 
