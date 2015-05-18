@@ -45,11 +45,11 @@ DEPEND="${RDEPEND}
 	sys-devel/gettext
 "
 
-S="${WORKDIR}/${PN}-${PV}"
+S="${WORKDIR}/${MY_PN}-${PV}"
 BUILD_DIR="${S}/build"
 
 src_configure() {
-	mycmakeargs=(
+	local mycmakeargs=(
 		`use gtk3 && echo "-Dforce-gtk2=OFF" || echo "-Dforce-gtk2=ON"`
 		`use desktop_manager && echo "-Denable-desktop-manager=ON" || echo "-Denable-desktop-manager=OFF"`
 		`use egl && echo "-Denable-egl-support=ON" || echo "-Denable-egl-support=OFF"`
