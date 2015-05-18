@@ -16,7 +16,7 @@ SRC_URI="https://github.com/Cairo-Dock/${MY_PN}/archive/${PV}.tar.gz -> ${PN}-${
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="alsa exif gmenu gtk3 kde terminal gnote vala webkit xfce xgamma xklavier twitter indicator3 zeitgeist mail"
+IUSE="alsa exif gmenu kde terminal gnote vala webkit xfce xgamma xklavier twitter indicator3 zeitgeist mail"
 
 RDEPEND="
 	dev-libs/dbus-glib
@@ -25,10 +25,9 @@ RDEPEND="
 	gnome-base/librsvg:2
 	sys-apps/dbus
 	x11-libs/cairo
-	!gtk3? ( x11-libs/gtk+:2 )
 	x11-libs/gtkglext
 	~x11-misc/cairo-dock-${PV}
-	gtk3? ( x11-libs/gtk+:3 )
+	x11-libs/gtk+:3
 	alsa? ( media-libs/alsa-lib )
 	exif? ( media-libs/libexif )
 	gmenu? ( gnome-base/gnome-menus )
@@ -52,11 +51,10 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig
 	dev-libs/libdbusmenu[gtk3]
 "
-src_configure() {
-	mycmakeargs=(
-		`use gtk3 && echo "-Dforce-gtk2=OFF" || echo "-Dforce-gtk2=ON"`
-	)
-	cmake-utils_src_configure
-}
 
-S="${WORKDIR}/${PN}-${PV}"
+S="${WORKDIR}/${MY_PN}-${PV}"
+BUILD_DIR="${S}/build"
+
+src_configure() {
+	cmake-utils_src_configure ..
+}

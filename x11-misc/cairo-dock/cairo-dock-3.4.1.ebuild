@@ -16,7 +16,7 @@ SRC_URI="https://github.com/Cairo-Dock/${MY_PN}/archive/${PV}.tar.gz -> ${PN}-${
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="crypt xcomposite desktop_manager gtk3 +egl"
+IUSE="crypt xcomposite desktop_manager +egl"
 
 RDEPEND="
 	dev-libs/dbus-glib
@@ -27,10 +27,9 @@ RDEPEND="
 	sys-apps/dbus
 	x11-libs/cairo
 	x11-libs/pango
-	!gtk3? ( x11-libs/gtk+:2 )
 	x11-libs/gtkglext
 	x11-libs/libXrender
-	gtk3? ( x11-libs/gtk+:3 )
+	x11-libs/gtk+:3
 	crypt? ( sys-libs/glibc )
 	xcomposite? (
 		x11-libs/libXcomposite
@@ -50,7 +49,6 @@ BUILD_DIR="${S}/build"
 
 src_configure() {
 	local mycmakeargs=(
-		`use gtk3 && echo "-Dforce-gtk2=OFF" || echo "-Dforce-gtk2=ON"`
 		`use desktop_manager && echo "-Denable-desktop-manager=ON" || echo "-Denable-desktop-manager=OFF"`
 		`use egl && echo "-Denable-egl-support=ON" || echo "-Denable-egl-support=OFF"`
 	)
