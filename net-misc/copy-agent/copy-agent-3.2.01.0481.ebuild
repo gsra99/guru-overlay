@@ -20,14 +20,13 @@ DEPEND=""
 
 RDEPEND=""
 
-S="x86? ( ${WORKDIR}/copy/x86 )
-   amd64? ( ${WORKDIR}/copy/x86_64 )
-   arm? ( ${WORKDIR}/copy/armv6h )
-"
-T="${WORKDIR}/copy"
+S="${WORKDIR}/copy"
 
 src_unpack() {
 	unpack ${A}
+	local sourcedir="x86? ( ${S}/x86 )
+			 amd64? ( ${S}/x86_64 )
+			 arm? ( ${S}/armv6h )"
 }
 
 src_install() {
