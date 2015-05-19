@@ -16,7 +16,7 @@ SRC_URI="https://github.com/Cairo-Dock/${MY_PN}/archive/${PV}.tar.gz -> ${PN}-${
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="crypt xcomposite desktop_manager +egl"
+IUSE="crypt xcomposite desktop_manager egl"
 
 RDEPEND="
 	dev-libs/dbus-glib
