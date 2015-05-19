@@ -43,7 +43,7 @@ src_install() {
 	newinitd "${FILESDIR}"/copy_agent.initd copy_agent
 	newconfd "${FILESDIR}"/copy_agent.conf copy_agent
 
-	dodoc "${T}"/README
+	dodoc "${S}"/README
 }
 
 #pkg_preinst() {
