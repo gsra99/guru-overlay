@@ -74,5 +74,5 @@ src_install() {
 	# Remove include files, which conflict with net-libs/libvncserver
 	rm -rf "${ED%/}"/usr/include
 	newconfd "${FILESDIR}/x11vnc-conf" x11vnc
-	newinitd "${FILESDIR}/x11vnc-init" x11vnc
+	newinitd "${FILESDIR}/x11vnc-init-r1" x11vnc
 }

@@ -8,7 +8,7 @@ inherit autotools eutils
 
 DESCRIPTION="A VNC server for real X displays"
 HOMEPAGE="http://www.karlrunge.com/x11vnc/"
-SRC_URI="https://github.com/LibVNC/x11vnc/archive/82eb9752485db87c9c6d3d6bb4aa1ae7ac81174a.zip"
+SRC_URI="https://github.com/LibVNC/x11vnc/archive/82eb9752485db87c9c6d3d6bb4aa1ae7ac81174a.zip -> ${PF}.zip"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -58,5 +58,5 @@ src_configure() {
 src_install() {
 	default
 	newconfd "${FILESDIR}/x11vnc-conf" x11vnc
-	newinitd "${FILESDIR}/x11vnc-init" x11vnc
+	newinitd "${FILESDIR}/x11vnc-init-r2" x11vnc
 }
