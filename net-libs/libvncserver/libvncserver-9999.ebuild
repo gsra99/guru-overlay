@@ -8,7 +8,7 @@ inherit autotools multilib-minimal git-r3
 
 DESCRIPTION="library for creating vnc servers"
 HOMEPAGE="http://libvncserver.sourceforge.net/"
-SRC_URI="https://github.com/LibVNC/libvncserver.git"
+EGIT_REPO_URI="https://github.com/LibVNC/libvncserver.git"
 
 LICENSE="GPL-2"
 SLOT="0"
