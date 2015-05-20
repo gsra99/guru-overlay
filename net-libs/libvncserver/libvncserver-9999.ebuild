@@ -13,7 +13,7 @@ EGIT_REPO_URI="https://github.com/LibVNC/libvncserver.git"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
-IUSE="+24bpp gcrypt gnutls ipv6 +jpeg +png ssl static-libs test threads vaapi +zlib"
+IUSE="+24bpp gcrypt gnutls ipv6 +jpeg +png ssl static-libs test threads +zlib"
 
 DEPEND="
 	gcrypt? ( >=dev-libs/libgcrypt-1.5.3:0[${MULTILIB_USEDEP}] )
@@ -26,7 +26,6 @@ DEPEND="
 	)
 	jpeg? ( >=virtual/jpeg-0-r2:0[${MULTILIB_USEDEP}] )
 	png? ( >=media-libs/libpng-1.6.10:0[${MULTILIB_USEDEP}] )
-	vaapi? ( >=x11-libs/libva-1.2.1-r1[${MULTILIB_USEDEP}] )
 	zlib? ( >=sys-libs/zlib-1.2.8-r1[${MULTILIB_USEDEP}] )"
 RDEPEND="${DEPEND}"
 
@@ -53,7 +52,6 @@ multilib_src_configure() {
 		$(use_with jpeg) \
 		$(use_with png) \
 		$(use_with threads pthread) \
-		$(use_with vaapi) \
 		$(use_with zlib)
 }
 
