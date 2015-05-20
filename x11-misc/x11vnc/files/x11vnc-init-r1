@@ -15,13 +15,13 @@ checkconfig() {
 
 start() {
 	ebegin "Starting x11vnc"
-	start-stop-daemon -S -q -o -n x11vnc \
+	start-stop-daemon -S -q -n x11vnc \
 	-x /usr/bin/x11vnc -- $OPTIONS -forever -bg
 	eend $?
 }
 
 stop() {
 	ebegin "Stopping x11vnc"
-	start-stop-daemon -K -q -o -n x11vnc
+	start-stop-daemon -K -q -n x11vnc
 	eend $?
 }
