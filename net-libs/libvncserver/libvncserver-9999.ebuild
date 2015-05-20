@@ -30,14 +30,9 @@ DEPEND="
 	zlib? ( >=sys-libs/zlib-1.2.8-r1[${MULTILIB_USEDEP}] )"
 RDEPEND="${DEPEND}"
 
-#S="${WORKDIR}"/${PN}-LibVNCServer-${PV}
-
 DOCS=( AUTHORS ChangeLog NEWS README TODO )
 
 src_prepare() {
-	# https://github.com/LibVNC/libvncserver/issues/11
-	epatch "${FILESDIR}/${PN}-0.9.10-libva-1.0.patch"
-
 	sed -i -r \
 		-e "/^SUBDIRS/s:\<$(usex test 'test|' '')client_examples|examples\>::g" \
 		Makefile.am || die
