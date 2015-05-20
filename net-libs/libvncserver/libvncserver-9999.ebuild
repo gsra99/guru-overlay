@@ -53,7 +53,7 @@ multilib_src_configure() {
 		$(use_with jpeg) \
 		$(use_with png) \
 		$(use_with threads pthread) \
-		$(use_with vaapi libva) \
+		$(use_with vaapi) \
 		$(use_with zlib)
 }
 
