@@ -36,7 +36,7 @@ DOCS=( AUTHORS ChangeLog NEWS README TODO )
 
 src_prepare() {
 	# https://github.com/LibVNC/libvncserver/issues/11
-	#epatch "${FILESDIR}/${P}-libva-1.0.patch"
+	epatch "${FILESDIR}/${PN}-0.9.10-libva-1.0.patch"
 
 	sed -i -r \
 		-e "/^SUBDIRS/s:\<$(usex test 'test|' '')client_examples|examples\>::g" \
