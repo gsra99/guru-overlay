@@ -15,13 +15,24 @@ checkconfig() {
 
 start() {
 	ebegin "Starting x11vnc"
-	start-stop-daemon -S -q -b -n x11vnc \
+	#start-stop-daemon -S -q -b -n x11vnc \
+	start-stop-daemon -S -q -b -m -p /var/run/x11vnc.pid
 	-x /usr/bin/x11vnc -- $OPTIONS -loop -forever
 	eend $?
 }
 
 stop() {
 	ebegin "Stopping x11vnc"
-	start-stop-daemon -K -q -n x11vnc
+	pid=`cat /var/run/x11vnc.pid`
+
+	# kill parent process
+	start-stop-daemon -K -q -p /var/run/x11vnc.pid
+	#start-stop-daemon -K -q -n x11vnc
+
+	# kill child processes
+	if [ -n "$pid" ]; then
+	pkill -s $pid
+	fi
+
 	eend $?
 }
