@@ -54,3 +54,9 @@ src_configure() {
 		--without-v4l \
 		$(use_with xinerama)
 }
+
+src_install() {
+	default
+	newconfd "${FILESDIR}/x11vnc-conf" x11vnc
+	newinitd "${FILESDIR}/x11vnc-init" x11vnc
+}
