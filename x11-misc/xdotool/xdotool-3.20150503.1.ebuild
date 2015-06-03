@@ -17,7 +17,8 @@ IUSE="examples"
 
 RDEPEND="x11-libs/libXtst
 	x11-libs/libX11
-	x11-libs/libXinerama"
+	x11-libs/libXinerama
+	x11-libs/libxkbcommon"
 DEPEND="${RDEPEND}"
 
 # The test wants to manualy start Xvfb, wont use VirtualX and it tries
