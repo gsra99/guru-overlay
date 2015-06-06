@@ -267,4 +267,7 @@ src_install() {
         insinto /etc
         doins samples/ccpd.conf
 
+	# Install udev rules
+	insinto /etc/udev/rules.d
+	doins ${FILESDIR}/85-canon-capt.rules
 }
