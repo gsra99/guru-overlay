@@ -34,7 +34,7 @@ src_install() {
 	doins regulatory.bin
 
 	insinto /etc/wireless-regdb/pubkeys
-	doins sforshee.key.pub.pem
+	doins *.pem
 
 	doman regulatory.bin.5
 	dodoc README db.txt
