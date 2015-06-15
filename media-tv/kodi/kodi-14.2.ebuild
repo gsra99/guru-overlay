@@ -172,7 +172,7 @@ src_prepare() {
 	multijob_finish
 	elibtoolize
 
-	[[ ${PV} == "9999" ]] && emake -f codegenerator.mk
+	emake -f codegenerator.mk
 
 	# Disable internal func checks as our USE/DEPEND
 	# stuff handles this just fine already #408395
