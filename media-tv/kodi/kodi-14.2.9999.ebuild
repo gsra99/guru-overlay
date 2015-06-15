@@ -14,7 +14,7 @@ case ${PV} in
 	EGIT_BRANCH="${CODENAME}"
 	inherit git-r3 versionator
 	MY_PV=$(get_version_component_range 3)
-	KEYWORDS="~amd64 ~x86"
+	KEYWORDS=""
 	;;
 esac
 
