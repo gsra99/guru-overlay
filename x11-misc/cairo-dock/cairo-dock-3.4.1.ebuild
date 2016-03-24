@@ -58,7 +58,7 @@ src_configure() {
 pkg_postinst() {
 	elog "Additional plugins are available to extend the functionality"
 	elog "of Cairo-Dock. It is recommended to install at least"
-	elog "x11-pluings/cairo-dock-plugins."
+	elog "x11-plugins/cairo-dock-plugins."
 	elog
 	elog "Cairo-Dock is an app that draws on a RGBA GLX visual."
 	elog "Some users have noticed that if the dock is launched,"
