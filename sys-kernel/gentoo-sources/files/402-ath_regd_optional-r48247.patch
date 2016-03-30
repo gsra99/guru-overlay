@@ -1,431 +1,69 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  
-  
-
-  
-
-
-  <head>
-    <title>
-      402-ath_regd_optional.patch in trunk/package/kernel/mac80211/patches
-     – OpenWrt
-    </title>
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!--[if IE]><script type="text/javascript">
-      if (/^#__msie303:/.test(window.location.hash))
-        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
-    </script><![endif]-->
-        <link rel="search" href="/search" />
-        <link rel="help" href="/wiki/TracGuide" />
-        <link rel="alternate" href="/browser/trunk/package/kernel/mac80211/patches/402-ath_regd_optional.patch?format=txt" type="text/plain" title="Plain Text" /><link rel="alternate" href="/export/49097/trunk/package/kernel/mac80211/patches/402-ath_regd_optional.patch" type="text/x-diff; charset=iso-8859-15" title="Original Format" />
-        <link rel="start" href="/wiki" />
-        <link rel="stylesheet" href="/chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="/chrome/common/css/code.css" type="text/css" /><link rel="stylesheet" href="/chrome/common/css/diff.css" type="text/css" /><link rel="stylesheet" href="/chrome/common/css/browser.css" type="text/css" />
-        <link rel="prev" href="/browser/trunk/package/kernel/mac80211/patches/402-ath_regd_optional.patch?rev=47771" title="Revision 47771" />
-        <link rel="shortcut icon" href="/chrome/common/trac.ico" type="image/x-icon" />
-        <link rel="icon" href="/chrome/common/trac.ico" type="image/x-icon" />
-      <link type="application/opensearchdescription+xml" rel="search" href="/search/opensearch" title="Search OpenWrt" />
-      <script type="text/javascript" charset="utf-8" src="/chrome/common/js/jquery.js"></script>
-      <script type="text/javascript" charset="utf-8" src="/chrome/common/js/babel.js"></script>
-      <script type="text/javascript" charset="utf-8" src="/chrome/common/js/messages/en_US.js"></script>
-      <script type="text/javascript" charset="utf-8" src="/chrome/common/js/trac.js"></script>
-      <script type="text/javascript" charset="utf-8" src="/chrome/common/js/search.js"></script>
-      <script type="text/javascript" charset="utf-8" src="/chrome/common/js/diff.js"></script>
-    <script type="text/javascript" src="/chrome/common/js/folding.js"></script>
-    <script type="text/javascript">
-      jQuery(document).ready(function($) {
-        $(".trac-toggledeleted").show().click(function() {
-                  $(this).siblings().find(".trac-deleted").toggle();
-                  return false;
-        }).click();
-        $("#jumploc input").hide();
-        $("#jumploc select").change(function () {
-          this.parentNode.parentNode.submit();
-        });
-          $('#preview table.code').enableCollapsibleColumns($('#preview table.code thead th.content'));
-      });
-    </script>
-    <script type="text/javascript">
-      jQuery(document).ready(function($) {
-        $("#modify").parent().removeClass("collapsed");
-      });
-    </script>
-  </head>
-  <body>
-    <div id="banner">
-      <div id="header">
-        <a id="logo" href="https://openwrt.org/"><img src="/chrome/site/openwrt-logo.png" alt="OpenWrt" height="98" width="386" /></a>
-      </div>
-      <form id="search" action="/search" method="get">
-        <div>
-          <label for="proj-search">Search:</label>
-          <input type="text" id="proj-search" name="q" size="18" value="" />
-          <input type="submit" value="Search" />
-        </div>
-      </form>
-      <div id="metanav" class="nav">
-    <ul>
-      <li class="first"><a href="/login">Login</a></li><li><a href="/prefs">Preferences</a></li><li><a href="/wiki/TracGuide">Help/Guide</a></li><li><a href="/about">About Trac</a></li><li class="last"><a href="/register">Register</a></li>
-    </ul>
-  </div>
-    </div>
-    <div id="mainnav" class="nav">
-    <ul>
-      <li class="first"><a href="/wiki">Wiki</a></li><li><a href="/timeline">Timeline</a></li><li><a href="/roadmap">Roadmap</a></li><li class="active"><a href="/browser">Browse Source</a></li><li><a href="/report">View Tickets</a></li><li><a href="/newticket">New Ticket</a></li><li class="last"><a href="/search">Search</a></li>
-    </ul>
-  </div>
-    <div id="main">
-      <div id="ctxtnav" class="nav">
-        <h2>Context Navigation</h2>
-        <ul>
-          <li class="first"><span>&larr; <a class="prev" href="/browser/trunk/package/kernel/mac80211/patches/402-ath_regd_optional.patch?rev=47771" title="Revision 47771">Previous Revision</a></span></li><li><span class="missing">Next Revision &rarr;</span></li><li><a href="/browser/trunk/package/kernel/mac80211/patches/402-ath_regd_optional.patch?annotate=blame" title="Annotate each line with the last changed revision (this can be time consuming...)">Blame</a></li><li class="last"><a href="/log/trunk/package/kernel/mac80211/patches/402-ath_regd_optional.patch">Revision Log</a></li>
-        </ul>
-        <hr />
-      </div>
-    <div id="content" class="browser">
-        <h1>
-          
-<a class="pathentry first" href="/browser?order=name" title="Go to repository root">source:</a>
-<a class="pathentry" href="/browser/trunk?order=name" title="View trunk">trunk</a><span class="pathentry sep">/</span><a class="pathentry" href="/browser/trunk/package?order=name" title="View package">package</a><span class="pathentry sep">/</span><a class="pathentry" href="/browser/trunk/package/kernel?order=name" title="View kernel">kernel</a><span class="pathentry sep">/</span><a class="pathentry" href="/browser/trunk/package/kernel/mac80211?order=name" title="View mac80211">mac80211</a><span class="pathentry sep">/</span><a class="pathentry" href="/browser/trunk/package/kernel/mac80211/patches?order=name" title="View patches">patches</a><span class="pathentry sep">/</span><a class="pathentry" href="/browser/trunk/package/kernel/mac80211/patches/402-ath_regd_optional.patch?order=name" title="View 402-ath_regd_optional.patch">402-ath_regd_optional.patch</a>
-<br style="clear: both" />
-
-        </h1>
-        <div id="diffrev">
-          <form action="/changeset" method="get">
-            <div>
-              <label title="Show the diff against a specific revision">
-                View diff against: <input type="text" name="old" size="6" />
-                <input type="hidden" name="old_path" value="trunk/package/kernel/mac80211/patches/402-ath_regd_optional.patch" />
-                <input type="hidden" name="new" />
-                <input type="hidden" name="new_path" value="trunk/package/kernel/mac80211/patches/402-ath_regd_optional.patch" />
-              </label>
-            </div>
-          </form>
-        </div>
-        <div id="jumprev">
-          <form action="" method="get">
-            <div>
-              <label for="rev">
-                View revision:</label>
-              <input type="text" id="rev" name="rev" size="6" />
-            </div>
-          </form>
-        </div>
-        <div id="jumploc">
-          <form action="" method="get">
-            <div style="display:none;"><input type="text" name="mail_addr" value="" /><input type="hidden" name="mail_addr_confirm" value="" /></div><div class="buttons">
-              <label for="preselected">Visit:</label>
-              <select id="preselected" name="preselected">
-                <option selected="selected"></option>
-                <optgroup label="branches">
-                  <option value="/browser/trunk">trunk</option><option value="/browser/branches/8.09">branches/8.09</option><option value="/browser/branches/attitude_adjustment">branches/attitude_adjustment</option><option value="/browser/branches/backfire">branches/backfire</option><option value="/browser/branches/barrier_breaker">branches/barrier_breaker</option><option value="/browser/branches/chaos_calmer">branches/chaos_calmer</option><option value="/browser/branches/kamikaze-before-brng">branches/kamikaze-before-brng</option><option value="/browser/branches/packages_8.09">branches/packages_8.09</option><option value="/browser/branches/packages_10.03.1">branches/packages_10.03.1</option><option value="/browser/branches/packages_10.03.2">branches/packages_10.03.2</option><option value="/browser/branches/packages_12.09">branches/packages_12.09</option><option value="/browser/branches/packages_14.07">branches/packages_14.07</option><option value="/browser/branches/whiterussian">branches/whiterussian</option>
-                </optgroup><optgroup label="tags">
-                  <option value="/browser/tags/8.09?rev=15317">tags/8.09</option><option value="/browser/tags/8.09.1?rev=16279">tags/8.09.1</option><option value="/browser/tags/8.09.2?rev=18961">tags/8.09.2</option><option value="/browser/tags/8.09_rc1?rev=13118">tags/8.09_rc1</option><option value="/browser/tags/8.09_rc2?rev=14166">tags/8.09_rc2</option><option value="/browser/tags/attitude_adjustment_12.09?rev=36422">tags/attitude_adjustment_12.09</option><option value="/browser/tags/backfire_10.03?rev=20742">tags/backfire_10.03</option><option value="/browser/tags/backfire_10.03.1?rev=29638">tags/backfire_10.03.1</option><option value="/browser/tags/kamikaze_7.06?rev=7431">tags/kamikaze_7.06</option><option value="/browser/tags/kamikaze_7.07?rev=8640">tags/kamikaze_7.07</option><option value="/browser/tags/kamikaze_7.09?rev=11162">tags/kamikaze_7.09</option><option value="/browser/tags/whiterussian_0.9?rev=6268">tags/whiterussian_0.9</option><option value="/browser/tags/whiterussian_rc1?rev=1284">tags/whiterussian_rc1</option><option value="/browser/tags/whiterussian_rc2?rev=1498">tags/whiterussian_rc2</option><option value="/browser/tags/whiterussian_rc3?rev=1922">tags/whiterussian_rc3</option><option value="/browser/tags/whiterussian_rc4?rev=2552">tags/whiterussian_rc4</option><option value="/browser/tags/whiterussian_rc5?rev=3506">tags/whiterussian_rc5</option><option value="/browser/tags/whiterussian_rc6?rev=5461">tags/whiterussian_rc6</option>
-                </optgroup>
-              </select>
-              <input type="submit" value="Go!" title="Jump to the chosen preselected path" />
-            </div>
-          </form>
-        </div>
-        <div class="trac-tags">
-        </div>
-      <table id="info" summary="Revision info">
-        <tr>
-          <th>
-                <a href="/changeset/48247/trunk/package/kernel/mac80211/patches/402-ath_regd_optional.patch" title="View differences">Last change</a>
-                  on this file was
-                  <a href="/changeset/48247/" title="View changeset 48247">48247</a>,
-                  checked in by nbd, <a class="timeline" href="/timeline?from=2016-01-15T16%3A03%3A48%2B01%3A00&amp;precision=second" title="See timeline at 2016-01-15T16:03:48+01:00">3 months ago</a>
-          </th>
-        </tr>
-        <tr>
-          <td class="message searchable">
-              <p>
-mac80211: update to wireless-testing 2016-01-10<br />
-</p>
-<p>
-Signed-off-by: Felix Fietkau &lt;nbd@…&gt;<br />
-</p>
-          </td>
-        </tr>
-        <tr><td colspan="2">
-            <strong>File size:</strong>
-            <span title="1571 bytes">1.5 KB</span>
-          </td></tr>
-      </table>
-      <div id="preview" class="searchable">
-        
-  <div class="diff">
-  <ul class="entries">
-      <li class="entry">
-        <h2>
-          <a>drivers/net/wireless/ath/regd.c</a>
-        </h2>
-        <table class="trac-diff inline" summary="Differences" cellspacing="0">
-              <colgroup><col class="lineno" /><col class="lineno" /><col class="content" /></colgroup>
-              <thead>
-                <tr>
-                  <th title="File a/drivers/net/wireless/ath/regd.c">
-                      a
-                  </th>
-                  <th title="File b/drivers/net/wireless/ath/regd.c">
-                      b
-                  </th>
-                  <td><em> ath_reg_apply_beaconing_flags(struct wip</em> </td>
-                </tr>
-              </thead>
-            <tbody class="unmod">
-                  <tr>
-                          <th>341</th><th>341</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; struct ieee80211_channel *ch;</span> </td>
-                  </tr><tr>
-                          <th>342</th><th>342</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; unsigned int i;</span> </td>
-                  </tr><tr>
-                          <th>343</th><th>343</th><td class="l"><span></span> </td>
-                  </tr>
-            </tbody><tbody class="add">
-                  <tr class="first">
-                          <th> </th><th>344</th><td class="r"><ins>#ifdef CPTCFG_ATH_USER_REGD</ins> </td>
-                  </tr><tr>
-                          <th> </th><th>345</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; return;</ins> </td>
-                  </tr><tr>
-                          <th> </th><th>346</th><td class="r"><ins>#endif</ins> </td>
-                  </tr><tr class="last">
-                          <th> </th><th>347</th><td class="r"><ins></ins> </td>
-                  </tr>
-            </tbody><tbody class="unmod">
-                  <tr>
-                          <th>344</th><th>348</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; for (band = 0; band &lt; IEEE80211_NUM_BANDS; band++) {</span> </td>
-                  </tr><tr>
-                          <th>345</th><th>349</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (!wiphy-&gt;bands[band])</span> </td>
-                  </tr><tr>
-                          <th>346</th><th>350</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; continue;</span> </td>
-                  </tr>
-            </tbody>
-              <tbody class="skipped">
-                <tr>
-                  <th><a href="#L374">…</a></th>
-                  <th><a href="#L378">…</a></th>
-                  <td><em> ath_reg_apply_ir_flags(struct wiphy *wip</em> </td>
-                </tr>
-              </tbody>
-            <tbody class="unmod">
-                  <tr>
-                          <th>374</th><th>378</th><td class="l"><span>{</span> </td>
-                  </tr><tr>
-                          <th>375</th><th>379</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; struct ieee80211_supported_band *sband;</span> </td>
-                  </tr><tr>
-                          <th>376</th><th>380</th><td class="l"><span></span> </td>
-                  </tr>
-            </tbody><tbody class="add">
-                  <tr class="first">
-                          <th> </th><th>381</th><td class="r"><ins>#ifdef CPTCFG_ATH_USER_REGD</ins> </td>
-                  </tr><tr>
-                          <th> </th><th>382</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; return;</ins> </td>
-                  </tr><tr>
-                          <th> </th><th>383</th><td class="r"><ins>#endif</ins> </td>
-                  </tr><tr class="last">
-                          <th> </th><th>384</th><td class="r"><ins></ins> </td>
-                  </tr>
-            </tbody><tbody class="unmod">
-                  <tr>
-                          <th>377</th><th>385</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; sband = wiphy-&gt;bands[IEEE80211_BAND_2GHZ];</span> </td>
-                  </tr><tr>
-                          <th>378</th><th>386</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; if (!sband)</span> </td>
-                  </tr><tr>
-                          <th>379</th><th>387</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return;</span> </td>
-                  </tr>
-            </tbody>
-              <tbody class="skipped">
-                <tr>
-                  <th><a href="#L402">…</a></th>
-                  <th><a href="#L410">…</a></th>
-                  <td><em> static void ath_reg_apply_radar_flags(st</em> </td>
-                </tr>
-              </tbody>
-            <tbody class="unmod">
-                  <tr>
-                          <th>402</th><th>410</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; struct ieee80211_channel *ch;</span> </td>
-                  </tr><tr>
-                          <th>403</th><th>411</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; unsigned int i;</span> </td>
-                  </tr><tr>
-                          <th>404</th><th>412</th><td class="l"><span></span> </td>
-                  </tr>
-            </tbody><tbody class="add">
-                  <tr class="first">
-                          <th> </th><th>413</th><td class="r"><ins>#ifdef CPTCFG_ATH_USER_REGD</ins> </td>
-                  </tr><tr>
-                          <th> </th><th>414</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; return;</ins> </td>
-                  </tr><tr>
-                          <th> </th><th>415</th><td class="r"><ins>#endif</ins> </td>
-                  </tr><tr class="last">
-                          <th> </th><th>416</th><td class="r"><ins></ins> </td>
-                  </tr>
-            </tbody><tbody class="unmod">
-                  <tr>
-                          <th>405</th><th>417</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; if (!wiphy-&gt;bands[IEEE80211_BAND_5GHZ])</span> </td>
-                  </tr><tr>
-                          <th>406</th><th>418</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return;</span> </td>
-                  </tr><tr>
-                          <th>407</th><th>419</th><td class="l"><span></span> </td>
-                  </tr>
-            </tbody>
-              <tbody class="skipped">
-                <tr>
-                  <th><a href="#L633">…</a></th>
-                  <th><a href="#L645">…</a></th>
-                  <td><em> ath_regd_init_wiphy(struct ath_regulator</em> </td>
-                </tr>
-              </tbody>
-            <tbody class="unmod">
-                  <tr>
-                          <th>633</th><th>645</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; const struct ieee80211_regdomain *regd;</span> </td>
-                  </tr><tr>
-                          <th>634</th><th>646</th><td class="l"><span></span> </td>
-                  </tr><tr>
-                          <th>635</th><th>647</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; wiphy-&gt;reg_notifier = reg_notifier;</span> </td>
-                  </tr>
-            </tbody><tbody class="add">
-                  <tr class="first">
-                          <th> </th><th>648</th><td class="r"><ins></ins> </td>
-                  </tr><tr>
-                          <th> </th><th>649</th><td class="r"><ins>#ifdef CPTCFG_ATH_USER_REGD</ins> </td>
-                  </tr><tr>
-                          <th> </th><th>650</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; return 0;</ins> </td>
-                  </tr><tr>
-                          <th> </th><th>651</th><td class="r"><ins>#endif</ins> </td>
-                  </tr><tr class="last">
-                          <th> </th><th>652</th><td class="r"><ins></ins> </td>
-                  </tr>
-            </tbody><tbody class="unmod">
-                  <tr>
-                          <th>636</th><th>653</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; wiphy-&gt;regulatory_flags |= REGULATORY_STRICT_REG |</span> </td>
-                  </tr><tr>
-                          <th>637</th><th>654</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;REGULATORY_CUSTOM_REG;</span> </td>
-                  </tr><tr>
-                          <th>638</th><th>655</th><td class="l"><span></span> </td>
-                  </tr>
-            </tbody>
-        </table>
-      </li>
-      <li class="entry">
-        <h2>
-          <a>drivers/net/wireless/ath/Kconfig</a>
-        </h2>
-        <table class="trac-diff inline" summary="Differences" cellspacing="0">
-              <colgroup><col class="lineno" /><col class="lineno" /><col class="content" /></colgroup>
-              <thead>
-                <tr>
-                  <th title="File a/drivers/net/wireless/ath/Kconfig">
-                      a
-                  </th>
-                  <th title="File b/drivers/net/wireless/ath/Kconfig">
-                      b
-                  </th>
-                  <td><em> config WLAN_VENDOR_ATH</em> </td>
-                </tr>
-              </thead>
-            <tbody class="unmod">
-                  <tr>
-                          <th>23</th><th>23</th><td class="l"><span></span> </td>
-                  </tr><tr>
-                          <th>24</th><th>24</th><td class="l"><span>if WLAN_VENDOR_ATH</span> </td>
-                  </tr><tr>
-                          <th>25</th><th>25</th><td class="l"><span></span> </td>
-                  </tr>
-            </tbody><tbody class="add">
-                  <tr class="first">
-                          <th> </th><th>26</th><td class="r"><ins>config ATH_USER_REGD</ins> </td>
-                  </tr><tr>
-                          <th> </th><th>27</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; bool "Do not enforce EEPROM regulatory restrictions"</ins> </td>
-                  </tr><tr class="last">
-                          <th> </th><th>28</th><td class="r"><ins></ins> </td>
-                  </tr>
-            </tbody><tbody class="unmod">
-                  <tr>
-                          <th>26</th><th>29</th><td class="l"><span>config ATH_DEBUG</span> </td>
-                  </tr><tr>
-                          <th>27</th><th>30</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; bool "Atheros wireless debugging"</span> </td>
-                  </tr><tr>
-                          <th>28</th><th>31</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; ---help---</span> </td>
-                  </tr>
-            </tbody>
-        </table>
-      </li>
-      <li class="entry">
-        <h2>
-          <a>.local-symbols</a>
-        </h2>
-        <table class="trac-diff inline" summary="Differences" cellspacing="0">
-              <colgroup><col class="lineno" /><col class="lineno" /><col class="content" /></colgroup>
-              <thead>
-                <tr>
-                  <th title="File a/.local-symbols">
-                      a
-                  </th>
-                  <th title="File b/.local-symbols">
-                      b
-                  </th>
-                  <td><em> ADM8211=</em> </td>
-                </tr>
-              </thead>
-            <tbody class="unmod">
-                  <tr>
-                          <th>125</th><th>125</th><td class="l"><span>ATH_COMMON=</span> </td>
-                  </tr><tr>
-                          <th>126</th><th>126</th><td class="l"><span>WLAN_VENDOR_ATH=</span> </td>
-                  </tr><tr>
-                          <th>127</th><th>127</th><td class="l"><span>ATH_DEBUG=</span> </td>
-                  </tr>
-            </tbody><tbody class="add">
-                  <tr class="last first">
-                          <th> </th><th>128</th><td class="r"><ins>ATH_USER_REGD=</ins> </td>
-                  </tr>
-            </tbody><tbody class="unmod">
-                  <tr>
-                          <th>128</th><th>129</th><td class="l"><span>ATH_TRACEPOINTS=</span> </td>
-                  </tr><tr>
-                          <th>129</th><th>130</th><td class="l"><span>ATH_REG_DYNAMIC_USER_REG_HINTS=</span> </td>
-                  </tr><tr>
-                          <th>130</th><th>131</th><td class="l"><span>ATH_REG_DYNAMIC_USER_CERT_TESTING=</span> </td>
-                  </tr>
-            </tbody>
-        </table>
-      </li>
-  </ul>
-</div>
-
-      </div>
-      <div id="anydiff">
-        <form action="/diff" method="get">
-          <div style="display:none;"><input type="text" name="mail_addr" value="" /><input type="hidden" name="mail_addr_confirm" value="" /></div><div class="buttons">
-            <input type="hidden" name="new_path" value="/trunk/package/kernel/mac80211/patches/402-ath_regd_optional.patch" />
-            <input type="hidden" name="old_path" value="/trunk/package/kernel/mac80211/patches/402-ath_regd_optional.patch" />
-            <input type="hidden" name="new_rev" />
-            <input type="hidden" name="old_rev" />
-            <input type="submit" value="View changes..." title="Select paths and revs for Diff" />
-          </div>
-        </form>
-      </div>
-      <div id="help"><strong>Note:</strong> See <a href="/wiki/TracBrowser">TracBrowser</a>
-        for help on using the repository browser.</div>
-    </div>
-    <div id="altlinks">
-      <h3>Download in other formats:</h3>
-      <ul>
-        <li class="first">
-          <a rel="nofollow" href="/browser/trunk/package/kernel/mac80211/patches/402-ath_regd_optional.patch?format=txt">Plain Text</a>
-        </li><li class="last">
-          <a rel="nofollow" href="/export/49097/trunk/package/kernel/mac80211/patches/402-ath_regd_optional.patch">Original Format</a>
-        </li>
-      </ul>
-    </div>
-    </div>
-    <div id="footer" lang="en" xml:lang="en"><hr />
-      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="/chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
-      <p class="left">Powered by <a href="/about"><strong>Trac 1.0.1</strong></a><br />
-        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
-      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.com/">http://trac.edgewall.com/</a></p>
-    </div>
-  </body>
-</html>
+--- a/drivers/net/wireless/ath/regd.c
++++ b/drivers/net/wireless/ath/regd.c
+@@ -341,6 +341,10 @@ ath_reg_apply_beaconing_flags(struct wip
+ 	struct ieee80211_channel *ch;
+ 	unsigned int i;
+ 
++#ifdef CPTCFG_ATH_USER_REGD
++	return;
++#endif
++
+ 	for (band = 0; band < IEEE80211_NUM_BANDS; band++) {
+ 		if (!wiphy->bands[band])
+ 			continue;
+@@ -374,6 +378,10 @@ ath_reg_apply_ir_flags(struct wiphy *wip
+ {
+ 	struct ieee80211_supported_band *sband;
+ 
++#ifdef CPTCFG_ATH_USER_REGD
++	return;
++#endif
++
+ 	sband = wiphy->bands[IEEE80211_BAND_2GHZ];
+ 	if (!sband)
+ 		return;
+@@ -402,6 +410,10 @@ static void ath_reg_apply_radar_flags(st
+ 	struct ieee80211_channel *ch;
+ 	unsigned int i;
+ 
++#ifdef CPTCFG_ATH_USER_REGD
++	return;
++#endif
++
+ 	if (!wiphy->bands[IEEE80211_BAND_5GHZ])
+ 		return;
+ 
+@@ -633,6 +645,11 @@ ath_regd_init_wiphy(struct ath_regulator
+ 	const struct ieee80211_regdomain *regd;
+ 
+ 	wiphy->reg_notifier = reg_notifier;
++
++#ifdef CPTCFG_ATH_USER_REGD
++	return 0;
++#endif
++
+ 	wiphy->regulatory_flags |= REGULATORY_STRICT_REG |
+ 				   REGULATORY_CUSTOM_REG;
+ 
+--- a/drivers/net/wireless/ath/Kconfig
++++ b/drivers/net/wireless/ath/Kconfig
+@@ -23,6 +23,9 @@ config WLAN_VENDOR_ATH
+ 
+ if WLAN_VENDOR_ATH
+ 
++config ATH_USER_REGD
++	bool "Do not enforce EEPROM regulatory restrictions"
++
+ config ATH_DEBUG
+ 	bool "Atheros wireless debugging"
+ 	---help---
+--- a/.local-symbols
++++ b/.local-symbols
+@@ -125,6 +125,7 @@ ADM8211=
+ ATH_COMMON=
+ WLAN_VENDOR_ATH=
+ ATH_DEBUG=
++ATH_USER_REGD=
+ ATH_TRACEPOINTS=
+ ATH_REG_DYNAMIC_USER_REG_HINTS=
+ ATH_REG_DYNAMIC_USER_CERT_TESTING=
