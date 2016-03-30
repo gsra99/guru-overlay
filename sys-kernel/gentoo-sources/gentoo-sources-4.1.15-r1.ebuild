@@ -26,12 +26,12 @@ src_prepare() {
 		#epatch "302-ath9k-restart-only-triggering-DFS-detector-line-r44655.patch"
 		#epatch "303-ath9k-add-DFS-support-for-extension-channel-r44655.patch"
 		#epatch "304-ath9k-allow-40MHz-radar-detection-width-r44655.patch"
-		epatch "402-ath_regd_optional-r48247.patch"
+		epatch "402-ath_regd_optional-r47771.patch"
 		epatch "403-world_regd_fixup-r42952.patch"
 		epatch "405-ath_regd_us-r42952.patch"
 		epatch "406-ath_relax_default_regd-r45710.patch"
 		#epatch "500-ath9k_eeprom_debugfs-r43208.patch"
-		epatch "522-mac80211_configure_antenna_gain-r48641.patch"
+		epatch "522-mac80211_configure_antenna_gain-r47771.patch"
 		#epatch "increase_max_power-3.18.patch"
 }
 
