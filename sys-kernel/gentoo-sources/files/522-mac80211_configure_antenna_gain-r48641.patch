@@ -1,0 +1,742 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      522-mac80211_configure_antenna_gain.patch in trunk/package/kernel/mac80211/patches
+     – OpenWrt
+    </title>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="/search" />
+        <link rel="help" href="/wiki/TracGuide" />
+        <link rel="alternate" href="/browser/trunk/package/kernel/mac80211/patches/522-mac80211_configure_antenna_gain.patch?format=txt" type="text/plain" title="Plain Text" /><link rel="alternate" href="/export/49097/trunk/package/kernel/mac80211/patches/522-mac80211_configure_antenna_gain.patch" type="text/x-diff; charset=iso-8859-15" title="Original Format" />
+        <link rel="start" href="/wiki" />
+        <link rel="stylesheet" href="/chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="/chrome/common/css/code.css" type="text/css" /><link rel="stylesheet" href="/chrome/common/css/diff.css" type="text/css" /><link rel="stylesheet" href="/chrome/common/css/browser.css" type="text/css" />
+        <link rel="prev" href="/browser/trunk/package/kernel/mac80211/patches/522-mac80211_configure_antenna_gain.patch?rev=48247" title="Revision 48247" />
+        <link rel="shortcut icon" href="/chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="/chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="/search/opensearch" title="Search OpenWrt" />
+      <script type="text/javascript" charset="utf-8" src="/chrome/common/js/jquery.js"></script>
+      <script type="text/javascript" charset="utf-8" src="/chrome/common/js/babel.js"></script>
+      <script type="text/javascript" charset="utf-8" src="/chrome/common/js/messages/en_US.js"></script>
+      <script type="text/javascript" charset="utf-8" src="/chrome/common/js/trac.js"></script>
+      <script type="text/javascript" charset="utf-8" src="/chrome/common/js/search.js"></script>
+      <script type="text/javascript" charset="utf-8" src="/chrome/common/js/diff.js"></script>
+    <script type="text/javascript" src="/chrome/common/js/folding.js"></script>
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $(".trac-toggledeleted").show().click(function() {
+                  $(this).siblings().find(".trac-deleted").toggle();
+                  return false;
+        }).click();
+        $("#jumploc input").hide();
+        $("#jumploc select").change(function () {
+          this.parentNode.parentNode.submit();
+        });
+          $('#preview table.code').enableCollapsibleColumns($('#preview table.code thead th.content'));
+      });
+    </script>
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#modify").parent().removeClass("collapsed");
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="https://openwrt.org/"><img src="/chrome/site/openwrt-logo.png" alt="OpenWrt" height="98" width="386" /></a>
+      </div>
+      <form id="search" action="/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="/login">Login</a></li><li><a href="/prefs">Preferences</a></li><li><a href="/wiki/TracGuide">Help/Guide</a></li><li><a href="/about">About Trac</a></li><li class="last"><a href="/register">Register</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first"><a href="/wiki">Wiki</a></li><li><a href="/timeline">Timeline</a></li><li><a href="/roadmap">Roadmap</a></li><li class="active"><a href="/browser">Browse Source</a></li><li><a href="/report">View Tickets</a></li><li><a href="/newticket">New Ticket</a></li><li class="last"><a href="/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+        <ul>
+          <li class="first"><span>&larr; <a class="prev" href="/browser/trunk/package/kernel/mac80211/patches/522-mac80211_configure_antenna_gain.patch?rev=48247" title="Revision 48247">Previous Revision</a></span></li><li><span class="missing">Next Revision &rarr;</span></li><li><a href="/browser/trunk/package/kernel/mac80211/patches/522-mac80211_configure_antenna_gain.patch?annotate=blame" title="Annotate each line with the last changed revision (this can be time consuming...)">Blame</a></li><li class="last"><a href="/log/trunk/package/kernel/mac80211/patches/522-mac80211_configure_antenna_gain.patch">Revision Log</a></li>
+        </ul>
+        <hr />
+      </div>
+    <div id="content" class="browser">
+        <h1>
+          
+<a class="pathentry first" href="/browser?order=name" title="Go to repository root">source:</a>
+<a class="pathentry" href="/browser/trunk?order=name" title="View trunk">trunk</a><span class="pathentry sep">/</span><a class="pathentry" href="/browser/trunk/package?order=name" title="View package">package</a><span class="pathentry sep">/</span><a class="pathentry" href="/browser/trunk/package/kernel?order=name" title="View kernel">kernel</a><span class="pathentry sep">/</span><a class="pathentry" href="/browser/trunk/package/kernel/mac80211?order=name" title="View mac80211">mac80211</a><span class="pathentry sep">/</span><a class="pathentry" href="/browser/trunk/package/kernel/mac80211/patches?order=name" title="View patches">patches</a><span class="pathentry sep">/</span><a class="pathentry" href="/browser/trunk/package/kernel/mac80211/patches/522-mac80211_configure_antenna_gain.patch?order=name" title="View 522-mac80211_configure_antenna_gain.patch">522-mac80211_configure_antenna_gain.patch</a>
+<br style="clear: both" />
+
+        </h1>
+        <div id="diffrev">
+          <form action="/changeset" method="get">
+            <div>
+              <label title="Show the diff against a specific revision">
+                View diff against: <input type="text" name="old" size="6" />
+                <input type="hidden" name="old_path" value="trunk/package/kernel/mac80211/patches/522-mac80211_configure_antenna_gain.patch" />
+                <input type="hidden" name="new" />
+                <input type="hidden" name="new_path" value="trunk/package/kernel/mac80211/patches/522-mac80211_configure_antenna_gain.patch" />
+              </label>
+            </div>
+          </form>
+        </div>
+        <div id="jumprev">
+          <form action="" method="get">
+            <div>
+              <label for="rev">
+                View revision:</label>
+              <input type="text" id="rev" name="rev" size="6" />
+            </div>
+          </form>
+        </div>
+        <div id="jumploc">
+          <form action="" method="get">
+            <div style="display:none;"><input type="text" name="mail_addr" value="" /><input type="hidden" name="mail_addr_confirm" value="" /></div><div class="buttons">
+              <label for="preselected">Visit:</label>
+              <select id="preselected" name="preselected">
+                <option selected="selected"></option>
+                <optgroup label="branches">
+                  <option value="/browser/trunk">trunk</option><option value="/browser/branches/8.09">branches/8.09</option><option value="/browser/branches/attitude_adjustment">branches/attitude_adjustment</option><option value="/browser/branches/backfire">branches/backfire</option><option value="/browser/branches/barrier_breaker">branches/barrier_breaker</option><option value="/browser/branches/chaos_calmer">branches/chaos_calmer</option><option value="/browser/branches/kamikaze-before-brng">branches/kamikaze-before-brng</option><option value="/browser/branches/packages_8.09">branches/packages_8.09</option><option value="/browser/branches/packages_10.03.1">branches/packages_10.03.1</option><option value="/browser/branches/packages_10.03.2">branches/packages_10.03.2</option><option value="/browser/branches/packages_12.09">branches/packages_12.09</option><option value="/browser/branches/packages_14.07">branches/packages_14.07</option><option value="/browser/branches/whiterussian">branches/whiterussian</option>
+                </optgroup><optgroup label="tags">
+                  <option value="/browser/tags/8.09?rev=15317">tags/8.09</option><option value="/browser/tags/8.09.1?rev=16279">tags/8.09.1</option><option value="/browser/tags/8.09.2?rev=18961">tags/8.09.2</option><option value="/browser/tags/8.09_rc1?rev=13118">tags/8.09_rc1</option><option value="/browser/tags/8.09_rc2?rev=14166">tags/8.09_rc2</option><option value="/browser/tags/attitude_adjustment_12.09?rev=36422">tags/attitude_adjustment_12.09</option><option value="/browser/tags/backfire_10.03?rev=20742">tags/backfire_10.03</option><option value="/browser/tags/backfire_10.03.1?rev=29638">tags/backfire_10.03.1</option><option value="/browser/tags/kamikaze_7.06?rev=7431">tags/kamikaze_7.06</option><option value="/browser/tags/kamikaze_7.07?rev=8640">tags/kamikaze_7.07</option><option value="/browser/tags/kamikaze_7.09?rev=11162">tags/kamikaze_7.09</option><option value="/browser/tags/whiterussian_0.9?rev=6268">tags/whiterussian_0.9</option><option value="/browser/tags/whiterussian_rc1?rev=1284">tags/whiterussian_rc1</option><option value="/browser/tags/whiterussian_rc2?rev=1498">tags/whiterussian_rc2</option><option value="/browser/tags/whiterussian_rc3?rev=1922">tags/whiterussian_rc3</option><option value="/browser/tags/whiterussian_rc4?rev=2552">tags/whiterussian_rc4</option><option value="/browser/tags/whiterussian_rc5?rev=3506">tags/whiterussian_rc5</option><option value="/browser/tags/whiterussian_rc6?rev=5461">tags/whiterussian_rc6</option>
+                </optgroup>
+              </select>
+              <input type="submit" value="Go!" title="Jump to the chosen preselected path" />
+            </div>
+          </form>
+        </div>
+        <div class="trac-tags">
+        </div>
+      <table id="info" summary="Revision info">
+        <tr>
+          <th>
+                <a href="/changeset/48641/trunk/package/kernel/mac80211/patches/522-mac80211_configure_antenna_gain.patch" title="View differences">Last change</a>
+                  on this file was
+                  <a href="/changeset/48641/" title="View changeset 48641">48641</a>,
+                  checked in by nbd, <a class="timeline" href="/timeline?from=2016-02-07T14%3A29%3A08%2B01%3A00&amp;precision=second" title="See timeline at 2016-02-07T14:29:08+01:00">7 weeks ago</a>
+          </th>
+        </tr>
+        <tr>
+          <td class="message searchable">
+              <p>
+ath9k: merge fix for noise floor calibration<br />
+</p>
+<p>
+Signed-off-by: Felix Fietkau &lt;nbd@…&gt;<br />
+</p>
+          </td>
+        </tr>
+        <tr><td colspan="2">
+            <strong>File size:</strong>
+            <span title="5378 bytes">5.3 KB</span>
+          </td></tr>
+      </table>
+      <div id="preview" class="searchable">
+        
+  <div class="diff">
+  <ul class="entries">
+      <li class="entry">
+        <h2>
+          <a>include/net/cfg80211.h</a>
+        </h2>
+        <table class="trac-diff inline" summary="Differences" cellspacing="0">
+              <colgroup><col class="lineno" /><col class="lineno" /><col class="content" /></colgroup>
+              <thead>
+                <tr>
+                  <th title="File a/include/net/cfg80211.h">
+                      a
+                  </th>
+                  <th title="File b/include/net/cfg80211.h">
+                      b
+                  </th>
+                  <td><em> struct cfg80211_qos_map {</em> </td>
+                </tr>
+              </thead>
+            <tbody class="unmod">
+                  <tr>
+                          <th>2363</th><th>2363</th><td class="l"><span>&nbsp;*&nbsp; &nbsp; &nbsp; (as advertised by the nl80211 feature flag.)</span> </td>
+                  </tr><tr>
+                          <th>2364</th><th>2364</th><td class="l"><span>&nbsp;* @get_tx_power: store the current TX power into the dbm variable;</span> </td>
+                  </tr><tr>
+                          <th>2365</th><th>2365</th><td class="l"><span>&nbsp;*&nbsp; &nbsp; &nbsp; return 0 if successful</span> </td>
+                  </tr>
+            </tbody><tbody class="add">
+                  <tr class="last first">
+                          <th> </th><th>2366</th><td class="r"><ins>&nbsp;* @set_antenna_gain: set antenna gain to reduce maximum tx power if necessary</ins> </td>
+                  </tr>
+            </tbody><tbody class="unmod">
+                  <tr>
+                          <th>2366</th><th>2367</th><td class="l"><span>&nbsp;*</span> </td>
+                  </tr><tr>
+                          <th>2367</th><th>2368</th><td class="l"><span>&nbsp;* @set_wds_peer: set the WDS peer for a WDS interface</span> </td>
+                  </tr><tr>
+                          <th>2368</th><th>2369</th><td class="l"><span>&nbsp;*</span> </td>
+                  </tr>
+            </tbody>
+              <tbody class="skipped">
+                <tr>
+                  <th><a href="#L2624">…</a></th>
+                  <th><a href="#L2625">…</a></th>
+                  <td><em> struct cfg80211_ops {</em> </td>
+                </tr>
+              </tbody>
+            <tbody class="unmod">
+                  <tr>
+                          <th>2624</th><th>2625</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; enum nl80211_tx_power_setting type, int mbm);</span> </td>
+                  </tr><tr>
+                          <th>2625</th><th>2626</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; int&nbsp; &nbsp; &nbsp;(*get_tx_power)(struct wiphy *wiphy, struct wireless_dev *wdev,</span> </td>
+                  </tr><tr>
+                          <th>2626</th><th>2627</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; int *dbm);</span> </td>
+                  </tr>
+            </tbody><tbody class="add">
+                  <tr class="last first">
+                          <th> </th><th>2628</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; int&nbsp; &nbsp; &nbsp;(*set_antenna_gain)(struct wiphy *wiphy, int dbi);</ins> </td>
+                  </tr>
+            </tbody><tbody class="unmod">
+                  <tr>
+                          <th>2627</th><th>2629</th><td class="l"><span></span> </td>
+                  </tr><tr>
+                          <th>2628</th><th>2630</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; int&nbsp; &nbsp; &nbsp;(*set_wds_peer)(struct wiphy *wiphy, struct net_device *dev,</span> </td>
+                  </tr><tr>
+                          <th>2629</th><th>2631</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; const u8 *addr);</span> </td>
+                  </tr>
+            </tbody>
+        </table>
+      </li>
+      <li class="entry">
+        <h2>
+          <a>include/net/mac80211.h</a>
+        </h2>
+        <table class="trac-diff inline" summary="Differences" cellspacing="0">
+              <colgroup><col class="lineno" /><col class="lineno" /><col class="content" /></colgroup>
+              <thead>
+                <tr>
+                  <th title="File a/include/net/mac80211.h">
+                      a
+                  </th>
+                  <th title="File b/include/net/mac80211.h">
+                      b
+                  </th>
+                  <td><em> enum ieee80211_smps_mode {</em> </td>
+                </tr>
+              </thead>
+            <tbody class="unmod">
+                  <tr>
+                          <th>1286</th><th>1286</th><td class="l"><span>&nbsp;*</span> </td>
+                  </tr><tr>
+                          <th>1287</th><th>1287</th><td class="l"><span>&nbsp;* @power_level: requested transmit power (in dBm), backward compatibility</span> </td>
+                  </tr><tr>
+                          <th>1288</th><th>1288</th><td class="l"><span>&nbsp;*&nbsp; &nbsp; &nbsp; value only that is set to the minimum of all interfaces</span> </td>
+                  </tr>
+            </tbody><tbody class="add">
+                  <tr class="last first">
+                          <th> </th><th>1289</th><td class="r"><ins>&nbsp;* @max_antenna_gain: maximum antenna gain adjusted by user config (in dBi)</ins> </td>
+                  </tr>
+            </tbody><tbody class="unmod">
+                  <tr>
+                          <th>1289</th><th>1290</th><td class="l"><span>&nbsp;*</span> </td>
+                  </tr><tr>
+                          <th>1290</th><th>1291</th><td class="l"><span>&nbsp;* @chandef: the channel definition to tune to</span> </td>
+                  </tr><tr>
+                          <th>1291</th><th>1292</th><td class="l"><span>&nbsp;* @radar_enabled: whether radar detection is enabled</span> </td>
+                  </tr>
+            </tbody>
+              <tbody class="skipped">
+                <tr>
+                  <th><a href="#L1306">…</a></th>
+                  <th><a href="#L1307">…</a></th>
+                  <td><em> enum ieee80211_smps_mode {</em> </td>
+                </tr>
+              </tbody>
+            <tbody class="unmod">
+                  <tr>
+                          <th>1306</th><th>1307</th><td class="l"><span>struct ieee80211_conf {</span> </td>
+                  </tr><tr>
+                          <th>1307</th><th>1308</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; u32 flags;</span> </td>
+                  </tr><tr>
+                          <th>1308</th><th>1309</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; int power_level, dynamic_ps_timeout;</span> </td>
+                  </tr>
+            </tbody><tbody class="add">
+                  <tr class="last first">
+                          <th> </th><th>1310</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; int max_antenna_gain;</ins> </td>
+                  </tr>
+            </tbody><tbody class="unmod">
+                  <tr>
+                          <th>1309</th><th>1311</th><td class="l"><span></span> </td>
+                  </tr><tr>
+                          <th>1310</th><th>1312</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; u16 listen_interval;</span> </td>
+                  </tr><tr>
+                          <th>1311</th><th>1313</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; u8 ps_dtim_period;</span> </td>
+                  </tr>
+            </tbody>
+        </table>
+      </li>
+      <li class="entry">
+        <h2>
+          <a>include/uapi/linux/nl80211.h</a>
+        </h2>
+        <table class="trac-diff inline" summary="Differences" cellspacing="0">
+              <colgroup><col class="lineno" /><col class="lineno" /><col class="content" /></colgroup>
+              <thead>
+                <tr>
+                  <th title="File a/include/uapi/linux/nl80211.h">
+                      a
+                  </th>
+                  <th title="File b/include/uapi/linux/nl80211.h">
+                      b
+                  </th>
+                  <td><em> enum nl80211_commands {</em> </td>
+                </tr>
+              </thead>
+            <tbody class="unmod">
+                  <tr>
+                          <th>1790</th><th>1790</th><td class="l"><span>&nbsp;*&nbsp; &nbsp; &nbsp; between scans. The scan plans are executed sequentially.</span> </td>
+                  </tr><tr>
+                          <th>1791</th><th>1791</th><td class="l"><span>&nbsp;*&nbsp; &nbsp; &nbsp; Each scan plan is a nested attribute of &amp;enum nl80211_sched_scan_plan.</span> </td>
+                  </tr><tr>
+                          <th>1792</th><th>1792</th><td class="l"><span>&nbsp;*</span> </td>
+                  </tr>
+            </tbody><tbody class="add">
+                  <tr class="first">
+                          <th> </th><th>1793</th><td class="r"><ins>&nbsp;* @NL80211_ATTR_WIPHY_ANTENNA_GAIN: Configured antenna gain. Used to reduce</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>1794</th><td class="r"><ins>&nbsp;*&nbsp; &nbsp; &nbsp; transmit power to stay within regulatory limits. u32, dBi.</ins> </td>
+                  </tr><tr class="last">
+                          <th> </th><th>1795</th><td class="r"><ins>&nbsp;*</ins> </td>
+                  </tr>
+            </tbody><tbody class="unmod">
+                  <tr>
+                          <th>1793</th><th>1796</th><td class="l"><span>&nbsp;* @NUM_NL80211_ATTR: total number of nl80211_attrs available</span> </td>
+                  </tr><tr>
+                          <th>1794</th><th>1797</th><td class="l"><span>&nbsp;* @NL80211_ATTR_MAX: highest attribute number currently defined</span> </td>
+                  </tr><tr>
+                          <th>1795</th><th>1798</th><td class="l"><span>&nbsp;* @__NL80211_ATTR_AFTER_LAST: internal use</span> </td>
+                  </tr>
+            </tbody>
+              <tbody class="skipped">
+                <tr>
+                  <th><a href="#L2164">…</a></th>
+                  <th><a href="#L2167">…</a></th>
+                  <td><em> enum nl80211_attrs {</em> </td>
+                </tr>
+              </tbody>
+            <tbody class="unmod">
+                  <tr>
+                          <th>2164</th><th>2167</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; NL80211_ATTR_MAX_SCAN_PLAN_ITERATIONS,</span> </td>
+                  </tr><tr>
+                          <th>2165</th><th>2168</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; NL80211_ATTR_SCHED_SCAN_PLANS,</span> </td>
+                  </tr><tr>
+                          <th>2166</th><th>2169</th><td class="l"><span></span> </td>
+                  </tr>
+            </tbody><tbody class="add">
+                  <tr class="first">
+                          <th> </th><th>2170</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; NL80211_ATTR_WIPHY_ANTENNA_GAIN,</ins> </td>
+                  </tr><tr class="last">
+                          <th> </th><th>2171</th><td class="r"><ins></ins> </td>
+                  </tr>
+            </tbody><tbody class="unmod">
+                  <tr>
+                          <th>2167</th><th>2172</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; /* add attributes here, update the policy in nl80211.c */</span> </td>
+                  </tr><tr>
+                          <th>2168</th><th>2173</th><td class="l"><span></span> </td>
+                  </tr><tr>
+                          <th>2169</th><th>2174</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; __NL80211_ATTR_AFTER_LAST,</span> </td>
+                  </tr>
+            </tbody>
+        </table>
+      </li>
+      <li class="entry">
+        <h2>
+          <a>net/mac80211/cfg.c</a>
+        </h2>
+        <table class="trac-diff inline" summary="Differences" cellspacing="0">
+              <colgroup><col class="lineno" /><col class="lineno" /><col class="content" /></colgroup>
+              <thead>
+                <tr>
+                  <th title="File a/net/mac80211/cfg.c">
+                      a
+                  </th>
+                  <th title="File b/net/mac80211/cfg.c">
+                      b
+                  </th>
+                  <td><em> static int ieee80211_get_tx_power(struct</em> </td>
+                </tr>
+              </thead>
+            <tbody class="unmod">
+                  <tr>
+                          <th>2229</th><th>2229</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; return 0;</span> </td>
+                  </tr><tr>
+                          <th>2230</th><th>2230</th><td class="l"><span>}</span> </td>
+                  </tr><tr>
+                          <th>2231</th><th>2231</th><td class="l"><span></span> </td>
+                  </tr>
+            </tbody><tbody class="add">
+                  <tr class="first">
+                          <th> </th><th>2232</th><td class="r"><ins>static int ieee80211_set_antenna_gain(struct wiphy *wiphy, int dbi)</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>2233</th><td class="r"><ins>{</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>2234</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; struct ieee80211_local *local = wiphy_priv(wiphy);</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>2235</th><td class="r"><ins></ins> </td>
+                  </tr><tr>
+                          <th> </th><th>2236</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; if (dbi &lt; 0)</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>2237</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return -EINVAL;</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>2238</th><td class="r"><ins></ins> </td>
+                  </tr><tr>
+                          <th> </th><th>2239</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; local-&gt;user_antenna_gain = dbi;</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>2240</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; ieee80211_hw_config(local, 0);</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>2241</th><td class="r"><ins></ins> </td>
+                  </tr><tr>
+                          <th> </th><th>2242</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; return 0;</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>2243</th><td class="r"><ins>}</ins> </td>
+                  </tr><tr class="last">
+                          <th> </th><th>2244</th><td class="r"><ins></ins> </td>
+                  </tr>
+            </tbody><tbody class="unmod">
+                  <tr>
+                          <th>2232</th><th>2245</th><td class="l"><span>static int ieee80211_set_wds_peer(struct wiphy *wiphy, struct net_device *dev,</span> </td>
+                  </tr><tr>
+                          <th>2233</th><th>2246</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; const u8 *addr)</span> </td>
+                  </tr><tr>
+                          <th>2234</th><th>2247</th><td class="l"><span>{</span> </td>
+                  </tr>
+            </tbody>
+              <tbody class="skipped">
+                <tr>
+                  <th><a href="#L3403">…</a></th>
+                  <th><a href="#L3416">…</a></th>
+                  <td><em> const struct cfg80211_ops mac80211_confi</em> </td>
+                </tr>
+              </tbody>
+            <tbody class="unmod">
+                  <tr>
+                          <th>3403</th><th>3416</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; .set_wiphy_params = ieee80211_set_wiphy_params,</span> </td>
+                  </tr><tr>
+                          <th>3404</th><th>3417</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; .set_tx_power = ieee80211_set_tx_power,</span> </td>
+                  </tr><tr>
+                          <th>3405</th><th>3418</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; .get_tx_power = ieee80211_get_tx_power,</span> </td>
+                  </tr>
+            </tbody><tbody class="add">
+                  <tr class="last first">
+                          <th> </th><th>3419</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; .set_antenna_gain = ieee80211_set_antenna_gain,</ins> </td>
+                  </tr>
+            </tbody><tbody class="unmod">
+                  <tr>
+                          <th>3406</th><th>3420</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; .set_wds_peer = ieee80211_set_wds_peer,</span> </td>
+                  </tr><tr>
+                          <th>3407</th><th>3421</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; .rfkill_poll = ieee80211_rfkill_poll,</span> </td>
+                  </tr><tr>
+                          <th>3408</th><th>3422</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; CFG80211_TESTMODE_CMD(ieee80211_testmode_cmd)</span> </td>
+                  </tr>
+            </tbody>
+        </table>
+      </li>
+      <li class="entry">
+        <h2>
+          <a>net/mac80211/ieee80211_i.h</a>
+        </h2>
+        <table class="trac-diff inline" summary="Differences" cellspacing="0">
+              <colgroup><col class="lineno" /><col class="lineno" /><col class="content" /></colgroup>
+              <thead>
+                <tr>
+                  <th title="File a/net/mac80211/ieee80211_i.h">
+                      a
+                  </th>
+                  <th title="File b/net/mac80211/ieee80211_i.h">
+                      b
+                  </th>
+                  <td><em> struct ieee80211_local {</em> </td>
+                </tr>
+              </thead>
+            <tbody class="unmod">
+                  <tr>
+                          <th>1318</th><th>1318</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; int dynamic_ps_forced_timeout;</span> </td>
+                  </tr><tr>
+                          <th>1319</th><th>1319</th><td class="l"><span></span> </td>
+                  </tr><tr>
+                          <th>1320</th><th>1320</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; int user_power_level; /* in dBm, for all interfaces */</span> </td>
+                  </tr>
+            </tbody><tbody class="add">
+                  <tr class="last first">
+                          <th> </th><th>1321</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; int user_antenna_gain; /* in dBi */</ins> </td>
+                  </tr>
+            </tbody><tbody class="unmod">
+                  <tr>
+                          <th>1321</th><th>1322</th><td class="l"><span></span> </td>
+                  </tr><tr>
+                          <th>1322</th><th>1323</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; enum ieee80211_smps_mode smps_mode;</span> </td>
+                  </tr><tr>
+                          <th>1323</th><th>1324</th><td class="l"><span></span> </td>
+                  </tr>
+            </tbody>
+        </table>
+      </li>
+      <li class="entry">
+        <h2>
+          <a>net/mac80211/main.c</a>
+        </h2>
+        <table class="trac-diff inline" summary="Differences" cellspacing="0">
+              <colgroup><col class="lineno" /><col class="lineno" /><col class="content" /></colgroup>
+              <thead>
+                <tr>
+                  <th title="File a/net/mac80211/main.c">
+                      a
+                  </th>
+                  <th title="File b/net/mac80211/main.c">
+                      b
+                  </th>
+                  <td><em> static u32 ieee80211_hw_conf_chan(struct</em> </td>
+                </tr>
+              </thead>
+            <tbody class="unmod">
+                  <tr>
+                          <th>93</th><th>93</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; struct ieee80211_sub_if_data *sdata;</span> </td>
+                  </tr><tr>
+                          <th>94</th><th>94</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; struct cfg80211_chan_def chandef = {};</span> </td>
+                  </tr><tr>
+                          <th>95</th><th>95</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; u32 changed = 0;</span> </td>
+                  </tr>
+            </tbody><tbody class="mod">
+                      <tr class="first">
+                        <th>96</th><th> </th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; int power<del></del>;</span> </td>
+                      </tr>
+                      <tr class="last">
+                        <th> </th><th>96</th><td class="r"><span>&nbsp; &nbsp; &nbsp; &nbsp; int power<ins>, max_power</ins>;</span> </td>
+                      </tr>
+            </tbody><tbody class="unmod">
+                  <tr>
+                          <th>97</th><th>97</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; u32 offchannel_flag;</span> </td>
+                  </tr><tr>
+                          <th>98</th><th>98</th><td class="l"><span></span> </td>
+                  </tr><tr>
+                          <th>99</th><th>99</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; offchannel_flag = local-&gt;hw.conf.flags &amp; IEEE80211_CONF_OFFCHANNEL;</span> </td>
+                  </tr>
+            </tbody>
+              <tbody class="skipped">
+                <tr>
+                  <th><a href="#L150">…</a></th>
+                  <th><a href="#L150">…</a></th>
+                  <td><em> static u32 ieee80211_hw_conf_chan(struct</em> </td>
+                </tr>
+              </tbody>
+            <tbody class="unmod">
+                  <tr>
+                          <th>150</th><th>150</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; }</span> </td>
+                  </tr><tr>
+                          <th>151</th><th>151</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; rcu_read_unlock();</span> </td>
+                  </tr><tr>
+                          <th>152</th><th>152</th><td class="l"><span></span> </td>
+                  </tr>
+            </tbody><tbody class="add">
+                  <tr class="first">
+                          <th> </th><th>153</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; max_power = chandef.chan-&gt;max_reg_power;</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>154</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; if (local-&gt;user_antenna_gain &gt; 0) {</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>155</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; max_power -= local-&gt;user_antenna_gain;</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>156</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; power = min(power, max_power);</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>157</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; }</ins> </td>
+                  </tr><tr class="last">
+                          <th> </th><th>158</th><td class="r"><ins></ins> </td>
+                  </tr>
+            </tbody><tbody class="unmod">
+                  <tr>
+                          <th>153</th><th>159</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; if (local-&gt;hw.conf.power_level != power) {</span> </td>
+                  </tr><tr>
+                          <th>154</th><th>160</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; changed |= IEEE80211_CONF_CHANGE_POWER;</span> </td>
+                  </tr><tr>
+                          <th>155</th><th>161</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; local-&gt;hw.conf.power_level = power;</span> </td>
+                  </tr>
+            </tbody>
+              <tbody class="skipped">
+                <tr>
+                  <th><a href="#L586">…</a></th>
+                  <th><a href="#L592">…</a></th>
+                  <td><em> struct ieee80211_hw *ieee80211_alloc_hw_</em> </td>
+                </tr>
+              </tbody>
+            <tbody class="unmod">
+                  <tr>
+                          <th>586</th><th>592</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;IEEE80211_RADIOTAP_MCS_HAVE_BW;</span> </td>
+                  </tr><tr>
+                          <th>587</th><th>593</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; local-&gt;hw.radiotap_vht_details = IEEE80211_RADIOTAP_VHT_KNOWN_GI |</span> </td>
+                  </tr><tr>
+                          <th>588</th><th>594</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;IEEE80211_RADIOTAP_VHT_KNOWN_BANDWIDTH;</span> </td>
+                  </tr>
+            </tbody><tbody class="add">
+                  <tr class="last first">
+                          <th> </th><th>595</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; local-&gt;user_antenna_gain = 0;</ins> </td>
+                  </tr>
+            </tbody><tbody class="unmod">
+                  <tr>
+                          <th>589</th><th>596</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; local-&gt;hw.uapsd_queues = IEEE80211_DEFAULT_UAPSD_QUEUES;</span> </td>
+                  </tr><tr>
+                          <th>590</th><th>597</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; local-&gt;hw.uapsd_max_sp_len = IEEE80211_DEFAULT_MAX_SP_LEN;</span> </td>
+                  </tr><tr>
+                          <th>591</th><th>598</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; local-&gt;user_power_level = IEEE80211_UNSET_POWER_LEVEL;</span> </td>
+                  </tr>
+            </tbody>
+        </table>
+      </li>
+      <li class="entry">
+        <h2>
+          <a>net/wireless/nl80211.c</a>
+        </h2>
+        <table class="trac-diff inline" summary="Differences" cellspacing="0">
+              <colgroup><col class="lineno" /><col class="lineno" /><col class="content" /></colgroup>
+              <thead>
+                <tr>
+                  <th title="File a/net/wireless/nl80211.c">
+                      a
+                  </th>
+                  <th title="File b/net/wireless/nl80211.c">
+                      b
+                  </th>
+                  <td><em> static const struct nla_policy nl80211_p</em> </td>
+                </tr>
+              </thead>
+            <tbody class="unmod">
+                  <tr>
+                          <th>403</th><th>403</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; [NL80211_ATTR_NETNS_FD] = { .type = NLA_U32 },</span> </td>
+                  </tr><tr>
+                          <th>404</th><th>404</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; [NL80211_ATTR_SCHED_SCAN_DELAY] = { .type = NLA_U32 },</span> </td>
+                  </tr><tr>
+                          <th>405</th><th>405</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; [NL80211_ATTR_REG_INDOOR] = { .type = NLA_FLAG },</span> </td>
+                  </tr>
+            </tbody><tbody class="add">
+                  <tr class="last first">
+                          <th> </th><th>406</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; [NL80211_ATTR_WIPHY_ANTENNA_GAIN] = { .type = NLA_U32 },</ins> </td>
+                  </tr>
+            </tbody><tbody class="unmod">
+                  <tr>
+                          <th>406</th><th>407</th><td class="l"><span>};</span> </td>
+                  </tr><tr>
+                          <th>407</th><th>408</th><td class="l"><span></span> </td>
+                  </tr><tr>
+                          <th>408</th><th>409</th><td class="l"><span>/* policy for the key attributes */</span> </td>
+                  </tr>
+            </tbody>
+              <tbody class="skipped">
+                <tr>
+                  <th><a href="#L2220">…</a></th>
+                  <th><a href="#L2221">…</a></th>
+                  <td><em> static int nl80211_set_wiphy(struct sk_b</em> </td>
+                </tr>
+              </tbody>
+            <tbody class="unmod">
+                  <tr>
+                          <th>2220</th><th>2221</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (result)</span> </td>
+                  </tr><tr>
+                          <th>2221</th><th>2222</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return result;</span> </td>
+                  </tr><tr>
+                          <th>2222</th><th>2223</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; }</span> </td>
+                  </tr>
+            </tbody><tbody class="add">
+                  <tr class="first">
+                          <th> </th><th>2224</th><td class="r"><ins></ins> </td>
+                  </tr><tr>
+                          <th> </th><th>2225</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; if (info-&gt;attrs[NL80211_ATTR_WIPHY_ANTENNA_GAIN]) {</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>2226</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; int idx, dbi = 0;</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>2227</th><td class="r"><ins></ins> </td>
+                  </tr><tr>
+                          <th> </th><th>2228</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (!rdev-&gt;ops-&gt;set_antenna_gain)</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>2229</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return -EOPNOTSUPP;</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>2230</th><td class="r"><ins></ins> </td>
+                  </tr><tr>
+                          <th> </th><th>2231</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; idx = NL80211_ATTR_WIPHY_ANTENNA_GAIN;</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>2232</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; dbi = nla_get_u32(info-&gt;attrs[idx]);</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>2233</th><td class="r"><ins></ins> </td>
+                  </tr><tr>
+                          <th> </th><th>2234</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; result = rdev-&gt;ops-&gt;set_antenna_gain(&amp;rdev-&gt;wiphy, dbi);</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>2235</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if (result)</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>2236</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return result;</ins> </td>
+                  </tr><tr class="last">
+                          <th> </th><th>2237</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; }</ins> </td>
+                  </tr>
+            </tbody><tbody class="unmod">
+                  <tr>
+                          <th>2223</th><th>2238</th><td class="l"><span></span> </td>
+                  </tr><tr>
+                          <th>2224</th><th>2239</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; if (info-&gt;attrs[NL80211_ATTR_WIPHY_ANTENNA_TX] &amp;&amp;</span> </td>
+                  </tr><tr>
+                          <th>2225</th><th>2240</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; info-&gt;attrs[NL80211_ATTR_WIPHY_ANTENNA_RX]) {</span> </td>
+                  </tr>
+            </tbody>
+        </table>
+      </li>
+  </ul>
+</div>
+
+      </div>
+      <div id="anydiff">
+        <form action="/diff" method="get">
+          <div style="display:none;"><input type="text" name="mail_addr" value="" /><input type="hidden" name="mail_addr_confirm" value="" /></div><div class="buttons">
+            <input type="hidden" name="new_path" value="/trunk/package/kernel/mac80211/patches/522-mac80211_configure_antenna_gain.patch" />
+            <input type="hidden" name="old_path" value="/trunk/package/kernel/mac80211/patches/522-mac80211_configure_antenna_gain.patch" />
+            <input type="hidden" name="new_rev" />
+            <input type="hidden" name="old_rev" />
+            <input type="submit" value="View changes..." title="Select paths and revs for Diff" />
+          </div>
+        </form>
+      </div>
+      <div id="help"><strong>Note:</strong> See <a href="/wiki/TracBrowser">TracBrowser</a>
+        for help on using the repository browser.</div>
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="first">
+          <a rel="nofollow" href="/browser/trunk/package/kernel/mac80211/patches/522-mac80211_configure_antenna_gain.patch?format=txt">Plain Text</a>
+        </li><li class="last">
+          <a rel="nofollow" href="/export/49097/trunk/package/kernel/mac80211/patches/522-mac80211_configure_antenna_gain.patch">Original Format</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="/chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="/about"><strong>Trac 1.0.1</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.com/">http://trac.edgewall.com/</a></p>
+    </div>
+  </body>
+</html>

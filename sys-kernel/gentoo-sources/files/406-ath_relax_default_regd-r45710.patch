@@ -1,0 +1,351 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  
+  
+
+  
+
+
+  <head>
+    <title>
+      406-ath_relax_default_regd.patch in trunk/package/kernel/mac80211/patches
+     – OpenWrt
+    </title>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!--[if IE]><script type="text/javascript">
+      if (/^#__msie303:/.test(window.location.hash))
+        window.location.replace(window.location.hash.replace(/^#__msie303:/, '#'));
+    </script><![endif]-->
+        <link rel="search" href="/search" />
+        <link rel="help" href="/wiki/TracGuide" />
+        <link rel="alternate" href="/browser/trunk/package/kernel/mac80211/patches/406-ath_relax_default_regd.patch?format=txt" type="text/plain" title="Plain Text" /><link rel="alternate" href="/export/49097/trunk/package/kernel/mac80211/patches/406-ath_relax_default_regd.patch" type="text/x-diff; charset=iso-8859-15" title="Original Format" />
+        <link rel="start" href="/wiki" />
+        <link rel="stylesheet" href="/chrome/common/css/trac.css" type="text/css" /><link rel="stylesheet" href="/chrome/common/css/code.css" type="text/css" /><link rel="stylesheet" href="/chrome/common/css/diff.css" type="text/css" /><link rel="stylesheet" href="/chrome/common/css/browser.css" type="text/css" />
+        <link rel="prev" href="/browser/trunk/package/kernel/mac80211/patches/406-ath_relax_default_regd.patch?rev=45252" title="Revision 45252" />
+        <link rel="shortcut icon" href="/chrome/common/trac.ico" type="image/x-icon" />
+        <link rel="icon" href="/chrome/common/trac.ico" type="image/x-icon" />
+      <link type="application/opensearchdescription+xml" rel="search" href="/search/opensearch" title="Search OpenWrt" />
+      <script type="text/javascript" charset="utf-8" src="/chrome/common/js/jquery.js"></script>
+      <script type="text/javascript" charset="utf-8" src="/chrome/common/js/babel.js"></script>
+      <script type="text/javascript" charset="utf-8" src="/chrome/common/js/messages/en_US.js"></script>
+      <script type="text/javascript" charset="utf-8" src="/chrome/common/js/trac.js"></script>
+      <script type="text/javascript" charset="utf-8" src="/chrome/common/js/search.js"></script>
+      <script type="text/javascript" charset="utf-8" src="/chrome/common/js/diff.js"></script>
+    <script type="text/javascript" src="/chrome/common/js/folding.js"></script>
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $(".trac-toggledeleted").show().click(function() {
+                  $(this).siblings().find(".trac-deleted").toggle();
+                  return false;
+        }).click();
+        $("#jumploc input").hide();
+        $("#jumploc select").change(function () {
+          this.parentNode.parentNode.submit();
+        });
+          $('#preview table.code').enableCollapsibleColumns($('#preview table.code thead th.content'));
+      });
+    </script>
+    <script type="text/javascript">
+      jQuery(document).ready(function($) {
+        $("#modify").parent().removeClass("collapsed");
+      });
+    </script>
+  </head>
+  <body>
+    <div id="banner">
+      <div id="header">
+        <a id="logo" href="https://openwrt.org/"><img src="/chrome/site/openwrt-logo.png" alt="OpenWrt" height="98" width="386" /></a>
+      </div>
+      <form id="search" action="/search" method="get">
+        <div>
+          <label for="proj-search">Search:</label>
+          <input type="text" id="proj-search" name="q" size="18" value="" />
+          <input type="submit" value="Search" />
+        </div>
+      </form>
+      <div id="metanav" class="nav">
+    <ul>
+      <li class="first"><a href="/login">Login</a></li><li><a href="/prefs">Preferences</a></li><li><a href="/wiki/TracGuide">Help/Guide</a></li><li><a href="/about">About Trac</a></li><li class="last"><a href="/register">Register</a></li>
+    </ul>
+  </div>
+    </div>
+    <div id="mainnav" class="nav">
+    <ul>
+      <li class="first"><a href="/wiki">Wiki</a></li><li><a href="/timeline">Timeline</a></li><li><a href="/roadmap">Roadmap</a></li><li class="active"><a href="/browser">Browse Source</a></li><li><a href="/report">View Tickets</a></li><li><a href="/newticket">New Ticket</a></li><li class="last"><a href="/search">Search</a></li>
+    </ul>
+  </div>
+    <div id="main">
+      <div id="ctxtnav" class="nav">
+        <h2>Context Navigation</h2>
+        <ul>
+          <li class="first"><span>&larr; <a class="prev" href="/browser/trunk/package/kernel/mac80211/patches/406-ath_relax_default_regd.patch?rev=45252" title="Revision 45252">Previous Revision</a></span></li><li><span class="missing">Next Revision &rarr;</span></li><li><a href="/browser/trunk/package/kernel/mac80211/patches/406-ath_relax_default_regd.patch?annotate=blame" title="Annotate each line with the last changed revision (this can be time consuming...)">Blame</a></li><li class="last"><a href="/log/trunk/package/kernel/mac80211/patches/406-ath_relax_default_regd.patch">Revision Log</a></li>
+        </ul>
+        <hr />
+      </div>
+    <div id="content" class="browser">
+        <h1>
+          
+<a class="pathentry first" href="/browser?order=name" title="Go to repository root">source:</a>
+<a class="pathentry" href="/browser/trunk?order=name" title="View trunk">trunk</a><span class="pathentry sep">/</span><a class="pathentry" href="/browser/trunk/package?order=name" title="View package">package</a><span class="pathentry sep">/</span><a class="pathentry" href="/browser/trunk/package/kernel?order=name" title="View kernel">kernel</a><span class="pathentry sep">/</span><a class="pathentry" href="/browser/trunk/package/kernel/mac80211?order=name" title="View mac80211">mac80211</a><span class="pathentry sep">/</span><a class="pathentry" href="/browser/trunk/package/kernel/mac80211/patches?order=name" title="View patches">patches</a><span class="pathentry sep">/</span><a class="pathentry" href="/browser/trunk/package/kernel/mac80211/patches/406-ath_relax_default_regd.patch?order=name" title="View 406-ath_relax_default_regd.patch">406-ath_relax_default_regd.patch</a>
+<br style="clear: both" />
+
+        </h1>
+        <div id="diffrev">
+          <form action="/changeset" method="get">
+            <div>
+              <label title="Show the diff against a specific revision">
+                View diff against: <input type="text" name="old" size="6" />
+                <input type="hidden" name="old_path" value="trunk/package/kernel/mac80211/patches/406-ath_relax_default_regd.patch" />
+                <input type="hidden" name="new" />
+                <input type="hidden" name="new_path" value="trunk/package/kernel/mac80211/patches/406-ath_relax_default_regd.patch" />
+              </label>
+            </div>
+          </form>
+        </div>
+        <div id="jumprev">
+          <form action="" method="get">
+            <div>
+              <label for="rev">
+                View revision:</label>
+              <input type="text" id="rev" name="rev" size="6" />
+            </div>
+          </form>
+        </div>
+        <div id="jumploc">
+          <form action="" method="get">
+            <div style="display:none;"><input type="text" name="mail_addr" value="" /><input type="hidden" name="mail_addr_confirm" value="" /></div><div class="buttons">
+              <label for="preselected">Visit:</label>
+              <select id="preselected" name="preselected">
+                <option selected="selected"></option>
+                <optgroup label="branches">
+                  <option value="/browser/trunk">trunk</option><option value="/browser/branches/8.09">branches/8.09</option><option value="/browser/branches/attitude_adjustment">branches/attitude_adjustment</option><option value="/browser/branches/backfire">branches/backfire</option><option value="/browser/branches/barrier_breaker">branches/barrier_breaker</option><option value="/browser/branches/chaos_calmer">branches/chaos_calmer</option><option value="/browser/branches/kamikaze-before-brng">branches/kamikaze-before-brng</option><option value="/browser/branches/packages_8.09">branches/packages_8.09</option><option value="/browser/branches/packages_10.03.1">branches/packages_10.03.1</option><option value="/browser/branches/packages_10.03.2">branches/packages_10.03.2</option><option value="/browser/branches/packages_12.09">branches/packages_12.09</option><option value="/browser/branches/packages_14.07">branches/packages_14.07</option><option value="/browser/branches/whiterussian">branches/whiterussian</option>
+                </optgroup><optgroup label="tags">
+                  <option value="/browser/tags/8.09?rev=15317">tags/8.09</option><option value="/browser/tags/8.09.1?rev=16279">tags/8.09.1</option><option value="/browser/tags/8.09.2?rev=18961">tags/8.09.2</option><option value="/browser/tags/8.09_rc1?rev=13118">tags/8.09_rc1</option><option value="/browser/tags/8.09_rc2?rev=14166">tags/8.09_rc2</option><option value="/browser/tags/attitude_adjustment_12.09?rev=36422">tags/attitude_adjustment_12.09</option><option value="/browser/tags/backfire_10.03?rev=20742">tags/backfire_10.03</option><option value="/browser/tags/backfire_10.03.1?rev=29638">tags/backfire_10.03.1</option><option value="/browser/tags/kamikaze_7.06?rev=7431">tags/kamikaze_7.06</option><option value="/browser/tags/kamikaze_7.07?rev=8640">tags/kamikaze_7.07</option><option value="/browser/tags/kamikaze_7.09?rev=11162">tags/kamikaze_7.09</option><option value="/browser/tags/whiterussian_0.9?rev=6268">tags/whiterussian_0.9</option><option value="/browser/tags/whiterussian_rc1?rev=1284">tags/whiterussian_rc1</option><option value="/browser/tags/whiterussian_rc2?rev=1498">tags/whiterussian_rc2</option><option value="/browser/tags/whiterussian_rc3?rev=1922">tags/whiterussian_rc3</option><option value="/browser/tags/whiterussian_rc4?rev=2552">tags/whiterussian_rc4</option><option value="/browser/tags/whiterussian_rc5?rev=3506">tags/whiterussian_rc5</option><option value="/browser/tags/whiterussian_rc6?rev=5461">tags/whiterussian_rc6</option>
+                </optgroup>
+              </select>
+              <input type="submit" value="Go!" title="Jump to the chosen preselected path" />
+            </div>
+          </form>
+        </div>
+        <div class="trac-tags">
+        </div>
+      <table id="info" summary="Revision info">
+        <tr>
+          <th>
+                <a href="/changeset/45710/trunk/package/kernel/mac80211/patches/406-ath_relax_default_regd.patch" title="View differences">Last change</a>
+                  on this file was
+                  <a href="/changeset/45710/" title="View changeset 45710">45710</a>,
+                  checked in by jogo, <a class="timeline" href="/timeline?from=2015-05-21T21%3A32%3A16%2B02%3A00&amp;precision=second" title="See timeline at 2015-05-21T21:32:16+02:00">10 months ago</a>
+          </th>
+        </tr>
+        <tr>
+          <td class="message searchable">
+              <p>
+mac80211: make it work with 3.18.12+<br />
+</p>
+<p>
+3.18.12 backported <a class="missing changeset" rel="nofollow" title="No changeset 61ada528dea028331e99e8ceaed87c683ad25de2 in the repository">61ada528dea028331e99e8ceaed87c683ad25de2</a> ("sched/wait:<br />
+Provide infrastructure to deal with nested blocking") from 3.19, causing<br />
+the following error on load:<br />
+</p>
+<p>
+[   13.588000] compat: exports duplicate symbol woken_wake_function (owned by kernel)<br />
+</p>
+<p>
+Fix this by guarding it with a check for 3.18.11 or earlier instead of<br />
+3.19.<br />
+</p>
+<p>
+Signed-off-by: Jonas Gorski &lt;jogo@…&gt;<br />
+</p>
+          </td>
+        </tr>
+        <tr><td colspan="2">
+            <strong>File size:</strong>
+            <span title="1171 bytes">1.1 KB</span>
+          </td></tr>
+      </table>
+      <div id="preview" class="searchable">
+        
+  <div class="diff">
+  <ul class="entries">
+      <li class="entry">
+        <h2>
+          <a>drivers/net/wireless/ath/regd.c</a>
+        </h2>
+        <table class="trac-diff inline" summary="Differences" cellspacing="0">
+              <colgroup><col class="lineno" /><col class="lineno" /><col class="content" /></colgroup>
+              <thead>
+                <tr>
+                  <th title="File a/drivers/net/wireless/ath/regd.c">
+                      a
+                  </th>
+                  <th title="File b/drivers/net/wireless/ath/regd.c">
+                      b
+                  </th>
+                  <td><em> static const struct ieee80211_regdomain</em> </td>
+                </tr>
+              </thead>
+            <tbody class="unmod">
+                  <tr>
+                          <th>114</th><th>114</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; )</span> </td>
+                  </tr><tr>
+                          <th>115</th><th>115</th><td class="l"><span>};</span> </td>
+                  </tr><tr>
+                          <th>116</th><th>116</th><td class="l"><span></span> </td>
+                  </tr>
+            </tbody><tbody class="add">
+                  <tr class="first">
+                          <th> </th><th>117</th><td class="r"><ins>static u16 ath_regd_get_eepromRD(struct ath_regulatory *reg)</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>118</th><td class="r"><ins>{</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>119</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; return reg-&gt;current_rd &amp; ~WORLDWIDE_ROAMING_FLAG;</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>120</th><td class="r"><ins>}</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>121</th><td class="r"><ins></ins> </td>
+                  </tr><tr>
+                          <th> </th><th>122</th><td class="r"><ins>static bool is_default_regd(struct ath_regulatory *reg)</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>123</th><td class="r"><ins>{</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>124</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; return ath_regd_get_eepromRD(reg) == CTRY_DEFAULT;</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>125</th><td class="r"><ins>}</ins> </td>
+                  </tr><tr class="last">
+                          <th> </th><th>126</th><td class="r"><ins></ins> </td>
+                  </tr>
+            </tbody><tbody class="unmod">
+                  <tr>
+                          <th>117</th><th>127</th><td class="l"><span>static bool dynamic_country_user_possible(struct ath_regulatory *reg)</span> </td>
+                  </tr><tr>
+                          <th>118</th><th>128</th><td class="l"><span>{</span> </td>
+                  </tr><tr>
+                          <th>119</th><th>129</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; if (config_enabled(CPTCFG_ATH_REG_DYNAMIC_USER_CERT_TESTING))</span> </td>
+                  </tr><tr>
+                          <th>120</th><th>130</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return true;</span> </td>
+                  </tr>
+            </tbody><tbody class="add">
+                  <tr class="first">
+                          <th> </th><th>131</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; if (is_default_regd(reg))</ins> </td>
+                  </tr><tr class="last">
+                          <th> </th><th>132</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return true;</ins> </td>
+                  </tr>
+            </tbody><tbody class="unmod">
+                  <tr>
+                          <th>121</th><th>133</th><td class="l"><span></span> </td>
+                  </tr><tr>
+                          <th>122</th><th>134</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; switch (reg-&gt;country_code) {</span> </td>
+                  </tr><tr>
+                          <th>123</th><th>135</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; case CTRY_UNITED_STATES:</span> </td>
+                  </tr>
+            </tbody>
+              <tbody class="skipped">
+                <tr>
+                  <th><a href="#L202">…</a></th>
+                  <th><a href="#L214">…</a></th>
+                  <td><em> static inline bool is_wwr_sku(u16 regd)</em> </td>
+                </tr>
+              </tbody>
+            <tbody class="unmod">
+                  <tr>
+                          <th>202</th><th>214</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (regd == WORLD));</span> </td>
+                  </tr><tr>
+                          <th>203</th><th>215</th><td class="l"><span>}</span> </td>
+                  </tr><tr>
+                          <th>204</th><th>216</th><td class="l"><span></span> </td>
+                  </tr>
+            </tbody><tbody class="rem">
+                  <tr class="first">
+                          <th>205</th><th> </th><td class="l"><del>static u16 ath_regd_get_eepromRD(struct ath_regulatory *reg)</del> </td>
+                  </tr><tr>
+                          <th>206</th><th> </th><td class="l"><del>{</del> </td>
+                  </tr><tr>
+                          <th>207</th><th> </th><td class="l"><del>&nbsp; &nbsp; &nbsp; &nbsp; return reg-&gt;current_rd &amp; ~WORLDWIDE_ROAMING_FLAG;</del> </td>
+                  </tr><tr>
+                          <th>208</th><th> </th><td class="l"><del>}</del> </td>
+                  </tr><tr class="last">
+                          <th>209</th><th> </th><td class="l"><del></del> </td>
+                  </tr>
+            </tbody><tbody class="unmod">
+                  <tr>
+                          <th>210</th><th>217</th><td class="l"><span>bool ath_is_world_regd(struct ath_regulatory *reg)</span> </td>
+                  </tr><tr>
+                          <th>211</th><th>218</th><td class="l"><span>{</span> </td>
+                  </tr><tr>
+                          <th>212</th><th>219</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; return is_wwr_sku(ath_regd_get_eepromRD(reg));</span> </td>
+                  </tr>
+            </tbody>
+              <tbody class="skipped">
+                <tr>
+                  <th><a href="#L650">…</a></th>
+                  <th><a href="#L657">…</a></th>
+                  <td><em> ath_regd_init_wiphy(struct ath_regulator</em> </td>
+                </tr>
+              </tbody>
+            <tbody class="unmod">
+                  <tr>
+                          <th>650</th><th>657</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; return 0;</span> </td>
+                  </tr><tr>
+                          <th>651</th><th>658</th><td class="l"><span>#endif</span> </td>
+                  </tr><tr>
+                          <th>652</th><th>659</th><td class="l"><span></span> </td>
+                  </tr>
+            </tbody><tbody class="add">
+                  <tr class="first">
+                          <th> </th><th>660</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; if (is_default_regd(reg))</ins> </td>
+                  </tr><tr>
+                          <th> </th><th>661</th><td class="r"><ins>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return 0;</ins> </td>
+                  </tr><tr class="last">
+                          <th> </th><th>662</th><td class="r"><ins></ins> </td>
+                  </tr>
+            </tbody><tbody class="unmod">
+                  <tr>
+                          <th>653</th><th>663</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; wiphy-&gt;regulatory_flags |= REGULATORY_STRICT_REG |</span> </td>
+                  </tr><tr>
+                          <th>654</th><th>664</th><td class="l"><span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;REGULATORY_CUSTOM_REG;</span> </td>
+                  </tr><tr>
+                          <th>655</th><th>665</th><td class="l"><span></span> </td>
+                  </tr>
+            </tbody>
+        </table>
+      </li>
+  </ul>
+</div>
+
+      </div>
+      <div id="anydiff">
+        <form action="/diff" method="get">
+          <div style="display:none;"><input type="text" name="mail_addr" value="" /><input type="hidden" name="mail_addr_confirm" value="" /></div><div class="buttons">
+            <input type="hidden" name="new_path" value="/trunk/package/kernel/mac80211/patches/406-ath_relax_default_regd.patch" />
+            <input type="hidden" name="old_path" value="/trunk/package/kernel/mac80211/patches/406-ath_relax_default_regd.patch" />
+            <input type="hidden" name="new_rev" />
+            <input type="hidden" name="old_rev" />
+            <input type="submit" value="View changes..." title="Select paths and revs for Diff" />
+          </div>
+        </form>
+      </div>
+      <div id="help"><strong>Note:</strong> See <a href="/wiki/TracBrowser">TracBrowser</a>
+        for help on using the repository browser.</div>
+    </div>
+    <div id="altlinks">
+      <h3>Download in other formats:</h3>
+      <ul>
+        <li class="first">
+          <a rel="nofollow" href="/browser/trunk/package/kernel/mac80211/patches/406-ath_relax_default_regd.patch?format=txt">Plain Text</a>
+        </li><li class="last">
+          <a rel="nofollow" href="/export/49097/trunk/package/kernel/mac80211/patches/406-ath_relax_default_regd.patch">Original Format</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    <div id="footer" lang="en" xml:lang="en"><hr />
+      <a id="tracpowered" href="http://trac.edgewall.org/"><img src="/chrome/common/trac_logo_mini.png" height="30" width="107" alt="Trac Powered" /></a>
+      <p class="left">Powered by <a href="/about"><strong>Trac 1.0.1</strong></a><br />
+        By <a href="http://www.edgewall.org/">Edgewall Software</a>.</p>
+      <p class="right">Visit the Trac open source project at<br /><a href="http://trac.edgewall.com/">http://trac.edgewall.com/</a></p>
+    </div>
+  </body>
+</html>
