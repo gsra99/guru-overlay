@@ -24,7 +24,7 @@ src_prepare() {
 		#epatch "302-ath9k-restart-only-triggering-DFS-detector-line-r44655.patch"
 		#epatch "303-ath9k-add-DFS-support-for-extension-channel-r44655.patch"
 		#epatch "304-ath9k-allow-40MHz-radar-detection-width-r44655.patch"
-		epatch "402-ath_regd_optional-r47771.patch"
+		epatch "402-ath_regd_optional-r47771-fixed.patch"
 		epatch "403-world_regd_fixup-r42952.patch"
 		epatch "405-ath_regd_us-r42952.patch"
 		epatch "406-ath_relax_default_regd-r45710-fixed.patch"
