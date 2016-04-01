@@ -37,15 +37,15 @@
 --- a/include/uapi/linux/nl80211.h
 +++ b/include/uapi/linux/nl80211.h
 @@ -1790,6 +1790,9 @@ enum nl80211_commands {
-  *	between scans. The scan plans are executed sequentially.
-  *	Each scan plan is a nested attribute of &enum nl80211_sched_scan_plan.
+  * @NL80211_ATTR_SMPS_MODE: SMPS mode to use (ap mode). see
+  *	&enum nl80211_smps_mode.
   *
 + * @NL80211_ATTR_WIPHY_ANTENNA_GAIN: Configured antenna gain. Used to reduce
 + *	transmit power to stay within regulatory limits. u32, dBi.
 + *
-  * @NUM_NL80211_ATTR: total number of nl80211_attrs available
   * @NL80211_ATTR_MAX: highest attribute number currently defined
   * @__NL80211_ATTR_AFTER_LAST: internal use
+  */
 @@ -2164,6 +2167,8 @@ enum nl80211_attrs {
  	NL80211_ATTR_MAX_SCAN_PLAN_ITERATIONS,
  	NL80211_ATTR_SCHED_SCAN_PLANS,
@@ -130,9 +130,9 @@
 --- a/net/wireless/nl80211.c
 +++ b/net/wireless/nl80211.c
 @@ -403,6 +403,7 @@ static const struct nla_policy nl80211_p
- 	[NL80211_ATTR_NETNS_FD] = { .type = NLA_U32 },
- 	[NL80211_ATTR_SCHED_SCAN_DELAY] = { .type = NLA_U32 },
- 	[NL80211_ATTR_REG_INDOOR] = { .type = NLA_FLAG },
+ 	[NL80211_ATTR_USER_PRIO] = { .type = NLA_U8 },
+ 	[NL80211_ATTR_ADMITTED_TIME] = { .type = NLA_U16 },
+ 	[NL80211_ATTR_SMPS_MODE] = { .type = NLA_U8 },
 +	[NL80211_ATTR_WIPHY_ANTENNA_GAIN] = { .type = NLA_U32 },
  };
  
