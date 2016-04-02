@@ -10,7 +10,7 @@ DESCRIPTION=""
 HOMEPAGE=""
 RELEASE_VERSION="6"
 MODULE_NAMES="8812au(net/wireless:${S})"
-S="${WORKDIR}/${P}"
+S="${WORKDIR}/rtl8812AU-rtl8812AU-${PV}-${RELEASE_VERSION}"
 SRC_URI="https://github.com/diederikdehaas/rtl8812AU/archive/rtl8812AU-${PV}-${RELEASE_VERSION}.tar.gz -> ${PF}.tar.gz"
 
 LICENSE=""
