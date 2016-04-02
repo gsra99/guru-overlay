@@ -60,7 +60,7 @@ pkg_setup() {
 	fi
 
         linux-mod_pkg_setup
-        kernel_is -gt 4 0 && die "Kernel higher than 4.0 is not supported."
+        kernel_is -gt 4 1 && die "Kernel higher than 4.1 is not supported."
 }
 
 src_compile() {
