@@ -38,7 +38,7 @@ pkg_setup() {
 	linux_config_exists
 	if false; then
 		die "Please configure and build a running kernel first."
-	else linux_chkconfig_present CFG80211_WEXT
+	else linux_chkconfig_builtin CFG80211_WEXT
 		if false; then
 			die "Please build kernel with cfg80211 wireless extensions compatibility 
 			     Netwowrking support --->
