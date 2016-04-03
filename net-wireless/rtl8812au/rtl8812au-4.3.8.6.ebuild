@@ -14,6 +14,11 @@ S="${WORKDIR}/${MY_PN}-${MY_PN}-${MY_PV}"
 SRC_URI="https://github.com/diederikdehaas/${MY_PN}/archive/${MY_PN}-${MY_PV}.tar.gz"
 MODULE_NAMES="8812au(net/wireless:${S}:${S})"
 CONFIG_CHECK="CFG80211_WEXT"
+ERROR_CFG80211_WEXT="Please build kernel with cfg80211 wireless extensions compatibility 
+Netwowrking support --->
+  Wireless --->
+    cfg80211 - wireless configuration API --->
+      cfg80211 wireless extensions compatibility"
 
 LICENSE=""
 SLOT="0"
@@ -36,14 +41,6 @@ pkg_setup() {
 
 	linux-mod_pkg_setup
 		kernel_is -gt 4 2 && die "Kernels higher than 4.2 are not supported."
-	linux_chkconfig_builtin CFG80211_WEXT
-	if false; then
-		die "Please build kernel with cfg80211 wireless extensions compatibility 
-		     Netwowrking support --->
-		       Wireless --->
-		         cfg80211 - wireless configuration API --->
-		           cfg80211 wireless extensions compatibility"
-	fi
 }
 
 src_compile() {
