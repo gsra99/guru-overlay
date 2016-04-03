@@ -35,17 +35,13 @@ pkg_setup() {
 
 	linux-mod_pkg_setup
 		kernel_is -gt 4 2 && die "Kernels higher than 4.2 are not supported."
-	linux_config_exists
+	linux_chkconfig_builtin CFG80211_WEXT
 	if false; then
-		die "Please configure and build a running kernel first."
-	else linux_chkconfig_builtin CFG80211_WEXT
-		if false; then
-			die "Please build kernel with cfg80211 wireless extensions compatibility 
-			     Netwowrking support --->
-			       Wireless --->
-			         cfg80211 - wireless configuration API --->
-			           cfg80211 wireless extensions compatibility"
-		fi
+		die "Please build kernel with cfg80211 wireless extensions compatibility 
+		     Netwowrking support --->
+		       Wireless --->
+		         cfg80211 - wireless configuration API --->
+		           cfg80211 wireless extensions compatibility"
 	fi
 }
 
