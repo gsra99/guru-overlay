@@ -15,10 +15,10 @@ SRC_URI="https://github.com/diederikdehaas/${MY_PN}/archive/${MY_PN}-${MY_PV}.ta
 MODULE_NAMES="8812au(net/wireless:${S}:${S})"
 CONFIG_CHECK="CFG80211_WEXT"
 ERROR_CFG80211_WEXT="Please build kernel with cfg80211 wireless extensions compatibility 
-Netwowrking support --->
-  Wireless --->
-    cfg80211 - wireless configuration API --->
-      cfg80211 wireless extensions compatibility"
+  Netwowrking support --->
+    Wireless --->
+      cfg80211 - wireless configuration API --->
+        cfg80211 wireless extensions compatibility"
 
 LICENSE=""
 SLOT="0"
