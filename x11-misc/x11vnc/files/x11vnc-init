@@ -11,6 +11,8 @@ checkconfig() {
 	eerror "You must set config options in /etc/conf.d/x11vnc first"
 	return 1
 	fi
+	if [ $AUTH="guess" ]; then
+	$OPTIONS=
 }
 
 start() {
