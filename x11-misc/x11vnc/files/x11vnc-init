@@ -12,7 +12,10 @@ checkconfig() {
 	return 1
 	fi
 	if [ $AUTH="guess" ]; then
-	$OPTIONS=
+	$OPTIONS="-env FD_XDM=1 $SETTINGS"
+	else
+	$OPTIONS="$SETTINGS"
+	fi
 }
 
 start() {
