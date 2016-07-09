@@ -1,4 +1,4 @@
-# Copyright 1999-2014 Gentoo Foundation
+# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
@@ -11,12 +11,12 @@ MM_PV=$(get_version_component_range '1-2')
 
 DESCRIPTION="Cairo-dock is a fast, responsive, Mac OS X-like dock."
 HOMEPAGE="http://www.glx-dock.org"
-SRC_URI="https://github.com/Cairo-Dock/${MY_PN}/archive/${PV}.tar.gz -> ${PN}-${PV}.tar.gz"
+SRC_URI="http://launchpad.net/${MY_PN}/${MM_PV}/${PV}/+download/${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="crypt xcomposite desktop_manager egl"
+IUSE="crypt xcomposite desktop_manager gtk3"
 
 RDEPEND="
 	dev-libs/dbus-glib
@@ -27,16 +27,16 @@ RDEPEND="
 	sys-apps/dbus
 	x11-libs/cairo
 	x11-libs/pango
+	!gtk3? ( x11-libs/gtk+:2 )
 	x11-libs/gtkglext
 	x11-libs/libXrender
-	x11-libs/gtk+:3
+	gtk3? ( x11-libs/gtk+:3 )
 	crypt? ( sys-libs/glibc )
 	xcomposite? (
 		x11-libs/libXcomposite
 		x11-libs/libXinerama
 		x11-libs/libXtst
 	)
-	media-libs/mesa[egl?]
 "
 DEPEND="${RDEPEND}
 	dev-util/intltool
@@ -44,21 +44,18 @@ DEPEND="${RDEPEND}
 	sys-devel/gettext
 "
 
-S="${WORKDIR}/${MY_PN}-${PV}"
-BUILD_DIR="${S}/build"
-
 src_configure() {
-	local mycmakeargs=(
+	mycmakeargs=(
+		`use gtk3 && echo "-Dforce-gtk2=OFF" || echo "-Dforce-gtk2=ON"`
 		`use desktop_manager && echo "-Denable-desktop-manager=ON" || echo "-Denable-desktop-manager=OFF"`
-		`use egl && echo "-Denable-egl-support=ON" || echo "-Denable-egl-support=OFF"`
 	)
-	cmake-utils_src_configure .. -DCMAKE_INSTALL_PREFIX=/usr
+	cmake-utils_src_configure
 }
 
 pkg_postinst() {
 	elog "Additional plugins are available to extend the functionality"
 	elog "of Cairo-Dock. It is recommended to install at least"
-	elog "x11-plugins/cairo-dock-plugins."
+	elog "x11-pluings/cairo-dock-plugins."
 	elog
 	elog "Cairo-Dock is an app that draws on a RGBA GLX visual."
 	elog "Some users have noticed that if the dock is launched,"
