@@ -49,7 +49,7 @@ COMMONDEPEND="
 	dev-python/pyrex[${PYTHON_USEDEP}]
 	media-libs/libpng:0=
 	>=gnome-base/librsvg-2.14.0:2
-	x11-base/xorg-server[dmx]
+	x11-base/xorg-server
 	>=x11-libs/cairo-1.0
 	x11-libs/libX11
 	x11-libs/libXcomposite
