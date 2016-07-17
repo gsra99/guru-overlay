@@ -26,7 +26,7 @@ DESCRIPTION="OpenGL compositing window manager."
 HOMEPAGE="https://launchpad.net/compiz"
 LICENSE="GPL-2 LGPL-2.1 MIT"
 SLOT="0.9"
-IUSE="gnome +gtk3 kde test"
+IUSE="gnome +gtk3 kde gles2 test"
 REQUIRED_USE="|| ( gnome gtk3 kde )"
 
 COMMONDEPEND="
@@ -49,9 +49,9 @@ COMMONDEPEND="
 	dev-python/pyrex[${PYTHON_USEDEP}]
 	media-libs/libpng:0=
 	>=gnome-base/librsvg-2.14.0:2
-	media-libs/mesa[gallium,llvm]
-	x11-base/xorg-server
-	>=x11-libs/cairo-1.0
+	media-libs/mesa[gallium,llvm,gles2?]
+	x11-base/xorg-server[dmx]
+	>=x11-libs/cairo-1.0[gles2?]
 	x11-libs/libX11
 	x11-libs/libXcomposite
 	x11-libs/libXdamage
