@@ -114,16 +114,16 @@ src_prepare() {
 	# Fix wrong path for icons
 	#sed -i 's:DataDir = "@prefix@/share":DataDir = "/usr/share":' compizconfig/ccsm/ccm/Constants.py.in
 
-	base_src_prepare
+	#base_src_prepare
 }
 
 src_configure() {
 	local mycmakeargs=(
-		"$(cmake-utils_use_use gnome GNOME)"
-		"$(cmake-utils_use_use gnome GSETTINGS)"
-		"$(cmake-utils_use_use gtk GTK)"
-		"$(cmake-utils_use_use kde KDE4)"
-		"$(cmake-utils_use test COMPIZ_BUILD_TESTING)"
+		#"$(cmake-utils_use_use gnome GNOME)"
+		#"$(cmake-utils_use_use gnome GSETTINGS)"
+		#"$(cmake-utils_use_use gtk3 GTK)"
+		#"$(cmake-utils_use_use kde KDE4)"
+		#"$(cmake-utils_use test COMPIZ_BUILD_TESTING)"
 		#"-DCMAKE_INSTALL_PREFIX=/usr"
 		"-DCOMPIZ_DEFAULT_PLUGINS=ccp"
 		"-DCOMPIZ_DISABLE_SCHEMAS_INSTALL=ON"
