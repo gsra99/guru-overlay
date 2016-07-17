@@ -62,7 +62,7 @@ COMMONDEPEND="
 	x11-libs/libICE
 	x11-libs/libSM
 	>=x11-libs/startup-notification-0.7
-	x11-libs/libwnck:1
+	x11-libs/libwnck
 	x11-libs/pango
 	gtk3? (
 		>=x11-libs/gtk+-3.12
