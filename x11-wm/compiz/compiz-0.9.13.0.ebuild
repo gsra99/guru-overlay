@@ -49,7 +49,8 @@ COMMONDEPEND="
 	dev-python/pyrex[${PYTHON_USEDEP}]
 	media-libs/libpng:0=
 	>=gnome-base/librsvg-2.14.0:2
-	x11-base/xorg-server
+	media-libs/mesa[gallium,llvm]
+	x11-base/xorg-server[drm]
 	>=x11-libs/cairo-1.0
 	x11-libs/libX11
 	x11-libs/libXcomposite
@@ -68,7 +69,6 @@ COMMONDEPEND="
 		>=x11-libs/gtk+-3.12
 		>=gnome-base/gsettings-desktop-schemas-3.8
 		gnome? (
-			gnome-base/gconf
 			>=x11-wm/metacity-3.12
 		)
 	)
@@ -144,13 +144,15 @@ src_install() {
 }
 
 pkg_preinst() {
-	use gnome && gnome2_gconf_savelist
+	gnome2_schemas_savelist
+	gnome2_icon_savelist
 }
 
 pkg_postinst() {
-	use gnome && gnome2_gconf_install
+	gnome2_schemas_update
+	gnome2_icon_cache_update
 }
 
-pkg_prerm() {
-	use gnome && gnome2_gconf_uninstall
+pkg_postrm() {
+	gnome2_schemas_update
 }
