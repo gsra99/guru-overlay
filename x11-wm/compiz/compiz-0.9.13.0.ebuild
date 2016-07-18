@@ -112,9 +112,7 @@ src_prepare() {
 	#echo "metadata/core.xml.in" >> "${S}/po/POTFILES.skip"
 
 	# Fix wrong path for icons
-	#sed -i 's:DataDir = "@prefix@/share":DataDir = "/usr/share":' compizconfig/ccsm/ccm/Constants.py.in
-
-	#base_src_prepare
+	sed -i 's:DataDir = "@prefix@/share":DataDir = "/usr/share":' compizconfig/ccsm/ccm/Constants.py.in
 }
 
 src_configure() {
@@ -124,7 +122,7 @@ src_configure() {
 		#"$(cmake-utils_use_use gtk3 GTK)"
 		#"$(cmake-utils_use_use kde KDE4)"
 		#"$(cmake-utils_use test COMPIZ_BUILD_TESTING)"
-		#"-DCMAKE_INSTALL_PREFIX=/usr"
+		"-DCMAKE_INSTALL_PREFIX=/usr"
 		"-DCOMPIZ_DEFAULT_PLUGINS=ccp"
 		"-DCOMPIZ_DISABLE_SCHEMAS_INSTALL=ON"
 		"-DCOMPIZ_PACKAGING_ENABLED=ON"
