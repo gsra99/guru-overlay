@@ -63,11 +63,11 @@ COMMONDEPEND="
 	x11-libs/libICE
 	x11-libs/libSM
 	>=x11-libs/startup-notification-0.7
-	x11-libs/libwnck
 	x11-libs/pango
 	gtk3? (
 		>=x11-libs/gtk+-3.12
 		>=gnome-base/gsettings-desktop-schemas-3.8
+		x11-libs/libwnck:3
 		gnome? (
 			>=x11-wm/metacity-3.12
 		)
@@ -108,8 +108,14 @@ src_unpack() {
 src_prepare() {
 	epatch -p1 "${FILESDIR}/compiz-python2.patch"
 
-	#echo "gtk/gnome/compiz-wm.desktop.in" >> "${S}/po/POTFILES.skip"
-	#echo "metadata/core.xml.in" >> "${S}/po/POTFILES.skip"
+	# correct gettext behavior
+	if [[ -n "${LINGUAS+x}" ]] ; then
+		for i in $(cd po ; echo *po | sed 's/\.po//g') ; do
+		if ! has ${i} ${LINGUAS} ; then
+			rm po/${i}.po || die
+		fi
+		done
+	fi
 
 	# Fix wrong path for icons
 	sed -i 's:DataDir = "@prefix@/share":DataDir = "/usr/share":' compizconfig/ccsm/ccm/Constants.py.in
