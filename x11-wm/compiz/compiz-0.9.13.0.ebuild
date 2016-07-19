@@ -109,13 +109,13 @@ src_prepare() {
 	epatch -p1 "${FILESDIR}/compiz-python2.patch"
 
 	# correct gettext behavior
-	if [[ -n "${LINGUAS+x}" ]] ; then
-		for i in $(cd po ; echo *po | sed 's/\.po//g') ; do
-		if ! has ${i} ${LINGUAS} ; then
-			rm po/${i}.po || die
-		fi
-		done
-	fi
+	#if [[ -n "${LINGUAS+x}" ]] ; then
+	#	for i in $(cd po ; echo *po | sed 's/\.po//g') ; do
+	#	if ! has ${i} ${LINGUAS} ; then
+	#		rm po/${i}.po || die
+	#	fi
+	#	done
+	#fi
 
 	# Fix wrong path for icons
 	sed -i 's:DataDir = "@prefix@/share":DataDir = "/usr/share":' compizconfig/ccsm/ccm/Constants.py.in
