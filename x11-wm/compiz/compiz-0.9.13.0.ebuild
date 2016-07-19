@@ -108,14 +108,8 @@ src_unpack() {
 src_prepare() {
 	epatch -p1 "${FILESDIR}/compiz-python2.patch"
 
-	# correct gettext behavior
-	#if [[ -n "${LINGUAS+x}" ]] ; then
-	#	for i in $(cd po ; echo *po | sed 's/\.po//g') ; do
-	#	if ! has ${i} ${LINGUAS} ; then
-	#		rm po/${i}.po || die
-	#	fi
-	#	done
-	#fi
+	echo "gtk/gnome/compiz-wm.desktop.in" >> "${S}/po/POTFILES.skip"
+	echo "metadata/core.xml.in" >> "${S}/po/POTFILES.skip"
 
 	# Fix wrong path for icons
 	sed -i 's:DataDir = "@prefix@/share":DataDir = "/usr/share":' compizconfig/ccsm/ccm/Constants.py.in
@@ -138,11 +132,13 @@ src_configure() {
 
 src_install() {
 	pushd "${CMAKE_BUILD_DIR}"
+
 	# Fix paths to avoid sandbox access violation
 	# 'emake DESTDIR=${D} install' does not work with compiz cmake files!
 	for i in `find . -type f -name "cmake_install.cmake"`;do
 		sed -e "s|/usr|${D}/usr|g" -i "${i}"  || die "sed failed"
 	done
+
 	emake install
 	popd
 }
