@@ -23,6 +23,7 @@ RDEPEND="dev-libs/crypto++
 	dev-db/sqlite:3
 	net-dns/c-ares
 	net-misc/curl[ssl,curl_ssl_openssl]
+	dev-libs/libsodium
 	!qt5? (
 		dev-qt/qtcore:4
 		dev-qt/qtgui:4
@@ -56,7 +57,7 @@ src_configure() {
 		--with-zlib \
 		--with-cares \
 		--with-curl \
-		--without-sodium \
+		--with-sodium \
 		--without-freeimage \
 		--without-readline \
 		--without-termcap \
