@@ -24,6 +24,7 @@ RDEPEND="dev-libs/crypto++
 	net-dns/c-ares
 	net-misc/curl[ssl,curl_ssl_openssl]
 	dev-libs/libsodium
+	dev-libs/libuv
 	!qt5? (
 		dev-qt/qtcore:4
 		dev-qt/qtgui:4
