@@ -35,6 +35,7 @@ RDEPEND="dev-libs/crypto++
 		dev-qt/qtwidgets:5
 		dev-qt/qtnetwork:5
 		dev-qt/linguist-tools:5
+		dev-qt/qtconcurrent
 	)"
 DEPEND="${RDEPEND}
 	app-arch/unzip"
