@@ -4,7 +4,7 @@
 
 EAPI=6
 
-inherit qmake-utils git-r3 autotools eutils
+inherit qmake-utils git-r3 autotools eutils gnome2-utils
 
 DESCRIPTION="Automated syncing between your computers and your MEGA cloud drive"
 HOMEPAGE="https://mega.nz/ https://github.com/meganz/MEGAsync https://github.com/meganz/sdk"
@@ -89,4 +89,18 @@ src_install() {
 	for size in 16 32 48 128 256; do
 		doicon -s ${size} ${size}x${size}/apps/mega.png
 	done
+}
+
+pkg_preinst() {
+	gnome2_schemas_savelist
+	gnome2_icon_savelist
+}
+
+pkg_postinst() {
+	gnome2_schemas_update
+	gnome2_icon_cache_update
+}
+
+pkg_postrm() {
+	gnome2_schemas_update
 }
