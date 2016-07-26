@@ -62,7 +62,7 @@ src_configure() {
 		--without-freeimage \
 		--without-readline \
 		--without-termcap \
-		--disable-posix-threads \
+		--enable-posix-threads \
 		--disable-examples
 
 	cd ../.. || die
