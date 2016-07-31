@@ -57,6 +57,6 @@ src_configure() {
 
 src_install() {
 	default
-	doinitd "${FILESDIR}/x11vnc.init.d"
-	doconfd "${FILESDIR}/x11vnc.conf.d"
+	doinitd "${FILESDIR}/x11vnc"
+	doconfd "${FILESDIR}/x11vnc"
 }
