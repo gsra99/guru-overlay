@@ -17,7 +17,8 @@ checkconfig() {
 	X11VNC_DISPLAY=${X11VNC_DISPLAY:-:0}
 	X11VNC_LOG=${X11VNC_LOG:-/var/log/x11vnc}
 
-	X11VNC_AUTH="/var/run/x11vnc-${X11VNC_DISPLAY}"
+	X11VNC_AUTH=${X11VNC_AUTH:-/var/run/lightdm/root/:0}
+	X11VNC_AUTH_TMP="/var/run/x11vnc-${X11VNC_DISPLAY}"
 
 	if [ -n "${X11VNC_AUTOPORT}" ]; then
 		X11VNC_PORT=""
@@ -31,8 +32,8 @@ checkconfig() {
 
 	# Attempt to find X-Auth file
 	if ! type xauth > /dev/null 2>&1 ||
-			! xauth -f /var/run/lightdm/root/${X11VNC_DISPLAY} extract - "${X11VNC_DISPLAY}" > "${X11VNC_AUTH}" 2>/dev/null ||
-			[ ! -s "${X11VNC_AUTH}" ]; then
+			! xauth -f ${X11VNC_AUTH} extract - "${X11VNC_DISPLAY}" > "${X11VNC_AUTH_TMP}" 2>/dev/null ||
+			[ ! -s "${X11VNC_AUTH_TMP}" ]; then
 		# Let x11vnc guess at auth
 		X11VNC_AUTH_OPTS="--env FD_XDM=1 -auth guess"
 	else
