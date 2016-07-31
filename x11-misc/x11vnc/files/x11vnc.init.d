@@ -31,7 +31,7 @@ checkconfig() {
 
 	# Attempt to find X-Auth file
 	if ! type xauth > /dev/null 2>&1 ||
-			! xauth -f /root/.Xauthority extract - "${X11VNC_DISPLAY}" > "${X11VNC_AUTH}" 2>/dev/null ||
+			! xauth -f /var/run/lightdm/root/${X11VNC_DISPLAY} extract - "${X11VNC_DISPLAY}" > "${X11VNC_AUTH}" 2>/dev/null ||
 			[ ! -s "${X11VNC_AUTH}" ]; then
 		# Let x11vnc guess at auth
 		X11VNC_AUTH_OPTS="--env FD_XDM=1 -auth guess"
