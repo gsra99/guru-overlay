@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE repositories SYSTEM "/dtd/repositories.dtd">
 <repositories xmlns="" version="1.0">
   <repo quality="experimental" status="unofficial">
-    <name><![CDATA[guru-overlay]]></name>
-    <description lang="en"><![CDATA[Unofficial portage overlay for Gentoo Linux providing modified and unofficial ebuilds.]]></description>
+    <name>guru-overlay</name>
+    <description lang="en">Unofficial portage overlay for Gentoo Linux providing modified and unofficial ebuilds.</description>
     <homepage>https://github.com/gsra99/guru-overlay</homepage>
     <owner type="person">
       <email>N/A</email>
-      <name><![CDATA[gsra99]]></name>
     </owner>
     <source type="git">git://github.com/gsra99/guru-overlay.git</source>
     <feed>https://github.com/gsra99/guru-overlay/commits/master.atom</feed>
