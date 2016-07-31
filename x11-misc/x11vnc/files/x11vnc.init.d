@@ -12,10 +12,11 @@ depend() {
 checkconfig() {
 
 	# Set Defaults
-	X11VNC_RFBAUTH=${X11VNC_RFBAUTH:-/etc/x11vnc.pass}
+	X11VNC_RFBAUTH=${X11VNC_RFBAUTH:-/etc/x11vnc/passwd}
 	X11VNC_RFBPORT=${X11VNC_RFBPORT:-5900}
 	X11VNC_DISPLAY=${X11VNC_DISPLAY:-:0}
-	X11VNC_LOG=${X11VNC_LOG:-/var/log/x11vnc}
+	X11VNC_LOG=${X11VNC_LOG:-/var/log/x11vnc.log}
+	X11VNC_ALLOW=${X11VNC_ALLOW:-192.168.1.,172.16.1.}
 
 	X11VNC_AUTH=${X11VNC_AUTH:-/var/run/lightdm/root/:0}
 	X11VNC_AUTH_TMP="/var/run/x11vnc-${X11VNC_DISPLAY}"
@@ -58,6 +59,7 @@ start() {
 			${X11VNC_RFBPORT:+-rfbport} ${X11VNC_RFBPORT} \
 			${X11VNC_AUTOPORT:+-autoport} ${X11VNC_AUTOPORT} \
 			-display ${X11VNC_DISPLAY} \
+			-allow ${X11VNC_ALLOW} \
 			-o ${X11VNC_LOG} \
 			-loop -forever \
 			${X11VNC_OPTS}
