@@ -26,6 +26,9 @@
 # Location of the x11vnc logfile
 #X11VNC_LOG="/var/log/x11vnc"
 
+# Location of Xauthority file
+#X11VNC_AUTH="/var/run/lightdm/root:0"
+
 # Miscelaneous options to pass to x11vnc.
 #   Do not set options that are configurable above.
 #   Check `x11vnc -help` or `man x11vnc` for more options.
