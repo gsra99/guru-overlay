@@ -16,8 +16,8 @@ checkconfig() {
 	X11VNC_RFBPORT=${X11VNC_RFBPORT:-5900}
 	X11VNC_DISPLAY=${X11VNC_DISPLAY:-:0}
 	X11VNC_LOG=${X11VNC_LOG:-/var/log/x11vnc}
-	
-	X11VNC_AUTH="/var/run/x11vnc-${X11VNC_DISPLAY}"	
+
+	X11VNC_AUTH="/var/run/x11vnc-${X11VNC_DISPLAY}"
 
 	if [ -n "${X11VNC_AUTOPORT}" ]; then
 		X11VNC_PORT=""
@@ -43,15 +43,15 @@ checkconfig() {
 	if [ ! -f "${X11VNC_AUTH}" ]; then
 		eerror "Specified X-Authority file '${X11VNC_AUTH}' not found!"
 		return 1
-	fi	
+	fi
 }
 
 start() {
 	checkconfig || return 1
 
 	ebegin "Starting ${SVCNAME}"
-	start-stop-daemon --start \
-		--exec /usr/bin/x11vnc -- \
+	start-stop-daemon -S -q -b -m -p /var/run/x11vnc.pid \
+		-x /usr/bin/x11vnc -- \
 			${X11VNC_AUTH_OPTS} \
 			-rfbauth ${X11VNC_RFBAUTH} \
 			${X11VNC_RFBPORT:+-rfbport} ${X11VNC_RFBPORT} \
@@ -65,6 +65,15 @@ start() {
 
 stop() {
 	ebegin "Stopping ${SVCNAME}"
-	start-stop-daemon --stop /usr/bin/x11vnc
+	pid=`cat /var/run/x11vnc.pid`
+
+	# kill parent process
+	start-stop-daemon -K -q -p /var/run/x11vnc.pid
+
+	# kill child processes
+	if [ -n "$pid" ]; then
+	pkill -s $pid
+	fi
+
 	eend $?
 }
