@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Copy
-GenericName=Desktop client for Copy
-Comment=See your files on the cloud
-Exec=/opt/bin/copyagent
-Categories=Network;
-Icon=copy
-Type=Application
