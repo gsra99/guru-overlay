@@ -16,7 +16,7 @@ else
 #	SDK_COMMIT="f1f9d5070d5b123d8c2f198764f83a64719ddb2d"
 	MY_PV="$(replace_all_version_separators _)"
 
-SRC_URI="https://github.com/meganz/MEGAsync/releases/tag/v${MY_PV}_0_Linux.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/meganz/MEGAsync/archive/v${MY_PV}_0_Linux.tar.gz -> ${P}.tar.gz"
 #	https://github.com/meganz/sdk/archive/${SDK_COMMIT}.tar.gz -> ${PN}-sdk-20160531.tar.gz"
 	KEYWORDS="~x86 ~amd64"
 	RESTRICT="mirror"
