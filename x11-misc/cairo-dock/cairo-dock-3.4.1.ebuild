@@ -46,7 +46,6 @@ DEPEND="${RDEPEND}
 
 src_configure() {
 	mycmakeargs=(
-		`use gtk3 && echo "-Dforce-gtk2=OFF" || echo "-Dforce-gtk2=ON"`
 		`use desktop_manager && echo "-Denable-desktop-manager=ON" || echo "-Denable-desktop-manager=OFF"`
 	)
 	cmake-utils_src_configure
