@@ -20,10 +20,6 @@ IUSE=""
 DEPEND=""
 RDEPEND="${DEPEND}"
 
-#src_unpack() {
-#	subversion_src_unpack
-#}
-
 src_install () {
 	doman ${S}/${PN}.8.gz
 	dosbin ${S}/${PN}
