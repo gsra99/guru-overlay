@@ -4,12 +4,13 @@
 
 EAPI=5
 
-inherit subversion eutils
+inherit git-r3 eutils
 
 DESCRIPTION=""
 HOMEPAGE=""
 RESTRICT="mirror"
-ESVN_REPO_URI="http://iwleeprom.googlecode.com/svn/branches/atheros"
+EGIT_REPO_URI="https://github.com/gsra99/iwleeprom.git"
+EGIT_BRANCH="atheros"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -19,9 +20,9 @@ IUSE=""
 DEPEND=""
 RDEPEND="${DEPEND}"
 
-src_unpack() {
-	subversion_src_unpack
-}
+#src_unpack() {
+#	subversion_src_unpack
+#}
 
 src_install () {
 	doman ${S}/${PN}.8.gz
