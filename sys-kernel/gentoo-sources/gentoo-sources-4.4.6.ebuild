@@ -23,7 +23,7 @@ SRC_URI="${KERNEL_URI} ${GENPATCHES_URI} ${ARCH_URI}"
 src_prepare() {
         EPATCH_SOURCE="${FILESDIR}"
         EPATCH_OPTS="-p1"
-		epatch "402-ath_regd_optional-r48247.patch"
+		epatch "402-ath_regd_optional-r47771-fixed.patch"
 		epatch "403-world_regd_fixup-r42952.patch"
 		epatch "405-ath_regd_us-r42952.patch"
 		epatch "406-ath_relax_default_regd-r45710-fixed.patch"
