@@ -23,7 +23,9 @@ KEYWORDS="~amd64 ~x86"
 
 IUSE="gtk3 python spell"
 
-REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
+REQUIRED_USE="
+	python? ( ${PYTHON_REQUIRED_USE} )
+	gtk3? ( !python )"
 
 # Tests require gvfs sftp fs mounted and schema's installed. Disable tests.
 # https://github.com/mate-desktop/mate-text-editor/issues/33
