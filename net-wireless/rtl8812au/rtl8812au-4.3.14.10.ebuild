@@ -15,6 +15,7 @@ EGIT_REPO_URI="https://github.com/diederikdehaas/rtl8812AU.git"
 EGIT_BRANCH="driver-4.3.14"
 EGIT_COMMIT="78a277b53e4321fb081b6036a68525351032a39d"
 EGIT_CHECKOUT_DIR="${WORKDIR}/${MY_PN}-${MY_PV}"
+S="${EGIT_CHECKOUT_DIR}"
 MODULE_NAMES="8812au(net/wireless:${S}:${S})"
 CONFIG_CHECK="CFG80211_WEXT"
 ERROR_CFG80211_WEXT="Please build kernel with cfg80211 wireless extensions compatibility 
