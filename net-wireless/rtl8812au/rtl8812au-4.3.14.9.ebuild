@@ -8,14 +8,16 @@ inherit linux-info linux-mod eutils versionator
 
 DESCRIPTION=""
 HOMEPAGE=""
+
 MY_PN="rtl8812AU"
 MY_PV=$(replace_version_separator 3 '-' )
 S="${WORKDIR}/${MY_PN}-${MY_PN}-${MY_PV}"
 SRC_URI="https://github.com/diederikdehaas/${MY_PN}/archive/${MY_PN}-${MY_PV}.tar.gz"
+
 MODULE_NAMES="8812au(net/wireless:${S}:${S})"
 CONFIG_CHECK="CFG80211_WEXT"
 ERROR_CFG80211_WEXT="Please build kernel with cfg80211 wireless extensions compatibility 
-  Netwowrking support --->
+  Networking support --->
     Wireless --->
       cfg80211 - wireless configuration API --->
         cfg80211 wireless extensions compatibility"
@@ -40,7 +42,7 @@ pkg_setup() {
 	fi
 
 	linux-mod_pkg_setup
-		kernel_is -gt 4 2 && die "Kernels higher than 4.2 are not supported."
+	kernel_is -gt 4 2 && die "Kernels higher than 4.2 are not supported"
 }
 
 src_compile() {
