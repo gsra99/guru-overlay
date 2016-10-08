@@ -28,7 +28,7 @@ RDEPEND="${DEPEND}"
 S="${S}/${PN}"
 
 src_prepare() {
-	cd ${S}
+	cd ${S}/..
 	epatch "${FILESDIR}/300-noscan.patch"
 
 	default
