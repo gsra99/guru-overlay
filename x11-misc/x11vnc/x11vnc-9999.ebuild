@@ -55,6 +55,6 @@ src_configure() {
 
 src_install() {
 	default
-	newconfd "${FILESDIR}/x11vnc-conf" x11vnc
-	newinitd "${FILESDIR}/x11vnc-init" x11vnc
+	newconfd "${FILESDIR}/x11vnc.conf.d" x11vnc
+	newinitd "${FILESDIR}/x11vnc.init.d" x11vnc
 }
