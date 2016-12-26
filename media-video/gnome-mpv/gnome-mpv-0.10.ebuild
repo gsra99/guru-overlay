@@ -12,18 +12,29 @@ SRC_URI="https://github.com/${PN}/${PN}/archive/v${PV}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~ppc ~ppc64 ~x86 ~x86-fbsd"
-IUSE=""
+IUSE="lua luajit"
+
+REQUIRED_USE="
+	luajit? ( lua )
+"
 
 COMMON_DEPEND=">=dev-libs/glib-2.30
-	>=x11-libs/gtk+-3.18:3
-	x11-libs/libX11"
+	>=x11-libs/gtk+-3.20:3
+	x11-libs/libX11
+	lua? (
+		!luajit? ( <dev-lang/lua-5.3:= )
+		luajit? ( dev-lang/luajit:2 )
+	)
+"
 RDEPEND="${COMMON_DEPEND}
 	x11-themes/gnome-icon-theme-symbolic
-	>=media-video/mpv-0.21[libmpv]"
+	>=media-video/mpv-0.21[libmpv,luajit?,lua?]
+"
 DEPEND="${COMMON_DEPEND}
 	dev-libs/appstream-glib
 	sys-devel/gettext
-	virtual/pkgconfig"
+	virtual/pkgconfig
+"
 
 DOCS="README.md"
 
