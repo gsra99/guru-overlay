@@ -11,9 +11,9 @@ HOMEPAGE=""
 
 MY_PN="rtl8812AU"
 MY_PV=$(replace_version_separator 3 '-' )
-EGIT_REPO_URI="https://github.com/diederikdehaas/rtl8812AU.git"
-EGIT_BRANCH="driver-4.3.20"
-EGIT_COMMIT="098b1f7ae2a489f748bc7ee5cdd136f0492ffd2c"
+EGIT_REPO_URI="https://github.com/uminokoe/rtl8812AU.git"
+EGIT_BRANCH="driver-4.3.21"
+EGIT_COMMIT="a422338714853794b7cfb8ed7e2fcec355b4399d"
 EGIT_CHECKOUT_DIR="${WORKDIR}/${MY_PN}-${MY_PV}"
 S="${EGIT_CHECKOUT_DIR}"
 MODULE_NAMES="8812au(net/wireless:${S}:${S})"
