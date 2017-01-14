@@ -36,6 +36,10 @@ src_unpack() {
 	git-r3_src_unpack
 }
 
+src_prepare() {
+	epatch "${FILESDIR}/trendnet.patch"
+}
+
 pkg_setup() {
 	eselected=$(eselect kernel list | awk '/\*/ {print $2}' | awk 'gsub("linux-", "")')
 	running=$(uname -r)
