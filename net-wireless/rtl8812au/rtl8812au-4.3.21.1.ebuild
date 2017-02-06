@@ -26,7 +26,7 @@ ERROR_CFG80211_WEXT="Please build kernel with cfg80211 wireless extensions compa
 
 LICENSE=""
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="**"
 IUSE=""
 
 DEPEND=""
@@ -36,9 +36,9 @@ src_unpack() {
 	git-r3_src_unpack
 }
 
-src_prepare() {
-	epatch "${FILESDIR}/trendnet.patch"
-}
+#src_prepare() {
+#	epatch "${FILESDIR}/trendnet.patch"
+#}
 
 pkg_setup() {
 	eselected=$(eselect kernel list | awk '/\*/ {print $2}' | awk 'gsub("linux-", "")')
