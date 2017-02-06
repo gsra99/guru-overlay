@@ -13,7 +13,7 @@ MY_PN="rtl8812AU"
 MY_PV=$(replace_version_separator 3 '-' )
 EGIT_REPO_URI="https://github.com/uminokoe/rtl8812AU.git"
 EGIT_BRANCH="driver-4.3.21"
-EGIT_COMMIT="a422338714853794b7cfb8ed7e2fcec355b4399d"
+EGIT_COMMIT="129f4958296fd302b5f21827dbdde3cfbb2e3bd8"
 EGIT_CHECKOUT_DIR="${WORKDIR}/${MY_PN}-${MY_PV}"
 S="${EGIT_CHECKOUT_DIR}"
 MODULE_NAMES="8812au(net/wireless:${S}:${S})"
@@ -26,7 +26,7 @@ ERROR_CFG80211_WEXT="Please build kernel with cfg80211 wireless extensions compa
 
 LICENSE=""
 SLOT="0"
-KEYWORDS="**"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND=""
