@@ -26,7 +26,7 @@ ERROR_CFG80211_WEXT="Please build kernel with cfg80211 wireless extensions compa
 
 LICENSE=""
 SLOT="0"
-KEYWORDS="**"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND=""
