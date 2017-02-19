@@ -1,6 +1,6 @@
 diff -Naur a/Makefile b/Makefile
 --- a/Makefile	2017-02-19 08:12:14.132318113 +0000
-+++ b/Makefile	2017-02-19 08:14:58.257319318 +0000
++++ b/Makefile	2017-02-19 08:53:01.645336094 +0000
 @@ -1,8 +1,8 @@
  EXTRA_CFLAGS += $(USER_EXTRA_CFLAGS)
 -#EXTRA_CFLAGS += -O1
@@ -13,3 +13,14 @@ diff -Naur a/Makefile b/Makefile
  #EXTRA_CFLAGS += -Werror
  #EXTRA_CFLAGS += -pedantic
  #EXTRA_CFLAGS += -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes
+@@ -16,6 +16,10 @@
+ #EXTRA_CFLAGS += -Wno-uninitialized
+ EXTRA_CFLAGS += -Wno-error=date-time	# Fix compile error on gcc 4.9 and later
+ 
++# Relax some warnings from '-Wextra' so we won't get flooded with warnings
++EXTRA_CFLAGS += -Wno-sign-compare
++EXTRA_CFLAGS += -Wno-missing-field-initializers
++
+ EXTRA_CFLAGS += -I$(src)/include
+ EXTRA_CFLAGS += -I$(src)/hal/phydm
+ 
