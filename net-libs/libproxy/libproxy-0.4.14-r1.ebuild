@@ -48,7 +48,7 @@ PATCHES=(
 
 	# prevent dependency loop with networkmanager, libsoup, glib-networking; bug #467696
 	# https://github.com/libproxy/libproxy/issues/28
-	"${FILESDIR}/${PN}-0.4.11-avoid-nm-build-dep.patch"
+	#"${FILESDIR}/${PN}-0.4.11-avoid-nm-build-dep.patch"
 
 	# Gentoo's spidermonkey doesn't set Version: in mozjs18[57].pc
 	"${FILESDIR}/${PN}-0.4.12-mozjs.pc.patch"
