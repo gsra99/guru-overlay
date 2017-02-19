@@ -24,7 +24,7 @@ fi
 
 LICENSE="MEGA"
 SLOT="0"
-IUSE="+cryptopp +sqlite libsodium +zlib +curl freeimage readline examples threads qt5 nautilus"
+IUSE="+cryptopp +sqlite libsodium +zlib +curl freeimage examples threads qt5 nautilus"
 
 DEPEND="
 	!qt5? (
@@ -54,7 +54,7 @@ RDEPEND="${DEPEND}
 		zlib? ( sys-libs/zlib )
 		curl? ( net-misc/curl[ssl,curl_ssl_openssl] )
 		freeimage? ( media-libs/freeimage )
-		readline? ( sys-libs/readline:0 )
+		sys-libs/readline:0
 		nautilus? (
 			>=gnome-base/nautilus-3.12.0
 			!!gnome-extra/nautilus-megasync
@@ -85,7 +85,6 @@ src_configure(){
 		$(use_enable threads posix-threads) \
 		$(use_with libsodium sodium) \
 		$(use_with freeimage) \
-		$(use_with readline) \
 		$(use_enable examples)
 	cd ../..
 	local myeqmakeargs=(
