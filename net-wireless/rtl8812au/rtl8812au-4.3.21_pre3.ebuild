@@ -36,9 +36,9 @@ src_unpack() {
 	git-r3_src_unpack
 }
 
-#src_prepare() {
-#	epatch "${FILESDIR}/trendnet.patch"
-#}
+src_prepare() {
+	epatch "${FILESDIR}/rtl8812au-4.3.21.patch"
+}
 
 pkg_setup() {
 	eselected=$(eselect kernel list | awk '/\*/ {print $2}' | awk 'gsub("linux-", "")')
