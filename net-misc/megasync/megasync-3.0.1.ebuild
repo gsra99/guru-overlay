@@ -14,8 +14,8 @@ if [[ ${PV} == *9999* ]];then
 	KEYWORDS=""
 else
 	SDK_COMMIT="e8e66e9f030febfb35c9e4dd503d69091e28fc04"
-#	MY_PV="$(replace_all_version_separators _)"
-	SRC_URI="https://github.com/meganz/MEGAsync/archive/v${PV}.0_Linux.tar.gz -> ${P}.tar.gz
+	MY_PV="${PV}.0"
+	SRC_URI="https://github.com/meganz/MEGAsync/archive/v${MY_PV}_Linux.tar.gz -> ${P}.tar.gz
 	https://github.com/meganz/sdk/archive/${SDK_COMMIT}.tar.gz -> ${PN}-sdk-20161109.tar.gz"
 	KEYWORDS="~x86 ~amd64"
 	RESTRICT="mirror"
