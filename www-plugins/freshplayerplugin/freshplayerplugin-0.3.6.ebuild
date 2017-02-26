@@ -77,10 +77,13 @@ src_configure() {
 	cmake-utils_src_configure
 }
 
-#src_install() {
-#	emake DESTDIR="${D}" install
-#
-#	insinto /opt/google/chrome/pepper
-#	doins "${FILESDIR}/libpepflashplayer.so"
-#	doins "${FILESDIR}/pepper-flash.info"
-#}
+src_install() {
+	if [[ -f Makefile ]] || [[ -f GNUmakefile ]] || [[ -f makefile ]] ; then
+		emake DESTDIR="${D}" install
+	fi
+	einstalldocs
+
+	insinto /opt/google/chrome/pepper
+	doins "${FILESDIR}/libpepflashplayer.so"
+	doins "${FILESDIR}/pepper-flash.info"
+}
