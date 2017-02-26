@@ -84,6 +84,7 @@ src_install() {
 	einstalldocs
 
 	insinto /opt/google/chrome/pepper
-	doins "${FILESDIR}/libpepflashplayer.so"
 	doins "${FILESDIR}/pepper-flash.info"
+	into /opt/google/chrome/pepper
+	dolib "${FILESDIR}/libpepflashplayer.so"
 }
