@@ -53,9 +53,9 @@ DEPEND="${COMMON_DEPEND}
 	dev-util/ragel
 	virtual/pkgconfig
 	"
-RDEPEND="${COMMON_DEPEND}
-	www-plugins/adobe-flash:22[abi_x86_64,ppapi(+)]
-	"
+#RDEPEND="${COMMON_DEPEND}
+#	www-plugins/adobe-flash:24[abi_x86_64,ppapi(+)]
+#	"
 
 PATCHES=( "${FILESDIR}/0.3.5-cmake.patch" "${FILESDIR}/0.3.4-git-revision.patch" )
 DOCS=( ChangeLog data/freshwrapper.conf.example README.md )
@@ -75,4 +75,12 @@ src_configure() {
 		mycmakeargs+=( -DWITH_HWDEC=0 )
 	fi
 	cmake-utils_src_configure
+}
+
+src_install() {
+	emake DESTDIR="${D}" install
+
+	insinto /opt/google/chrome/pepper
+	doins "${FILESDIR}/libpepflashplayer.so"
+	doins "${FILESDIR}/pepper-flash.info"
 }
