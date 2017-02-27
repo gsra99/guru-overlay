@@ -78,8 +78,7 @@ src_configure() {
 }
 
 src_install() {
-	emake DESTDIR="${D}" install
-	dodoc ${DOCS}
+	cmake-utils_src_install
 
 	insinto /opt/google/chrome/pepper
 	doins "${FILESDIR}/pepper-flash.info"
