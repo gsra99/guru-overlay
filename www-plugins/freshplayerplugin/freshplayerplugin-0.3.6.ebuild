@@ -78,7 +78,7 @@ src_configure() {
 }
 
 src_install() {
-	einstall
+	emake DESTDIR="${D}" install
 	dodoc ${DOCS}
 
 	insinto /opt/google/chrome/pepper
