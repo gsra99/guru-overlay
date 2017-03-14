@@ -32,7 +32,7 @@ QA_TEXTRELS="${dir:1}/libcaepcm.so.1.0
         ${dir:1}/libcnlbcm.so.1.0
         ${dir:1}/libcaiousb.so.1.0.0"
 
-S=${WORKDIR}/${SOURCES_NAME}/Src/${P/_p/-}-1
+S=${WORKDIR}/${SOURCES_NAME}/Src/${P}
 
 src_unpack() {
     if [ "${A}" != "" ]; then
