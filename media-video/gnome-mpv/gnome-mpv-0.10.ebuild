@@ -1,6 +1,5 @@
 # Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/media-video/gnome-mplayer/gnome-mplayer-1.0.9.ebuild,v 1.1 2014/05/28 19:13:02 ssuominen Exp $
 
 EAPI=5
 inherit fdo-mime autotools eutils versionator gnome2-utils

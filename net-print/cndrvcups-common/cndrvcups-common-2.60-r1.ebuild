@@ -1,7 +1,6 @@
 # Copyright 1999-2006 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: $
- 
+
 EAPI="2"
 inherit multilib eutils rpm versionator
 MY_P=${P/_p/-}-1
