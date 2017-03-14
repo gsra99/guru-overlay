@@ -242,7 +242,7 @@ src_install() {
         doins libs/captemon/*.xml
 
         insinto /usr/share/caepcm
-        doins data/CnA* data/CNL*
+        doins data/CnA*
 
         insinto /usr/share/captfilter
         doins libs/CnA*
@@ -267,6 +267,6 @@ src_install() {
         doins samples/ccpd.conf
 
 	# Install udev rules
-	insinto /etc/udev/rules.d
+	insinto /lib/udev/rules.d
 	doins ${FILESDIR}/85-canon-capt.rules
 }
