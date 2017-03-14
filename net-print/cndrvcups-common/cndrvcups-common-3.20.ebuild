@@ -101,7 +101,7 @@ src_install() {
         doins data/*
  
  
-        dodoc LICENSE-common-*.txt README
+        dodoc LICENSE-*.txt README
         for i in buftool c3plmod_ipc ${CNGPLP}; do
                 docinto ${i}
                 dodoc ${i}/NEWS ${i}/README ${i}/AUTHORS ${i}/ChangeLog
