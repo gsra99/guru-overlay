@@ -18,7 +18,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="-cngplp amd64"
 
-DEPEND="=net-print/cndrvcups-common-2.70
+DEPEND="=net-print/cndrvcups-common-3.20
         >=net-print/cups-1.1.17"
 
 dir=/usr/$(get_libdir)
