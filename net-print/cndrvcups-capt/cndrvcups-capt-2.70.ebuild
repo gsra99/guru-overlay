@@ -37,7 +37,7 @@ RDEPEND="${DEPEND}
                         dev-libs/popt
                         dev-libs/libxml2
                 )"
-S=${WORKDIR}/${SOURCES_NAME}/Src/${P/_p/-}-1
+S=${WORKDIR}/${SOURCES_NAME}/Src/${P}
 
 
 pkg_postinst() {
@@ -99,7 +99,7 @@ src_unpack() {
     cd "${WORKDIR}/${SOURCES_NAME}/Src/"
     unpack ./${MY_P}.tar.gz
 
-    cd ${MY_P}
+    cd ${P}
     # Fix the cups backend path
     for i in backend pstocapt{,2,3}/filter; do
             sed -i -e 's@libdir@libexecdir@' "${i}/Makefile.am"
