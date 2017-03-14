@@ -39,7 +39,7 @@ src_unpack() {
         unpack ${A}
         cd "${WORKDIR}/${SOURCES_NAME}/Src/"
         unpack ./${MY_P}.tar.gz
-        cd ${MY_P}
+        cd ${P}
     fi
 }
 
