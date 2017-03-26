@@ -78,7 +78,7 @@ STRIP_MASK="/usr/lib/go/pkg/*.a
 	/usr/lib/go/src/runtime/race/*.syso"
 
 if [[ ${PV} != 9999 ]]; then
-	S="${WORKDIR}"/go
+	S="${WORKDIR}"/go-go${MY_PV}
 fi
 
 go_arch()
