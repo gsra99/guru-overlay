@@ -12,10 +12,10 @@ if [[ ${PV} == *9999* ]];then
 	EGIT_REPO_URI="https://github.com/meganz/MEGAsync"
 	KEYWORDS=""
 else
-	SDK="3.1.0"
+	SDK_VERSION="3.1.0"
 	MY_PV="${PV}.0"
 	SRC_URI="https://github.com/meganz/MEGAsync/archive/v${MY_PV}_Linux.tar.gz -> ${P}.tar.gz
-	https://github.com/meganz/sdk/archive/V${SDK}.tar.gz -> ${PN}-sdk-${SDK}.tar.gz"
+	https://github.com/meganz/sdk/archive/V${SDK_VERSION}.tar.gz -> ${PN}-sdk-${SDK_VERSION}.tar.gz"
 	KEYWORDS="~x86 ~amd64"
 	RESTRICT="mirror"
 	S="${WORKDIR}/MEGAsync-${MY_PV}_Linux"
@@ -62,7 +62,7 @@ RDEPEND="${DEPEND}
 
 if [[ ${PV} != *9999* ]];then
 	src_prepare(){
-		cp -r ../sdk-${SDK_COMMIT}/* src/MEGASync/mega
+		cp -r ../sdk-${SDK_VERSION}/* src/MEGASync/mega
 		cd src/MEGASync/mega
 		eapply_user
 		eautoreconf
