@@ -12,10 +12,10 @@ if [[ ${PV} == *9999* ]];then
 	EGIT_REPO_URI="https://github.com/meganz/MEGAsync"
 	KEYWORDS=""
 else
-	SDK_COMMIT="e8e66e9f030febfb35c9e4dd503d69091e28fc04"
+	SDK="3.1.0"
 	MY_PV="${PV}.0"
 	SRC_URI="https://github.com/meganz/MEGAsync/archive/v${MY_PV}_Linux.tar.gz -> ${P}.tar.gz
-	https://github.com/meganz/sdk/archive/${SDK_COMMIT}.tar.gz -> ${PN}-sdk-3.0.0.tar.gz"
+	https://github.com/meganz/sdk/archive/V${SDK}.tar.gz -> ${PN}-sdk-${SDK}.tar.gz"
 	KEYWORDS="~x86 ~amd64"
 	RESTRICT="mirror"
 	S="${WORKDIR}/MEGAsync-${MY_PV}_Linux"
