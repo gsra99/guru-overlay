@@ -1,32 +1,13 @@
---- orig/sh/rc-cgroup.sh.in	2015-08-31 10:39:36.068009618 +0300
-+++ patched/sh/rc-cgroup.sh.in	2015-08-31 10:38:29.817210595 +0300
-@@ -85,8 +85,28 @@ cgroup_add_service()
+diff -Naur a/sh/rc-cgroup.sh.in b/sh/rc-cgroup.sh.in
+--- a/sh/rc-cgroup.sh.in	2017-03-23 22:50:51.000000000 +0000
++++ b/sh/rc-cgroup.sh.in	2017-05-13 17:18:03.882749932 +0100
+@@ -94,7 +94,9 @@
  	openrc_cgroup=/sys/fs/cgroup/openrc
  	if [ -d "$openrc_cgroup" ]; then
  		cgroup="$openrc_cgroup/$RC_SVCNAME"
-+
-+    #the delay these introduce, seems to prevent wtw race is going on that causes this: /lib64/rc/sh/rc-cgroup.sh: line 89: printf: write error: No such device
-+    #echo "Current: $$ $RC_SVCNAME" >/dev/null #2>/dev/null 1>&2
-+    #ps afwj $$ >/dev/null #2>/dev/null 1>&2
-+  #apparently fixed in openrc 0.18.3 old:^tested and confirmed to FAIL(2) (at boot) when the above 2 lines are commented out! but not when they are uncommented! so, draw your own conclusions.
++		sleep 0.01
  		mkdir -p "$cgroup"
--		[ -f "$cgroup/tasks" ] && printf "%d" 0 > "$cgroup/tasks"
-+    local fail=0
-+		if test -f "$cgroup/tasks"; then
-+      if ! printf "%d" 0 > "$cgroup/tasks"; then
-+        fail=1
-+      fi
-+    else
-+      fail=2
-+    fi
-+    if test "$fail" -ne "0"; then
-+      echo "------FAIL(${fail})----- $cgroup/tasks" 1>&2
-+      echo "Current: $$ $RC_SVCNAME" 1>&2
-+      cat "$cgroup/tasks"
-+    fi
-+#    [ -f "$cgroup/tasks" ] || ls -la "$openrc_cgroup" 1>&2
-+
-+#		[ -f "$cgroup/tasks" ] && printf "%d" 0 > "$cgroup/tasks"
++		sleep 0.01
+ 		[ -w "$cgroup/tasks" ] && printf "%d" 0 > "$cgroup/tasks"
  	fi
  }
- 
