@@ -1,0 +1,48 @@
+diff -Naur a/drivers/net/wireless/ath/regd.c b/drivers/net/wireless/ath/regd.c
+--- a/drivers/net/wireless/ath/regd.c	2017-05-20 19:59:26.608375424 +0100
++++ b/drivers/net/wireless/ath/regd.c	2017-05-20 20:07:47.680379106 +0100
+@@ -114,10 +114,22 @@
+ 	}
+ };
+ 
++static u16 ath_regd_get_eepromRD(struct ath_regulatory *reg)
++{
++	return reg->current_rd & ~WORLDWIDE_ROAMING_FLAG;
++}
++
++static bool is_default_regd(struct ath_regulatory *reg)
++{
++	return ath_regd_get_eepromRD(reg) == CTRY_DEFAULT;
++}
++
+ static bool dynamic_country_user_possible(struct ath_regulatory *reg)
+ {
+ 	if (IS_ENABLED(CONFIG_ATH_REG_DYNAMIC_USER_CERT_TESTING))
+ 		return true;
++	if (is_default_regd(reg))
++		return true;
+ 
+ 	switch (reg->country_code) {
+ 	case CTRY_UNITED_STATES:
+@@ -202,11 +214,6 @@
+ 		(regd == WORLD));
+ }
+ 
+-static u16 ath_regd_get_eepromRD(struct ath_regulatory *reg)
+-{
+-	return reg->current_rd & ~WORLDWIDE_ROAMING_FLAG;
+-}
+-
+ bool ath_is_world_regd(struct ath_regulatory *reg)
+ {
+ 	return is_wwr_sku(ath_regd_get_eepromRD(reg));
+@@ -648,6 +655,9 @@
+ 	return 0;
+ #endif
+ 
++	if (is_default_regd(reg))
++		return 0;
++
+ 	wiphy->reg_notifier = reg_notifier;
+ 	wiphy->regulatory_flags |= REGULATORY_STRICT_REG |
+ 				   REGULATORY_CUSTOM_REG;
