@@ -79,9 +79,9 @@ src_configure() {
 src_install() {
 	cmake-utils_src_install
 
-	insinto /opt/google/chrome/pepper
+	insinto /opt/google/chrome/PepperFlash
 	doins "${FILESDIR}/pepper-flash.info"
 	doins "${FILESDIR}/manifest.json"
-	exeinto /opt/google/chrome/pepper
+	exeinto /opt/google/chrome/PepperFlash
 	doexe "${FILESDIR}/libpepflashplayer.so"
 }
