@@ -12,7 +12,7 @@ SRC_URI="https://github.com/i-rinat/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 SLOT=0
 IUSE="gles2 gtk3 jack libav libressl pulseaudio v4l vaapi vdpau"
 
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 
 HWDEC_DEPEND="
 	libav? ( media-video/libav:0=[vaapi?,vdpau?] )
@@ -81,6 +81,7 @@ src_install() {
 
 	insinto /opt/google/chrome/pepper
 	doins "${FILESDIR}/pepper-flash.info"
+	doins "${FILESDIR}/manifest.json"
 	exeinto /opt/google/chrome/pepper
 	doexe "${FILESDIR}/libpepflashplayer.so"
 }
