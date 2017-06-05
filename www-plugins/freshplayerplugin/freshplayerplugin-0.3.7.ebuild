@@ -56,7 +56,6 @@ DEPEND="${COMMON_DEPEND}
 #	www-plugins/adobe-flash:24[abi_x86_64,ppapi(+)]
 #	"
 
-PATCHES=( "${FILESDIR}/0.3.5-cmake.patch" )
 DOCS=( ChangeLog data/freshwrapper.conf.example README.md )
 
 src_configure() {
@@ -81,6 +80,7 @@ src_install() {
 
 	insinto /opt/google/chrome/pepper
 	doins "${FILESDIR}/pepper-flash.info"
+	doins "${FILESDIR}/manifest.json"
 	exeinto /opt/google/chrome/pepper
 	doexe "${FILESDIR}/libpepflashplayer.so"
 }
