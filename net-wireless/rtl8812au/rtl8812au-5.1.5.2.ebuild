@@ -44,13 +44,12 @@ pkg_setup() {
 
 	linux-mod_pkg_setup
 	kernel_is -gt 4 11 8 && die "Kernels higher than 4.11.8 are not supported"
+	eselected="${KV_MAJOR}.${KV_MINOR}"
+	echo ${eselected}
 	get_running_version
 	running="${KV_MAJOR}.${KV_MINOR}"
 	echo ${running}
-	get_version
-	eselected="${KV_MAJOR}.${KV_MINOR}"
 	echo ${eselected}
-	echo ${running}
 	if [ "${eselected}" != "${running}" ]; then
 		die "Please ensure the eselected kernel source and running kernel are the same version, then try again." 
 	fi
