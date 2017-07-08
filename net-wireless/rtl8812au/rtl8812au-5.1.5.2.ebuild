@@ -36,14 +36,22 @@ src_unpack() {
 }
 
 pkg_setup() {
-	eselected=$(eselect kernel list | awk '/\*/ {print $2}' | awk 'gsub("linux-", "")')
-	running=$(uname -r)
-	if [ "$running" != "$eselected" ]; then
-		die "Please ensure the eselected kernel source and running kernel are the same version, then try again."
-	fi
+#	eselected=$(eselect kernel list | awk '/\*/ {print $2}' | awk 'gsub("linux-", "")')
+#	running=$(uname -r)
+#	if [ "$running" != "$eselected" ]; then
+#		die "Please ensure the eselected kernel source and running kernel are the same version, then try again."
+#	fi
 
 	linux-mod_pkg_setup
 	kernel_is -gt 4 11 && die "Kernels higher than 4.11 are not supported"
+	get_running_version
+	old="${KV_MAJOR}.${KV_MINOR}"
+	get_version
+	new="${KV_MAJOR}.${KV_MINOR}"
+	if [ "${old}" = "${new}" ]; then
+		echo "${old} equals ${new}"
+		die "${old} equals ${new}"
+	fi
 }
 
 src_compile() {
