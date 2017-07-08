@@ -43,7 +43,7 @@ pkg_setup() {
 #	fi
 
 	linux-mod_pkg_setup
-	kernel_is -gt 4 11 && die "Kernels higher than 4.11 are not supported"
+	kernel_is -gt 4 11 8 && die "Kernels higher than 4.11.8 are not supported"
 	get_running_version
 	running="${KV_MAJOR}.${KV_MINOR}"
 	get_version
