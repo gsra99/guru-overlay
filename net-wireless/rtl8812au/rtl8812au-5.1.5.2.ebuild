@@ -48,7 +48,6 @@ pkg_setup() {
 	running="${KV_MAJOR}.${KV_MINOR}"
 	if [ "${eselected}" != "${running}" ]; then
 		die "Please ensure the eselected kernel source and running kernel are the same version, then try again." 
-		else get_version
 	fi
 	linux-mod_pkg_setup
 }
