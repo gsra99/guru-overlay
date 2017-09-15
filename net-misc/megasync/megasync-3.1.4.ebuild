@@ -91,7 +91,7 @@ src_configure(){
 		$(use_with freeimage) \
 		$(use_with readline) \
 		$(use_enable examples) \
-		$(use_enable java) \
+		$(use_enable java) "--with-java-include-dir=/usr/lib/jvm/icedtea-bin-8/include/" \
 		$(use_enable php) \
 		$(use_enable python) \
 		"--enable-chat" \
