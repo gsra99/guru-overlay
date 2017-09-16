@@ -45,9 +45,9 @@ DEPEND="
 	qt5? ( dev-qt/linguist-tools:5 )
 "
 src_prepare() {
-	local PATCHES=(
-		"${FILESDIR}"/${PN}-qmake.diff
-	)
+#	local PATCHES=(
+#		"${FILESDIR}"/${PN}-qmake.diff
+#	)
 	cp -r "${EROOT}"usr/share/meganz-sdk/bindings "${S}"/src/MEGASync/mega/
 	default
 	use dolphin && mv -f src/MEGAShellExtDolphin/CMakeLists{_kde5,}.txt
