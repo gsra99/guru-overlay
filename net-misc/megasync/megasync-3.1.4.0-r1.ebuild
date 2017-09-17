@@ -79,14 +79,14 @@ src_configure(){
 		"--disable-silent-rules" \
 		"--disable-curl-checks" \
 		"--disable-megaapi" \
-		$(use_with zlib) \
+#		$(use_with zlib) \
 		$(use_with sqlite) \
-		$(use_with cryptopp) \
+#		$(use_with cryptopp) \
 		"--with-cares" \
 		$(use_with curl) \
 		"--without-termcap" \
-		$(use_enable threads posix-threads) \
-		$(use_with libsodium sodium) \
+#		$(use_enable threads posix-threads) \
+#		$(use_with libsodium sodium) \
 		$(use_with freeimage) \
 		$(use_enable examples)
 	cd ../..
