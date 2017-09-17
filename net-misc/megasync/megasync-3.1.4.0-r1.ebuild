@@ -25,10 +25,7 @@ fi
 
 LICENSE="MEGA"
 SLOT="0"
-IUSE="+sqlite +curl freeimage examples qt5 nautilus"
-REQUIRED_USE="
-	examples? ( sqlite )
-	"
+IUSE="+curl examples qt5 nautilus"
 DEPEND="
 	!qt5? (
 		dev-qt/qtcore:4
@@ -52,11 +49,11 @@ RDEPEND="${DEPEND}
 		dev-libs/crypto++
 		app-arch/xz-utils
 		dev-libs/libuv
-		sqlite? ( dev-db/sqlite:3 )
+		dev-db/sqlite:3
 		dev-libs/libsodium
 		sys-libs/zlib
 		curl? ( net-misc/curl[ssl,curl_ssl_openssl] )
-		freeimage? ( media-libs/freeimage )
+		media-libs/freeimage
 		sys-libs/readline:0
 		nautilus? (
 			>=gnome-base/nautilus-3.12.0
@@ -80,14 +77,14 @@ src_configure(){
 		"--disable-curl-checks" \
 		"--disable-megaapi" \
 #		$(use_with zlib) \
-		$(use_with sqlite) \
+#		$(use_with sqlite) \
 #		$(use_with cryptopp) \
-		"--with-cares" \
+#		"--with-cares" \
 		$(use_with curl) \
 		"--without-termcap" \
 #		$(use_enable threads posix-threads) \
 #		$(use_with libsodium sodium) \
-		$(use_with freeimage) \
+#		$(use_with freeimage) \
 		$(use_enable examples)
 	cd ../..
 	local myeqmakeargs=(
