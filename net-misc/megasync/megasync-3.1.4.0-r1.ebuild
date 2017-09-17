@@ -12,7 +12,7 @@ if [[ ${PV} == *9999* ]];then
 	EGIT_REPO_URI="https://github.com/meganz/MEGAsync"
 	KEYWORDS=""
 else
-	SDK_VERSION="3.2.0"
+	SDK_VERSION="3.1.5"
 #	MY_PV="${PV}.0"
 	SRC_URI="
 	https://github.com/meganz/MEGAsync/archive/v${PV}_Linux.tar.gz -> ${P}.tar.gz
