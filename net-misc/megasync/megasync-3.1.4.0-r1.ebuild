@@ -14,11 +14,13 @@ if [[ ${PV} == *9999* ]];then
 else
 	SDK_VERSION="3.2.0"
 #	MY_PV="${PV}.0"
-	SRC_URI="https://github.com/meganz/MEGAsync/archive/v${PV}_Linux.tar.gz -> ${P}.tar.gz
-	https://github.com/meganz/sdk/archive/v${SDK_VERSION}.tar.gz -> ${PN}-sdk-${SDK_VERSION}.tar.gz"
+	SRC_URI="
+	https://github.com/meganz/MEGAsync/archive/v${PV}_Linux.tar.gz -> ${P}.tar.gz
+	https://github.com/meganz/sdk/archive/v${SDK_VERSION}.tar.gz -> ${PN}-sdk-${SDK_VERSION}.tar.gz
+	"
 	KEYWORDS="~x86 ~amd64"
 	RESTRICT="mirror"
-	S="${WORKDIR}/MEGAsync-${MY_PV}_Linux"
+	S="${WORKDIR}/MEGAsync-${PV}_Linux"
 fi
 
 LICENSE="MEGA"
