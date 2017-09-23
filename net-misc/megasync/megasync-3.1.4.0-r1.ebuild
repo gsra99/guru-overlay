@@ -73,8 +73,6 @@ fi
 src_configure(){
 	cd "${S}"/src/MEGASync/mega
 	econf \
-		"--disable-silent-rules" \
-		"--disable-curl-checks" \
 		"--disable-megaapi" \
 		"--without-termcap" \
 		$(use_with freeimage)
