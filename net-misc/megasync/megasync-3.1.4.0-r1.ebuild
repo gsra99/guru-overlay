@@ -49,7 +49,7 @@ RDEPEND="${DEPEND}
 		app-arch/xz-utils
 		dev-libs/libuv
 		dev-db/sqlite:3
-		dev-libs/libsodium
+		>=dev-libs/libsodium-1.0.12
 		sys-libs/zlib
 		net-misc/curl[ssl,curl_ssl_openssl]
 		freeimage? ( media-libs/freeimage )
