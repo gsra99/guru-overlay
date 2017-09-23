@@ -12,8 +12,7 @@ if [[ ${PV} == *9999* ]];then
 	EGIT_REPO_URI="https://github.com/meganz/MEGAsync"
 	KEYWORDS=""
 else
-	SDK_VERSION="3.1.5"
-#	MY_PV="${PV}.0"
+	SDK_VERSION="3.2.0"
 	SRC_URI="
 	https://github.com/meganz/MEGAsync/archive/v${PV}_Linux.tar.gz -> ${P}.tar.gz
 	https://github.com/meganz/sdk/archive/v${SDK_VERSION}.tar.gz -> ${PN}-sdk-${SDK_VERSION}.tar.gz
@@ -25,7 +24,7 @@ fi
 
 LICENSE="MEGA"
 SLOT="0"
-IUSE="+curl examples qt5 nautilus"
+IUSE="qt5 nautilus freeimage"
 DEPEND="
 	!qt5? (
 		dev-qt/qtcore:4
@@ -52,9 +51,10 @@ RDEPEND="${DEPEND}
 		dev-db/sqlite:3
 		dev-libs/libsodium
 		sys-libs/zlib
-		curl? ( net-misc/curl[ssl,curl_ssl_openssl] )
-		media-libs/freeimage
+		net-misc/curl[ssl,curl_ssl_openssl]
+		freeimage? ( media-libs/freeimage )
 		sys-libs/readline:0
+		x11-themes/hicolor-icon-theme
 		nautilus? (
 			>=gnome-base/nautilus-3.12.0
 			!!gnome-extra/nautilus-megasync
@@ -76,16 +76,9 @@ src_configure(){
 		"--disable-silent-rules" \
 		"--disable-curl-checks" \
 		"--disable-megaapi" \
-#		$(use_with zlib) \
-#		$(use_with sqlite) \
-#		$(use_with cryptopp) \
-#		"--with-cares" \
-		$(use_with curl) \
 		"--without-termcap" \
-#		$(use_enable threads posix-threads) \
-#		$(use_with libsodium sodium) \
-#		$(use_with freeimage) \
-		$(use_enable examples)
+		$(use_with freeimage)
+
 	cd ../..
 	local myeqmakeargs=(
 		MEGA.pro
