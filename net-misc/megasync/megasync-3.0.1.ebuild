@@ -23,7 +23,7 @@ fi
 
 LICENSE="MEGA"
 SLOT="0"
-IUSE="+cryptopp +sqlite libsodium +zlib +curl freeimage examples threads qt5 nautilus"
+IUSE="freeimage examples qt5 nautilus"
 
 DEPEND="
 	!qt5? (
@@ -45,13 +45,13 @@ RDEPEND="${DEPEND}
 		dev-libs/libgcrypt
 		media-libs/libpng
 		net-dns/c-ares
-		cryptopp? ( dev-libs/crypto++ )
+		dev-libs/crypto++
 		app-arch/xz-utils
 		dev-libs/libuv
-		sqlite? ( dev-db/sqlite:3 )
-		libsodium? ( dev-libs/libsodium )
-		zlib? ( sys-libs/zlib )
-		curl? ( net-misc/curl[ssl,curl_ssl_openssl] )
+		dev-db/sqlite:3
+		dev-libs/libsodium
+		sys-libs/zlib
+		net-misc/curl[ssl,curl_ssl_openssl]
 		freeimage? ( media-libs/freeimage )
 		sys-libs/readline:0
 		nautilus? (
@@ -72,17 +72,8 @@ fi
 src_configure(){
 	cd "${S}"/src/MEGASync/mega
 	econf \
-		"--disable-silent-rules" \
-		"--disable-curl-checks" \
 		"--disable-megaapi" \
-		$(use_with zlib) \
-		$(use_with sqlite) \
-		$(use_with cryptopp) \
-		"--with-cares" \
-		$(use_with curl) \
 		"--without-termcap" \
-		$(use_enable threads posix-threads) \
-		$(use_with libsodium sodium) \
 		$(use_with freeimage) \
 		$(use_enable examples)
 	cd ../..
