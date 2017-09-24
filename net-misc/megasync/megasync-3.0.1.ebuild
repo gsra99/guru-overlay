@@ -23,7 +23,7 @@ fi
 
 LICENSE="MEGA"
 SLOT="0"
-IUSE="freeimage examples qt5 nautilus"
+IUSE="freeimage qt5 nautilus"
 
 DEPEND="
 	!qt5? (
@@ -74,8 +74,7 @@ src_configure(){
 	econf \
 		"--disable-megaapi" \
 		"--without-termcap" \
-		$(use_with freeimage) \
-		$(use_enable examples)
+		$(use_with freeimage)
 	cd ../..
 	local myeqmakeargs=(
 		MEGA.pro
