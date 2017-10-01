@@ -1,1 +1,2 @@
-%veracrypt ALL = NOPASSWD: /usr/bin/veracrypt
+# Users in the veracrypt group are allowed to run VeraCrypt as root.
+%veracrypt ALL=(root) NOPASSWD:/usr/bin/veracrypt
