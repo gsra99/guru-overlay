@@ -75,7 +75,7 @@ src_install() {
 	newinitd "${FILESDIR}/${PN}.init" ${PN}
 
 	insinto /etc/sudoers.d
-	doins "${FILESDIR}/veracrypt-sudoers" ${PN}
+	newins "${FILESDIR}/${PN}-sudoers" ${PN}
 
 	if use X; then
 		local s
