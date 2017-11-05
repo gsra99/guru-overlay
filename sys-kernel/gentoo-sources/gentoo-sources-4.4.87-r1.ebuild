@@ -18,6 +18,7 @@ DESCRIPTION="Full sources including the Gentoo patchset for the ${KV_MAJOR}.${KV
 SRC_URI="${KERNEL_URI} ${GENPATCHES_URI} ${ARCH_URI}"
 
 src_prepare() {
+	default
 	EPATCH_SOURCE="${FILESDIR}"
 	EPATCH_OPTS="-p1"
 		epatch "402-ath_regd_optional-r47771-fixed.patch"
