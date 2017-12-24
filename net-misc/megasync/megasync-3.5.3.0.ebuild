@@ -1,122 +1,86 @@
-# Copyright 1999-2016 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
 
-inherit eutils multilib qmake-utils autotools versionator
-
-DESCRIPTION="A Qt-based program for syncing your MEGA account in your PC. This is the official app."
-HOMEPAGE="http://mega.co.nz"
-if [[ ${PV} == *9999* ]];then
+CMAKE_USE_DIR="${S}/src/MEGAShellExtDolphin"
+CMAKE_IN_SOURCE_BUILD=y
+inherit gnome2 cmake-utils qmake-utils
+if [[ -z ${PV%%*9999} ]]; then
 	inherit git-r3
-	EGIT_REPO_URI="https://github.com/meganz/MEGAsync"
-	KEYWORDS=""
+	EGIT_REPO_URI="https://github.com/meganz/${PN}.git"
+	EGIT_SUBMODULES=( -src/MEGASync/mega )
+	SRC_URI=
 else
-	inherit git-r3
-	EGIT_REPO_URI="https://github.com/meganz/MEGAsync"
-	EGIT_COMMIT="369055d3bf90646f36429ceb04c31b9d23f5d405"
-	KEYWORDS="~x86 ~amd64"
-	#S="${WORKDIR}/MEGAsync"
+	inherit vcs-snapshot
+	MY_PV="2e03def"
+	[[ -n ${PV%%*_p*} ]] && MY_PV="v${PV}_Linux"
+	SRC_URI="
+		https://github.com/meganz/${PN}/archive/${MY_PV}.tar.gz
+		-> ${P}.tar.gz
+	"
+	RESTRICT="primaryuri"
+	KEYWORDS="~amd64 ~x86"
 fi
 
-LICENSE="MEGA"
+DESCRIPTION="Easy automated syncing with MEGA Cloud Drive"
+HOMEPAGE="https://github.com/meganz/MEGAsync"
+
+LICENSE="EULA"
+LICENSE_URL="https://raw.githubusercontent.com/meganz/MEGAsync/master/LICENCE.md"
 SLOT="0"
-IUSE="qt5 nautilus freeimage"
-DEPEND="
-	!qt5? (
-		dev-qt/qtcore:4
-		dev-qt/qtgui:4
-		dev-qt/qtdbus:4
-		)
+IUSE="dolphin nautilus qt5 thunar"
+REQUIRED_USE="dolphin? ( qt5 )"
+
+RDEPEND="
+	net-misc/meganz-sdk[libuv,qt,sodium,sqlite]
 	qt5? (
-		dev-qt/qtcore:5
-		dev-qt/linguist-tools
-		dev-qt/qtwidgets:5
-		dev-qt/qtgui:5
-		dev-qt/qtconcurrent:5
-		dev-qt/qtnetwork:5
+		dev-qt/qtsvg:5
 		dev-qt/qtdbus:5
-		)"
-RDEPEND="${DEPEND}
-		dev-libs/openssl
-		dev-libs/libgcrypt
-		media-libs/libpng
-		net-dns/c-ares
-		dev-libs/crypto++
-		app-arch/xz-utils
-		dev-libs/libuv
-		dev-db/sqlite:3
-		>=dev-libs/libsodium-1.0.12
-		sys-libs/zlib
-		net-misc/curl[ssl,curl_ssl_openssl]
-		freeimage? ( media-libs/freeimage )
-		sys-libs/readline:0
-		x11-themes/hicolor-icon-theme
-		nautilus? (
-			>=gnome-base/nautilus-3.12.0
-			!!gnome-extra/nautilus-megasync
-			)
-		"
-
-if [[ ${PV} != *9999* ]];then
-	src_prepare(){
-		cp -r ../sdk-${SDK_VERSION}/* src/MEGASync/mega
-		cd src/MEGASync/mega
-		eapply_user
-		eautoreconf
-	}
-fi
-
-src_configure(){
-	cd "${S}"/src/MEGASync/mega
-	econf \
-		"--disable-megaapi" \
-		"--without-termcap" \
-		$(use_with freeimage)
-
-	cd ../..
-	local myeqmakeargs=(
-		MEGA.pro
-		CONFIG+="release"
 	)
-	use nautilus && myeqmakeargs+=( CONFIG+="with_ext" )
-	if use qt5; then
-		eqmake5 ${myeqmakeargs[@]}
-		$(qt5_get_bindir)/lrelease MEGASync/MEGASync.pro
-	else
-		eqmake4 ${myeqmakeargs[@]}
-		$(qt4_get_bindir)/lrelease MEGASync/MEGASync.pro
-	fi
+	!qt5? (
+		dev-qt/qtsvg:4
+		dev-qt/qtdbus:4
+	)
+	dolphin? ( kde-apps/dolphin )
+	nautilus? ( >=gnome-base/nautilus-3 )
+	thunar? ( xfce-base/thunar )
+"
+DEPEND="
+	${RDEPEND}
+	qt5? ( dev-qt/linguist-tools:5 )
+"
+src_prepare() {
+	local PATCHES=(
+		"${FILESDIR}"/${PN}-qmake.diff
+	)
+	cp -r "${EROOT}"usr/share/meganz-sdk/bindings "${S}"/src/MEGASync/mega/
+	cmake-utils_src_prepare
+	mv -f src/MEGAShellExtDolphin/CMakeLists{_kde5,}.txt
+	rm -f src/MEGAShellExtDolphin/megasync-plugin.moc
 }
 
-src_compile(){
-	cd "${S}"/src
-	emake INSTALL_ROOT="${D}" || die
+src_configure() {
+	cd src
+	eqmake$(usex qt5 5 4) \
+		$(usex dolphin 'CONFIG+=with_dol' '') \
+		$(usex nautilus 'CONFIG+=with_ext' '') \
+		$(usex thunar 'CONFIG+=with_thu' '') \
+		'CONFIG-=with_tools'
+	use dolphin && cmake-utils_src_configure
 }
 
-src_install(){
-	insinto usr/share/licenses/${PN}
-	doins LICENCE.md installer/terms.txt
-	cd src/MEGASync
-	dobin ${PN}
-	cd platform/linux/data
-	insinto usr/share/applications
-	doins ${PN}.desktop
-	cd icons/hicolor
-	for size in 16x16 32x32 48x48 128x128 256x256;do
-		doicon -s $size $size/apps/mega.png
-	done
-	if use nautilus; then
-		cd "${S}/src/MEGAShellExtNautilus"
-		insinto usr/lib/nautilus/extensions-3.0
-		doins libMEGAShellExtNautilus.so.1.0.0
-		cd data/emblems
-		for size in 32x32 64x64;do
-			insinto usr/share/icons/hicolor/$size/emblems
-			doins $size/mega-{pending,synced,syncing,upload}.{icon,png}
-			dosym ${EPREFIX}/usr/lib/nautilus/extensions-3.0/libMEGAShellExtNautilus.so.1.0.0 ${EPREFIX}/usr/lib/nautilus/extensions-3.0/libMEGAShellExtNautilus.so.1.0
-			dosym ${EPREFIX}/usr/lib/nautilus/extensions-3.0/libMEGAShellExtNautilus.so.1.0.0 ${EPREFIX}/usr/lib/nautilus/extensions-3.0/libMEGAShellExtNautilus.so.1
-			dosym ${EPREFIX}/usr/lib/nautilus/extensions-3.0/libMEGAShellExtNautilus.so.1.0.0 ${EPREFIX}/usr/lib/nautilus/extensions-3.0/libMEGAShellExtNautilus.so
-		done
-	fi
+src_compile() {
+	cd src
+	$(usex qt5 $(qt5_get_bindir) $(qt4_get_bindir))/lrelease \
+		MEGASync/MEGASync.pro
+	emake
+	use dolphin && cmake-utils_src_compile
+}
+
+src_install() {
+	local DOCS=( CREDITS.md README.md )
+	einstalldocs
+	emake -C src INSTALL_ROOT="${D}" install
+	use dolphin && cmake-utils_src_install
 }
