@@ -66,7 +66,6 @@ src_configure() {
 		-DWITH_PULSEAUDIO=$(usex pulseaudio)
 		-DWITH_GTK=$(usex gtk3 3 2)
 		-DWITH_GLES2=$(usex gles2)
-		-DWITH_LIBV4L2=$(usex v4l)
 		-DCMAKE_SKIP_RPATH=1
 	)
 	if use vaapi || use vdpau ; then
