@@ -57,7 +57,7 @@ DEPEND="${COMMON_DEPEND}
 #	www-plugins/adobe-flash:24[abi_x86_64,ppapi(+)]
 #	"
 
-#PATCHES=( "${FILESDIR}/0.3.5-cmake.patch" )
+PATCHES=( "${FILESDIR}/0.3.5-cmake.patch" )
 DOCS=( ChangeLog data/freshwrapper.conf.example README.md )
 
 src_configure() {
