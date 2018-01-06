@@ -11,7 +11,7 @@ DESCRIPTION="PPAPI-host NPAPI-plugin adapter for flashplayer in npapi based brow
 SRC_URI="https://github.com/i-rinat/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 RESTRICT="primaryuri"
 SLOT=0
-IUSE="gles2 gtk3 jack libav libressl pulseaudio v4l vaapi vdpau"
+IUSE="gles2 gtk3 jack libav libressl pulseaudio vaapi vdpau"
 
 KEYWORDS="~amd64"
 
@@ -28,6 +28,7 @@ COMMON_DEPEND="
 	dev-libs/libevent:=[threads]
 	media-libs/alsa-lib:=
 	media-libs/freetype:2=
+	media-libs/libv4l:0=
 	media-libs/mesa:=[egl,gles2?]
 	x11-libs/cairo:=[X]
 	x11-libs/libXcursor:=
@@ -44,7 +45,6 @@ COMMON_DEPEND="
 	gtk3? ( x11-libs/gtk+:3= )
 	libressl? ( dev-libs/libressl:0= )
 	!libressl? ( dev-libs/openssl:0= )
-	v4l? ( media-libs/libv4l:0= )
 	vaapi? ( ${HWDEC_DEPEND} )
 	vdpau? ( ${HWDEC_DEPEND} )
 "
