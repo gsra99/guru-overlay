@@ -37,6 +37,9 @@ RDEPEND="
 	qt5? (
 		dev-qt/qtsvg:5
 		dev-qt/qtdbus:5
+		dev-qt/qtnetwork:5
+		dev-qt/qtconcurrent:5
+		dev-qt/linguist-tools
 	)
 	!qt5? (
 		dev-qt/qtsvg:4
