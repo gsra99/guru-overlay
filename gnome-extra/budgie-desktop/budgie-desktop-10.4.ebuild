@@ -18,6 +18,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 COMMON_DEPEND=">=app-i18n/ibus-1.5.11[vala]
 	>=dev-libs/glib-2.46.0:2
+	!=dev-libs/glib-2.50*:2
 	dev-libs/gjs
 	>=dev-libs/libpeas-1.8.0:0
 	>=gnome-base/gnome-desktop-3.18.0:3
