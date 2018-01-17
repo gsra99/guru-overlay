@@ -50,7 +50,7 @@ SRC_URI="
 
 LICENSE="CC-BY-SA-2.5"
 SLOT="0"
-KEYWORDS="amd64 x86"
+KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RESTRICT="mirror"  # TODO make a tarball, instead?
