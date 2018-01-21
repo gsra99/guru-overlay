@@ -22,7 +22,7 @@ DEPEND="virtual/pam
 	sys-fs/encfs"
 RDEPEND="${DEPEND}"
 
-${S}="${WORKDIR}/${MY_P}"
+S="${WORKDIR}/${MY_P}"
 
 src_prepare() {
 	sed -i -e "s:/lib/:/$(get_libdir)/:" \
