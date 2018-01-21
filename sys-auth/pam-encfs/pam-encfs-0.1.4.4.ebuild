@@ -6,9 +6,11 @@ EAPI=4
 
 inherit pam toolchain-funcs
 
+MY_P="pam_encfs-${PV}"
+
 DESCRIPTION="PAM module for auto mounting encfs drives on login."
 HOMEPAGE="http://code.google.com/p/pam-encfs/"
-SRC_URI="https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/${PN}/pam_encfs-${PV}.tar.gz"
+SRC_URI="https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/${PN}/${MY_P}.tar.gz"
 RESTRICT="primaryuri"
 
 LICENSE="GPL-2"
@@ -19,6 +21,8 @@ IUSE=""
 DEPEND="virtual/pam
 	sys-fs/encfs"
 RDEPEND="${DEPEND}"
+
+${S}="${WORKDIR}/${MY_P}"
 
 src_prepare() {
 	sed -i -e "s:/lib/:/$(get_libdir)/:" \
