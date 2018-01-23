@@ -29,7 +29,7 @@ COMMON_DEPEND="${PYTHON_DEPS}
 	net-firewall/iptables[ipv6]
 	net-firewall/ipset
 	gui? ( x11-libs/gtk+:3
-		dev-python/PyQt5[${PYTHON_USEDEP}] )
+		dev-python/PyQt5[${PYTHON_USEDEP},gui,widget] )
 	!systemd? ( >=sys-apps/openrc-0.11.5 )
 	systemd? ( sys-apps/systemd )"
 DEPEND="${COMMON_DEPEND}
