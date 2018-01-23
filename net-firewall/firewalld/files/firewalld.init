@@ -1,0 +1,13 @@
+#!/sbin/openrc-run
+# Copyright 1999-2018 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+
+description="FirewallD"
+command=/usr/sbin/firewalld
+pidfile=/var/run/firewalld.pid
+
+depend() {
+	before net
+	need dbus
+	provide firewall
+}
