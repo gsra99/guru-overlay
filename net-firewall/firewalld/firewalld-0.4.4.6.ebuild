@@ -17,7 +17,7 @@ SRC_URI="https://github.com/t-woerner/firewalld/archive/v${PV}.tar.gz
 
 LICENSE="GPL-2+"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE="gui systemd"
 
 COMMON_DEPEND="${PYTHON_DEPS}
