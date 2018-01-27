@@ -15,3 +15,7 @@ KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
 inherit rpm
+
+src_unpack () {
+	rpm_src_unpack ${A}
+}
