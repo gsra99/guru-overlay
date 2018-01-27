@@ -16,6 +16,4 @@ RESTRICT="mirror"
 
 inherit rpm
 
-src_unpack () {
-	rpm_src_unpack ${A}
-}
+S="${WORKDIR}"
