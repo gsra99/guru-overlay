@@ -17,3 +17,27 @@ RESTRICT="mirror"
 inherit rpm eutils
 
 S="${WORKDIR}"
+
+src_install() {
+	cd "${S}/usr/bin"
+	dobin vncviewer
+
+	cd "${S}/usr/share/doc/${PN}-vnc-viewer-${PV}.31799"
+#	dodir /usr/share/doc/${PN}-vnc-viewer-${PV}.31799
+	dodoc LICENSE_en.txt README.txt
+
+	cd "${S}/usr/share/man/man1"
+	doman vncviewer.1.gz
+
+	cd "${S}/usr/share/icons/hicolor/48x48/apps"
+	insinto /usr/share/icons/hicolor/48x48/apps
+	doins vncviewer48x48.png
+
+	cd "${S}/usr/share/applications"
+	insinto /usr/share/applications
+	doins ${PN}-vncviewer.desktop
+
+	cd "${S}/usr/share/mime/packages"
+	insinto /usr/share/mime/packages
+	doins ${PN}-vncviewer.xml
+}
