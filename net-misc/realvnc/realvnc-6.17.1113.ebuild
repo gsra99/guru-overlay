@@ -14,11 +14,6 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
-inherit rpm
+inherit rpm eutils
 
 S="${WORKDIR}"
-
-src_unpack () {
-	rpm_src_unpack ${A}
-	cd "${S}"
-}
