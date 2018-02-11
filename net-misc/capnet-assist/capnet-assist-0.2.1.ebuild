@@ -45,7 +45,7 @@ src_configure() {
 
 src_install() {
 	addpredict "/usr/share/glib-2.0/schemas/"
-	cd "${S}/${P}_build/"
+	cd "${WORKDIR}/${P}_build/"
 	emake DESTDIR="${D}" install
 	#cmake-utils_src_install
 }
