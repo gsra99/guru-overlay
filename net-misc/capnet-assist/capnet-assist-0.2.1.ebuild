@@ -21,6 +21,7 @@ RDEPEND="
 	>=app-crypt/gcr-3.12.0[vala]
 	>=net-libs/webkit-gtk-2.18.0:4
 	>=x11-libs/gtk+-3.12.0:3
+	>=net-misc/networkmanager-1.4.4
 "
 DEPEND="${RDEPEND}
 	$(vala_depend)
@@ -43,7 +44,6 @@ src_configure() {
 }
 
 src_install() {
-	HTML_DOCS=( doc/. )
 	cmake-utils_src_install
 }
 
