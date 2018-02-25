@@ -1,8 +1,9 @@
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="5"
+EAPI="6"
+GNOME_ORG_MODULE="NetworkManager-${PN##*-}"
 
-inherit eutils gnome.org autotools
+inherit gnome2 user
 
 MY_PN="network-manager-l2tp"
 
@@ -14,19 +15,19 @@ RESTRICT="mirror"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="gnome"
+IUSE="gtk"
 
 RDEPEND="
-	>=net-misc/networkmanager-0.8.1
+	>=net-misc/networkmanager-1.2:=
+	>=dev-libs/glib-2.32.2:2
 	>=dev-libs/dbus-glib-0.74
 	=net-dialup/ppp-2.4.7*
+	dev-libs/xml2:2
 	net-dialup/xl2tpd
 	net-vpn/libreswan
-	gnome? (
-		x11-libs/gtk+:3
-		gnome-base/gconf:2
-		gnome-base/gnome-keyring
-		gnome-base/libglade:2.0
+	gtk? (
+		>=app-crypt/libsecret-0.18
+		>=x11-libs/gtk+-3.4:3
 	)"
 
 DEPEND="${RDEPEND}
@@ -36,19 +37,20 @@ DEPEND="${RDEPEND}
 
 S="${WORKDIR}/${MY_PN}-${PV}"
 
-src_prepare() {
-	mkdir -p m4
-	intltoolize --copy --force --automake
-	eautoreconf
-}
-
 src_configure() {
-	ECONF="--with-pppd-plugin-dir=/usr/lib/pppd/2.4.7
-		$(use_with gnome)"
-
-	econf ${ECONF}
+	# We cannot drop libnm-glib support yet (--without-libnm-glib)
+	# because gnome-shell wasn't ported yet:
+	# https://bugzilla.redhat.com/show_bug.cgi?id=1394977
+	# https://bugzilla.redhat.com/show_bug.cgi?id=1398425
+	gnome2_src_configure \
+		--disable-more-warnings \
+		--disable-static \
+		$(use_with gtk gnome) \
+		$(use_with gtk authdlg)
 }
 
-src_install() {
-	emake DESTDIR="${D}" install || die "emake install failed"
+pkg_postinst() {
+	gnome2_pkg_postinst
+	enewgroup nm-l2tp
+	enewuser nm-l2tp -1 -1 -1 nm-l2tp
 }
