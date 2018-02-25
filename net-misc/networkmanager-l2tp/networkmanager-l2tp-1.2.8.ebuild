@@ -3,7 +3,7 @@
 EAPI="6"
 GNOME_ORG_MODULE="NetworkManager-${PN##*-}"
 
-inherit gnome2 user
+inherit eutils gnome2 user autotools
 
 MY_PN="network-manager-l2tp"
 
@@ -36,6 +36,13 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 
 S="${WORKDIR}/${MY_PN}-${PV}"
+
+src_prepare() {
+	mkdir -p m4
+	intltoolize --copy --force --automake
+	eautoreconf
+	default
+}
 
 src_configure() {
 	# We cannot drop libnm-glib support yet (--without-libnm-glib)
