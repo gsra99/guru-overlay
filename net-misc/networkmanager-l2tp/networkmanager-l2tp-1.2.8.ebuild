@@ -22,7 +22,7 @@ RDEPEND="
 	>=dev-libs/glib-2.32.2:2
 	>=dev-libs/dbus-glib-0.74
 	=net-dialup/ppp-2.4.7*
-	dev-libs/xml2:2
+	dev-libs/libxml2:2
 	net-dialup/xl2tpd
 	net-vpn/libreswan
 	gtk? (
