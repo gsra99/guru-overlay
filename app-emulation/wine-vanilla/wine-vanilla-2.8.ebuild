@@ -291,7 +291,7 @@ src_unpack() {
 src_prepare() {
 	local md5="$(md5sum server/protocol.def)"
 	local PATCHES=(
-		"${FILESDIR}"/${MY_PN}-crossover-17.1.0.patch # Patch to version found in crossover-17.1.0
+		"${FILESDIR}"/${MY_PN}-2.8-crossover-17.1.0.patch # Patch to version found in crossover-17.1.0
 		"${FILESDIR}"/${MY_PN}-2.0-multislot-apploader.patch
 	)
 
