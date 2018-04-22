@@ -80,7 +80,7 @@ REQUIRED_USE="|| ( abi_x86_32 abi_x86_64 )
 
 # FIXME: the test suite is unsuitable for us; many tests require net access
 # or fail due to Xvfb's opengl limitations.
-RESTRICT="test primaryuri"
+RESTRICT="test"
 
 COMMON_DEPEND="
 	>=app-emulation/wine-desktop-common-20180412
@@ -363,7 +363,6 @@ src_prepare() {
 	)
 	if use truetype; then
 		PATCHES+=(
-			"${WORKDIR}/${GENTOO_WINE_EBUILD_COMMON_P%/}/patches/${MY_PN}-2.18-freetype-2.8.1-segfault.patch"    #631676
 			"${WORKDIR}/${GENTOO_WINE_EBUILD_COMMON_P%/}/patches/${MY_PN}-2.18-freetype-2.8.1-drop-glyphs.patch" #631676
 		)
 		PATCHES_BIN+=( "${WORKDIR}/${GENTOO_WINE_EBUILD_COMMON_P%/}/patches/${MY_PN}-2.18-freetype-2.8.1-implement_minimum_em_size_required_by_opentype_1.8.2.patch" ) #631376
