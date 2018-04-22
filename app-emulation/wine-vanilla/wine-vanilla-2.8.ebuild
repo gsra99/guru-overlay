@@ -485,12 +485,6 @@ multilib_src_install_all() {
 		make_wrapper "${b##*/}-${WINE_VARIANT}" "${MY_PREFIX}/bin/${b##*/}"
 	done
 
-	# respect LINGUAS when installing man pages, #469418
-	#local l
-	#for l in de fr pl; do
-	#	has ${l} ${LINGUAS} || rm -r "${D}"usr/share/man/${l}*
-	#done
-
 	eval "${glob_state}"
 }
 
