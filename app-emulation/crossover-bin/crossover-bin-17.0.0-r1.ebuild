@@ -99,9 +99,9 @@ src_prepare() {
 	use doc || rm -r doc/ || die "Could not remove files"
 
 	# Install crack
-	rm "${ED}opt/cxoffice/lib/wine/winewrapper.exe.so" || die "Could not remove files"
-	cp "${FILESDIR}/winewrapper.exe.so" "{$ED}opt/cxoffice/lib/wine" || die "Could not remove files"
-	chmod +x "${ED}opt/cxoffice/lib/wine/winewrapper.exe.so" || die "Could not remove files"
+	rm "${WORKDIR}/lib/wine/winewrapper.exe.so" || die "Could not remove files"
+	cp "${FILESDIR}/winewrapper.exe.so" "{$WORKDIR}/lib/wine" || die "Could not remove files"
+	chmod +x "${WORDIR}/lib/wine/winewrapper.exe.so" || die "Could not remove files"
 }
 
 src_install() {
