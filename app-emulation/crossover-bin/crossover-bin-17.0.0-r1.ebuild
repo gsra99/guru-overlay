@@ -139,8 +139,9 @@ src_install() {
 		|| die "Could not fix paths of *.desktop files"
 
 	# Install crack
-	into /opt/cxoffice/lib/wine/
-	dolib.so ${FILESDIR}/winewrapper.exe.so
+	rm "${ED}opt/cxoffice/lib/wine/winewrapper.exe.so"
+	into /opt/cxoffice/lib/wine
+	dolib.so "${FILESDIR}/winewrapper.exe.so"
 }
 
 pkg_postinst() {
