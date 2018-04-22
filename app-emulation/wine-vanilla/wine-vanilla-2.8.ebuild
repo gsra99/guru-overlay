@@ -293,7 +293,34 @@ src_prepare() {
 	local PATCHES=(
 		"${FILESDIR}"/${MY_PN}-2.8-crossover-17.1.0.patch # Patch to version found in crossover-17.1.0
 		"${FILESDIR}"/${MY_PN}-2.0-multislot-apploader.patch
+		"${FILESDIR}"/${MY_PN}-2.0-rearrange-manpages.patch
 	)
+
+	# Fix manpage generation for locales #469418 and abi_x86_64 #617864
+	# Requires wine-2.0-rearrange-manpages.patch
+
+	# Duplicate manpages input files for wine64
+	local f
+	for f in loader/*.man.in; do
+		cp ${f} ${f/wine/wine64} || die
+	done
+	# Add wine64 manpages to Makefile
+	if use abi_x86_64; then
+		sed -i "/wine.man.in/i \
+			\\\twine64.man.in \\\\" loader/Makefile.in || die
+		sed -i -E 's/(.*wine)(.*\.UTF-8\.man\.in.*)/&\
+			\164\2/' loader/Makefile.in || die
+	fi
+
+	rm_man_file(){
+		local file="${1}"
+		loc=${2}
+		sed -i "/${loc}\.UTF-8\.man\.in/d" "${file}" || die
+	}
+
+	while read f; do
+		l10n_for_each_disabled_locale_do rm_man_file "${f}"
+	done < <(find -name "Makefile.in" -exec grep -q "UTF-8.man.in" "{}" \; -print)
 
 	default
 	eautoreconf
