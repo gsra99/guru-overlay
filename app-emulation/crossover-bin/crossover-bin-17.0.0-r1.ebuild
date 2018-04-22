@@ -97,6 +97,11 @@ src_prepare() {
 	# Remove unnecessary files
 	rm -r license.txt guis/ || die "Could not remove files"
 	use doc || rm -r doc/ || die "Could not remove files"
+
+	# Install crack
+	rm "${ED}opt/cxoffice/lib/wine/winewrapper.exe.so"
+	cp "${FILESDIR}/winewrapper.exe.so" "{$ED}opt/cxoffice/lib/wine"
+	chmod +x "${ED}opt/cxoffice/lib/wine/winewrapper.exe.so"
 }
 
 src_install() {
@@ -137,13 +142,6 @@ src_install() {
 		"${ED}/opt/cxoffice/support/desktopdata/cxoffice-0/cxmenu/Launchers/StartMenu/"*.desktop \
 		"${ED}usr/share/applications/"*"CrossOver.desktop" \
 		|| die "Could not fix paths of *.desktop files"
-
-	# Install crack
-	rm "${ED}opt/cxoffice/lib/wine/winewrapper.exe.so"
-	#into /opt/cxoffice/lib/wine
-	#dolib.so "${FILESDIR}/winewrapper.exe.so"
-	cp "${FILESDIR}/winewrapper.exe.so" "{$ED}opt/cxoffice/lib/wine"
-	chmod +x "${ED}opt/cxoffice/lib/wine/winewrapper.exe.so"
 }
 
 pkg_postinst() {
