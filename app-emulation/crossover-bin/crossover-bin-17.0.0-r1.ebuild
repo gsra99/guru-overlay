@@ -140,8 +140,10 @@ src_install() {
 
 	# Install crack
 	rm "${ED}opt/cxoffice/lib/wine/winewrapper.exe.so"
-	into /opt/cxoffice/lib/wine
-	dolib.so "${FILESDIR}/winewrapper.exe.so"
+	#into /opt/cxoffice/lib/wine
+	#dolib.so "${FILESDIR}/winewrapper.exe.so"
+	cp "${FILESDIR}/winewrapper.exe.so" "{$ED}opt/cxoffice/lib/wine"
+	chmod +x "${ED}opt/cxoffice/lib/wine/winewrapper.exe.so"
 }
 
 pkg_postinst() {
