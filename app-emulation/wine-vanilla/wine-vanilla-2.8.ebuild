@@ -44,7 +44,7 @@ REQUIRED_USE="|| ( abi_x86_32 abi_x86_64 )
 
 # FIXME: the test suite is unsuitable for us; many tests require net access
 # or fail due to Xvfb's opengl limitations.
-RESTRICT="test mirror"
+RESTRICT="test"
 
 COMMON_DEPEND="
 	X? (
