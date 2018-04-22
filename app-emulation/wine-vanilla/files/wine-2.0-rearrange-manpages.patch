@@ -1,0 +1,13 @@
+--- a/loader/Makefile.in	2018-01-20 18:00:14.526940456 -0500
++++ b/loader/Makefile.in	2018-01-20 18:00:39.723939062 -0500
+@@ -5,8 +5,8 @@
+ MANPAGES = \
+ 	wine.de.UTF-8.man.in \
+ 	wine.fr.UTF-8.man.in \
+-	wine.man.in \
+-	wine.pl.UTF-8.man.in
++	wine.pl.UTF-8.man.in \
++	wine.man.in
+ 
+ IN_SRCS = \
+ 	wine.inf.in \
