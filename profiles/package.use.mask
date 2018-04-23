@@ -1,0 +1,1 @@
+app-emulation/wine:2.8			-mono
