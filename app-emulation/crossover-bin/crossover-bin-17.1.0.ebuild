@@ -6,7 +6,7 @@ EAPI=5
 PYTHON_COMPAT=( python2_7 )
 PYTHON_REQ_USE="threads"
 
-inherit python-single-r1 unpacker
+inherit python-single-r1 unpacker gnome2-utils
 
 DESCRIPTION="Commercial version of app-emulation/wine with paid support."
 HOMEPAGE="http://www.codeweavers.com/products/crossover/"
@@ -144,4 +144,11 @@ pkg_postinst() {
 	einfo "Source code can be obtained from:"
 	einfo
 	einfo "https://media.codeweavers.com/pub/crossover/source/crossover-sources-${PV}.tar.gz"
+
+gnome2_icon_cache_update
 }
+
+pkg_postrm() {
+gnome2_icon_cache_update
+}
+
