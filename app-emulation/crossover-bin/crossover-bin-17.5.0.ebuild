@@ -139,6 +139,11 @@ src_install() {
 		|| die "Could not fix paths of *.desktop files"
 }
 
+pkg_preinst() {
+gnome2_icon_savelist
+gnome2_schemas_savelist
+}
+
 pkg_postinst() {
 	einfo "${P} is open source software with the exception of the GUI."
 	einfo "Source code can be obtained from:"
@@ -146,8 +151,10 @@ pkg_postinst() {
 	einfo "https://media.codeweavers.com/pub/crossover/source/crossover-sources-${PV}.tar.gz"
 
 gnome2_icon_cache_update
+gnome2_schemas_update gnome2_schemas_update
 }
 
 pkg_postrm() {
 gnome2_icon_cache_update
+gnome2_schemas_update gnome2_schemas_update
 }
