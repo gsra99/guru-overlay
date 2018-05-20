@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-inherit autotools eutils gnome2
+inherit eutils meson
 
 DESCRIPTION="Cinnamon session manager"
 HOMEPAGE="http://cinnamon.linuxmint.com/"
@@ -49,21 +49,27 @@ DEPEND="${COMMON_DEPEND}
 	gnome-base/gnome-common
 "
 
-src_prepare() {
+#src_prepare() {
 	# make upower and logind check non-automagic
-	eapply "${FILESDIR}/${PN}-3.0.1-automagic.patch"
-	eapply "${FILESDIR}/${PN}-3.6.1-elogind.patch"
-	eapply "${FILESDIR}/${PN}-3.6.1-elogind2.patch"
+	#eapply "${FILESDIR}/${PN}-3.0.1-automagic.patch"
+	#eapply "${FILESDIR}/${PN}-3.6.1-elogind.patch"
+	#eapply "${FILESDIR}/${PN}-3.6.1-elogind2.patch"
 
-	eautoreconf
-	gnome2_src_prepare
-}
+	#eautoreconf
+	#gnome2_src_prepare
+#}
 
 src_configure() {
-	gnome2_src_configure \
-		--disable-gconf \
-		--disable-static \
-		--enable-logind \
-		$(use_enable doc docbook-docs) \
-		$(use_enable ipv6)
+#	gnome2_src_configure \
+#		--disable-gconf \
+#		--disable-static \
+#		--enable-logind \
+#		$(use_enable doc docbook-docs) \
+#		$(use_enable ipv6)
+
+	local emesonargs=(
+		-Ddocbook=$(usex doc true false)
+		-Dipv6=$(usex ipv6 true false)
+	)
+	meson_src_configure
 }
