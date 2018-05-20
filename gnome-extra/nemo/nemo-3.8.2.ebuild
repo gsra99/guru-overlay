@@ -77,8 +77,8 @@ src_configure() {
 #		$(use_enable xmp)
 
 	local emesonargs=(
-		-Dlibexif=$(usex exif true false)
-		-Dexempi=$(usex xmp true false)
+		-Dexif=$(usex libexif true false)
+		-Dxmp=$(usex exempi true false)
 		-Dtracker=$(usex tracker true false)
 	)
 	meson_src_configure
