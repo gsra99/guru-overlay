@@ -4,7 +4,7 @@
 EAPI=6
 PYTHON_COMPAT=( python3_{4,5,6} )
 
-inherit eutils gnome2 meson python-single-r1
+inherit eutils meson python-single-r1
 
 DESCRIPTION="A collection of libraries and utilites used by Cinnamon"
 HOMEPAGE="http://cinnamon.linuxmint.com/"
@@ -46,19 +46,24 @@ pkg_setup() {
 	python_setup
 }
 
-src_prepare() {
-	eautoreconf
-	gnome2_src_prepare
-}
+#src_prepare() {
+#	eautoreconf
+#	gnome2_src_prepare
+#}
 
 src_configure() {
-	gnome2_src_configure \
-		--disable-static \
-		$(use_enable introspection)
+#	gnome2_src_configure \
+#		--disable-static \
+#		$(use_enable introspection)
+	local emesonargs=(
+		-Dintrospection=$(usex introspection true false)
+        )
+        meson_src_configure
 }
 
 src_install() {
-	gnome2_src_install
+#	gnome2_src_install
+	meson_src_install
 
 	# set sane default gschema values for systemd users
 	if use systemd; then
