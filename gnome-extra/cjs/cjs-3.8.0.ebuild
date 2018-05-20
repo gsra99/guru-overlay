@@ -36,7 +36,7 @@ RDEPEND="${RDEPEND}
 
 RESTRICT="test"
 
-PATCHES=( "${FILESDIR}/${PN}-3.6.1-No-reason-for-System.version-to-be-this-restrictive.patch" )
+#PATCHES=( "${FILESDIR}/${PN}-3.6.1-No-reason-for-System.version-to-be-this-restrictive.patch" )
 
 src_prepare() {
 	eautoreconf
