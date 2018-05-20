@@ -5,7 +5,7 @@ EAPI=6
 GNOME2_LA_PUNT="yes"
 PYTHON_COMPAT=( python3_{4,5,6} )
 
-inherit autotools eutils gnome2 python-any-r1 virtualx
+inherit eutils meson python-any-r1 virtualx
 
 DESCRIPTION="A file manager for Cinnamon, forked from Nautilus"
 HOMEPAGE="http://cinnamon.linuxmint.com/"
@@ -14,13 +14,13 @@ SRC_URI="https://github.com/linuxmint/nemo/archive/${PV}.tar.gz -> ${P}.tar.gz"
 LICENSE="GPL-2+ LGPL-2+ FDL-1.1"
 SLOT="0"
 KEYWORDS="amd64 x86"
-IUSE="exif +introspection +nls packagekit tracker xmp"
+IUSE="exif +nls packagekit tracker xmp"
 
 COMMON_DEPEND="
 	>=dev-libs/glib-2.37.3:2[dbus]
 	>=gnome-extra/cinnamon-desktop-2.6.1:0=
 	>=x11-libs/pango-1.28.3
-	>=x11-libs/gtk+-3.9.10:3[introspection?]
+	>=x11-libs/gtk+-3.9.10:3[introspection]
 	>=dev-libs/libxml2-2.7.8:2
 
 	gnome-base/dconf:0=
@@ -32,7 +32,7 @@ COMMON_DEPEND="
 	>=x11-libs/xapps-1.0.4
 
 	exif? ( >=media-libs/libexif-0.6.20:= )
-	introspection? ( >=dev-libs/gobject-introspection-0.6.4:= )
+	>=dev-libs/gobject-introspection-1.0:=
 	tracker? ( >=app-misc/tracker-0.12:= )
 	xmp? ( >=media-libs/exempi-2.2.0:= )
 	sys-libs/libselinux
@@ -64,17 +64,24 @@ DEPEND="${COMMON_DEPEND}
 # For eautoreconf
 #	gnome-base/gnome-common, dev-util/gtk-doc (not only -am!)
 
-src_prepare() {
-	eautoreconf
-	gnome2_src_prepare
-}
+#src_prepare() {
+#	eautoreconf
+#	gnome2_src_prepare
+#}
 
 src_configure() {
-	gnome2_src_configure \
-		$(use_enable exif libexif) \
-		$(use_enable introspection) \
-		$(use_enable tracker) \
-		$(use_enable xmp)
+#	gnome2_src_configure \
+#		$(use_enable exif libexif) \
+#		$(use_enable introspection) \
+#		$(use_enable tracker) \
+#		$(use_enable xmp)
+
+	local emesonargs=(
+		-Dexif=$(usex libexif true false)
+		-Dxmp=$(usex xmp true false)
+		-Dtracker=$(usex tracker true false)
+	)
+	meson_src_configure
 }
 
 src_test() {
