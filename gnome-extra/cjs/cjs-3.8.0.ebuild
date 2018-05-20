@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-inherit gnome2 meson pax-utils virtualx
+inherit autotools gnome2 pax-utils virtualx
 
 DESCRIPTION="Linux Mint's fork of gjs for Cinnamon"
 HOMEPAGE="http://cinnamon.linuxmint.com/"

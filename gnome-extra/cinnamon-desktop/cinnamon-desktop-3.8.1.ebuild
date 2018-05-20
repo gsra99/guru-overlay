@@ -4,7 +4,7 @@
 EAPI=6
 PYTHON_COMPAT=( python3_{4,5,6} )
 
-inherit autotools eutils gnome2 python-single-r1
+inherit eutils gnome2 meson python-single-r1
 
 DESCRIPTION="A collection of libraries and utilites used by Cinnamon"
 HOMEPAGE="http://cinnamon.linuxmint.com/"
