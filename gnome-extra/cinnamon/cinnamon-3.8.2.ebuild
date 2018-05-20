@@ -143,7 +143,7 @@ src_prepare() {
 	eapply "${FILESDIR}"/${PN}-2.8.0-background.patch
 
 	# Fix automagic gnome-bluetooth dep, bug #398145
-	eapply "${FILESDIR}"/${PN}-2.2.6-automagic-gnome-bluetooth.patch
+	#eapply "${FILESDIR}"/${PN}-2.2.6-automagic-gnome-bluetooth.patch
 
 	# Use wheel group instead of sudo (from Fedora/Arch)
 	# https://github.com/linuxmint/Cinnamon/issues/3576
