@@ -14,7 +14,7 @@ IUSE="+cairo examples gtk test"
 KEYWORDS="amd64 x86"
 
 RDEPEND="
-	dev-lang/spidermonkey:38
+	dev-lang/spidermonkey:52
 	>=dev-libs/glib-2.37.3:2
 	>=dev-libs/gobject-introspection-1.38:=
 	sys-libs/readline:0
