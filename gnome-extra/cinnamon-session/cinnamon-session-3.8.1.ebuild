@@ -68,8 +68,9 @@ src_configure() {
 #		$(use_enable ipv6)
 
 	local emesonargs=(
-		-Ddocbook=$(usex doc true false)
-		-Dipv6=$(usex ipv6 true false)
+		-Dwith-gconf=false
+		-Dwith-docbook=$(usex doc true false)
+		-Dwith-ipv6=$(usex ipv6 true false)
 	)
 	meson_src_configure
 }
