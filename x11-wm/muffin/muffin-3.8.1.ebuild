@@ -10,19 +10,19 @@ SRC_URI="https://github.com/linuxmint/muffin/archive/${PV}.tar.gz -> ${P}.tar.gz
 
 LICENSE="GPL-2+"
 SLOT="0"
-IUSE="+introspection test xinerama"
+IUSE="test xinerama"
 KEYWORDS="amd64 x86"
 
 COMMON_DEPEND="
-	>=x11-libs/pango-1.2[X,introspection?]
+	>=x11-libs/pango-1.2[X,introspection]
 	>=x11-libs/cairo-1.14:=[X]
-	x11-libs/gdk-pixbuf:2[introspection?]
-	>=x11-libs/gtk+-3.9.12:3[X,introspection?]
+	x11-libs/gdk-pixbuf:2[introspection]
+	>=x11-libs/gtk+-3.9.12:3[X,introspection]
 	>=dev-libs/glib-2.37.3:2[dbus]
-	>=gnome-extra/cinnamon-desktop-2.4:0=[introspection?]
-	>=gnome-base/gsettings-desktop-schemas-3.3.0[introspection?]
-	>=media-libs/clutter-1.14.3:1.0=[X,introspection?]
-	>=media-libs/cogl-1.13.3:1.0=[introspection?]
+	>=gnome-extra/cinnamon-desktop-2.4:0=[introspection]
+	>=gnome-base/gsettings-desktop-schemas-3.3.0[introspection]
+	>=media-libs/clutter-1.14.3:1.0=[X,introspection]
+	>=media-libs/cogl-1.13.3:1.0=[introspection]
 	>=media-libs/libcanberra-0.26[gtk3]
 	>=x11-libs/libXcomposite-0.3
 	>=x11-libs/startup-notification-0.7:=
@@ -41,7 +41,7 @@ COMMON_DEPEND="
 
 	gnome-extra/zenity
 
-	introspection? ( >=dev-libs/gobject-introspection-0.9.5:= )
+	>=dev-libs/gobject-introspection-0.9.5:=
 	xinerama? ( x11-libs/libXinerama )
 "
 # needs gtk-doc, not just -am, for gtk-doc.make
@@ -77,6 +77,5 @@ src_configure() {
 		--enable-xsync \
 		--enable-verbose-mode \
 		--with-libcanberra \
-		$(use_enable introspection) \
 		$(use_enable xinerama)
 }

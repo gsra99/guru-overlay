@@ -61,21 +61,7 @@ DEPEND="${COMMON_DEPEND}
 	dev-util/gtk-doc
 	gnome-base/gnome-common
 "
-# For eautoreconf
-#	gnome-base/gnome-common, dev-util/gtk-doc (not only -am!)
-
-#src_prepare() {
-#	eautoreconf
-#	gnome2_src_prepare
-#}
-
 src_configure() {
-#	gnome2_src_configure \
-#		$(use_enable exif libexif) \
-#		$(use_enable introspection) \
-#		$(use_enable tracker) \
-#		$(use_enable xmp)
-
 	local emesonargs=(
 		-Dexif=$(usex exif true false)
 		-Dxmp=$(usex xmp true false)

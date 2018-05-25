@@ -35,8 +35,8 @@ COMMON_DEPEND="${PYTHON_DEPS}
 	>=dev-libs/libcroco-0.6.2:0.6
 	dev-libs/libxml2:2
 	gnome-base/librsvg
-	>=gnome-extra/cinnamon-desktop-3.8:0=[introspection]
-	>=gnome-extra/cinnamon-menus-3.8[introspection]
+	>=gnome-extra/cinnamon-desktop-3.8:0=
+	>=gnome-extra/cinnamon-menus-3.8
 	>=gnome-extra/cjs-3.8.0
 	>=media-libs/clutter-1.10:1.0[introspection]
 	media-libs/cogl:1.0=[introspection]
@@ -51,7 +51,7 @@ COMMON_DEPEND="${PYTHON_DEPS}
 	>=x11-libs/startup-notification-0.11
 	x11-libs/libX11
 	>=x11-libs/libXfixes-5.0
-	>=x11-wm/muffin-3.8.0[introspection]
+	>=x11-wm/muffin-3.8.0
 	networkmanager? (
 		gnome-base/libgnome-keyring
 		>=net-misc/networkmanager-0.8.999:=[introspection] )

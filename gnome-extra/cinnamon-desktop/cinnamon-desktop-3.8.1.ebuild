@@ -28,7 +28,7 @@ COMMON_DEPEND="${PYTHON_DEPS}
 	x11-libs/libxkbfile
 	x11-misc/xkeyboard-config
 	>=gnome-base/gsettings-desktop-schemas-3.5.91
-	introspection? ( >=dev-libs/gobject-introspection-0.9.7:= )
+	>=dev-libs/gobject-introspection-0.9.7:=
 	sys-apps/accountsservice
 "
 RDEPEND="${COMMON_DEPEND}
@@ -46,23 +46,11 @@ pkg_setup() {
 	python_setup
 }
 
-#src_prepare() {
-#	eautoreconf
-#	gnome2_src_prepare
-#}
-
 src_configure() {
-#	gnome2_src_configure \
-#		--disable-static \
-#		$(use_enable introspection)
-	local emesonargs=(
-		-Dintrospection=$(usex introspection true false)
-        )
         meson_src_configure
 }
 
 src_install() {
-#	gnome2_src_install
 	meson_src_install
 
 	# set sane default gschema values for systemd users

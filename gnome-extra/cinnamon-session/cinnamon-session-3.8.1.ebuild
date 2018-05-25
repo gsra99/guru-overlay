@@ -49,24 +49,7 @@ DEPEND="${COMMON_DEPEND}
 	gnome-base/gnome-common
 "
 
-#src_prepare() {
-	# make upower and logind check non-automagic
-	#eapply "${FILESDIR}/${PN}-3.0.1-automagic.patch"
-	#eapply "${FILESDIR}/${PN}-3.6.1-elogind.patch"
-	#eapply "${FILESDIR}/${PN}-3.6.1-elogind2.patch"
-
-	#eautoreconf
-	#gnome2_src_prepare
-#}
-
 src_configure() {
-#	gnome2_src_configure \
-#		--disable-gconf \
-#		--disable-static \
-#		--enable-logind \
-#		$(use_enable doc docbook-docs) \
-#		$(use_enable ipv6)
-
 	local emesonargs=(
 		-Dwith-gconf=false
 		-Dwith-docbook=$(usex doc true false)
