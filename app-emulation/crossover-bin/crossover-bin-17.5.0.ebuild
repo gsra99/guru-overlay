@@ -18,9 +18,9 @@ KEYWORDS="-* ~amd64 ~x86"
 IUSE="+capi +cups doc +gphoto2 +gsm +jpeg +lcms +ldap +mp3 +nls +openal +opengl +png +scanner +ssl +v4l"
 
 # We need python 2.x
-REQUIRED_USE="${PYTHON_REQUIRED_USE}
-	|| ( $(python_gen_useflags 'python2*') )
-"
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+#	|| ( $(python_gen_useflags 'python2*') )
+#"
 
 RESTRICT="bindist test"
 QA_FLAGS_IGNORED="opt/cxoffice/.*"
