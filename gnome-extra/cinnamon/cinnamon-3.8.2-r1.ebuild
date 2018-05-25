@@ -24,7 +24,7 @@ IUSE="+nls +networkmanager"
 # We need *both* python 2.x and 3.x
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 
 COMMON_DEPEND="${PYTHON_DEPS}
 	app-accessibility/at-spi2-atk:2
