@@ -3,7 +3,7 @@
 
 EAPI=6
 GNOME2_LA_PUNT="yes"
-PYTHON_COMPAT=( python{2_7,3_4,3_5,3_6} )
+PYTHON_COMPAT=( python{3_4,3_5,3_6} )
 PYTHON_REQ_USE="xml"
 
 inherit autotools eutils flag-o-matic gnome2 multilib pax-utils python-r1
@@ -21,10 +21,9 @@ SLOT="0"
 
 IUSE="+nls +networkmanager"
 
-# We need *both* python 2.x and 3.x
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 
 COMMON_DEPEND="${PYTHON_DEPS}
 	app-accessibility/at-spi2-atk:2
@@ -151,16 +150,16 @@ src_prepare() {
 	fi
 
 	# python 2-and-3 shebang fixing craziness
-	local p
-	python_setup 'python3*'
-	for p in $(grep -rl '#!.*python3'); do
-		python_fix_shebang "${p}"
-	done
+	#local p
+	#python_setup 'python3*'
+	#for p in $(grep -rl '#!.*python3'); do
+	#	python_fix_shebang "${p}"
+	#done
 
-	python_setup 'python2*'
-	for p in $(grep -rl '#!.*python[^3]'); do
-		python_fix_shebang "${p}"
-	done
+	#python_setup 'python2*'
+	#for p in $(grep -rl '#!.*python[^3]'); do
+	#	python_fix_shebang "${p}"
+	#done
 
 	eautoreconf
 	gnome2_src_prepare
