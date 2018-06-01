@@ -3,6 +3,7 @@
 
 EAPI=6
 #VALA_USE_DEPEND="vapigen"
+WANT_AUTOCONF=latest
 
 inherit autotools gnome2 vala
 
