@@ -31,8 +31,8 @@ RDEPEND="${DEPEND}
 "
 
 src_prepare() {
-	default
 	eautoreconf
+	gnome2_src_prepare
 }
 
 src_configure() {
