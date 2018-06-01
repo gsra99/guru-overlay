@@ -3,7 +3,7 @@
 
 EAPI=6
 
-inherit autotools gnome2 vala
+inherit autotools eutils vala
 
 DESCRIPTION="The Gnome Encfs Manager (or short GEncfsM) is an easy to use manager and mounter for encfs stashes"
 HOMEPAGE="https://moritzmolch.com/apps/gencfsm/"
