@@ -41,6 +41,6 @@ src_configure() {
 
 	econf \
 	--prefix=/usr \
-	--disable-appindicator
-	$(use_enable appindicator appindicator )
+#	--disable-appindicator
+#	$(use_enable appindicator appindicator )
 }
