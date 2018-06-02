@@ -3,7 +3,7 @@
 
 EAPI=6
 
-inherit autotools eutils vala
+inherit autotools gnome2 vala
 
 DESCRIPTION="The Gnome Encfs Manager (or short GEncfsM) is an easy to use manager and mounter for encfs stashes"
 HOMEPAGE="https://moritzmolch.com/apps/gencfsm/"
@@ -29,18 +29,17 @@ RDEPEND="${DEPEND}
 "
 
 src_prepare() {
-	default
 	# use version information from debian/changelog
 	VERSION=$(head -n 1 debian/changelog | cut -d '(' -f 2 | cut -d ')' -f 1)
 	sed -e "s/%VERSION%/$VERSION/" "configure.ac.in" > "configure.ac"
 	eautoreconf
+	gnome2_src_prepare
 }
 
 src_configure() {
 	vala_src_prepare
 
-	econf \
-	--prefix=/usr \
+	gnome2_src_configure \
 #	--disable-appindicator
 #	$(use_enable appindicator appindicator )
 }
