@@ -40,13 +40,12 @@ src_configure() {
 	vala_src_prepare
 
 	OPTIONS=(
-	--prefix=/usr
+		--prefix=/usr
 	)
 
 	use appindicator || OPTIONS+=(
 				--disable-appindicator
 			)
 
-	gnome2_src_configure \
-	${OPTIONS}
+	gnome2_src_configure ${OPTIONS}
 }
