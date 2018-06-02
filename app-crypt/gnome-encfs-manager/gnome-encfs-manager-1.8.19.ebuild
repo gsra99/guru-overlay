@@ -43,3 +43,15 @@ src_configure() {
 #	--disable-appindicator
 #	$(use_enable appindicator appindicator )
 }
+
+pkg_preinst() {
+	gnome2_pkg_preinst
+}
+
+pkg_postinst() {
+	gnome2_pkg_postinst
+}
+
+pkg_postrm() {
+	gnome2_pkg_postrm
+}
