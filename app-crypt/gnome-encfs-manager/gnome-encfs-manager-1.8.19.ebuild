@@ -43,11 +43,7 @@ src_configure() {
 		--prefix=/usr
 	)
 
-	if ! use appindicator; then
-	OPTIONS+=(
-		--disable-appindicator
-		)
-	fi
-
-	gnome2_src_configure ${OPTIONS}
+	use appindicator || OPTIONS+=(
+				--disable-appindicator
+				)
 }
