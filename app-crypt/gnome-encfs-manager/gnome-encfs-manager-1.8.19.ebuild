@@ -40,6 +40,6 @@ src_configure() {
 	vala_src_prepare
 
 	econf \
-	--with-prefix=/usr \
-	$(use_disable appindicator appindicator )
+	--prefix=/usr \
+	$(use_disable -appindicator -appindicator )
 }
