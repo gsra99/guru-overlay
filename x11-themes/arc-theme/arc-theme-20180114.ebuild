@@ -17,7 +17,8 @@ IUSE="cinnamon gnome-shell +gtk2 +gtk3 mate xfce"
 # set of files to install. Updates will break it but only this fix will
 # help. https://github.com/horst3180/arc-theme/pull/436
 DEPEND="gtk3? ( >=x11-libs/gtk+-3.14:3
-	virtual/pkgconfig )"
+	virtual/pkgconfig )
+	>=dev-lang/sassc-3.4.7"
 
 # gnome-themes-standard is only needed by GTK+2 for the Adwaita
 # engine. This engine is built into GTK+3.
