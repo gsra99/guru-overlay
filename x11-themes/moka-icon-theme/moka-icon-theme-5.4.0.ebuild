@@ -4,7 +4,7 @@
 
 EAPI=6
 
-inherit eutils autotools meson ninja-utils
+inherit eutils autotools meson
 
 DESCRIPTION="Moka is a stylized Linux desktop icon set, and the titular icon theme of the Moka Project. They are designed to be clear, simple and consistent."
 HOMEPAGE="http://snwh.org"
@@ -23,20 +23,10 @@ LICENSE="LGPL-3.0"
 SLOT="0"
 IUSE=""
 
-#DEPEND="x11-themes/faba-icon-theme"
-#RDEPEND="${DEPEND}"
-
-#src_prepare(){
-#	eapply_user
-#	eautoreconf
-#}
-
 src_compile(){
-#	emake DESTDIR="${D}" || die
 	meson_src_compile "build" --prefix=/usr
 }
 
 src_install(){
-#	emake DESTDIR="${D}" install || die
-	eninja -C "build" install
+	meson_src_install "build" install
 }
