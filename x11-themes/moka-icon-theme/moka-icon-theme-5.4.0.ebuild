@@ -4,7 +4,7 @@
 
 EAPI=6
 
-inherit eutils autotools meson
+inherit meson
 
 DESCRIPTION="Moka is a stylized Linux desktop icon set, and the titular icon theme of the Moka Project. They are designed to be clear, simple and consistent."
 HOMEPAGE="http://snwh.org"
