@@ -5,7 +5,7 @@
 # Registration file for Pepper Flash player.
 FILE_NAME=/opt/google/chrome/pepper/libpepflashplayer.so
 PLUGIN_NAME="Shockwave Flash"
-VERSION="29.0.0.171"
-VISIBLE_VERSION="29.0 r0"
-DESCRIPTION="Shockwave Flash 29.0 r0"
+VERSION="30.0.0.113"
+VISIBLE_VERSION="30.0 r0"
+DESCRIPTION="Shockwave Flash 30.0 r0"
 MIME_TYPES="application/x-shockwave-flash"
