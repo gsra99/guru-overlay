@@ -17,7 +17,7 @@ else
 	SRC_URI="https://github.com/snwh/faba-icon-theme/archive/v4.3.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="*"
 	RESTRICT="mirror"
-	S="${PN}-4.3"
+	S="${WORKDIR}/${PN}-4.3"
 fi
 
 LICENSE="LGPL-3.0"
