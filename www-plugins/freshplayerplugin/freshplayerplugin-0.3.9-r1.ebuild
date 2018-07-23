@@ -80,8 +80,8 @@ src_install() {
 	cmake-utils_src_install
 
 	insinto /opt/google/chrome/PepperFlash
-	doins "${FILESDIR}/pepper-flash-30.0.0.113.info -> pepper-flash.info"
-	doins "${FILESDIR}/manifest-30.0.0.113.json" manifest.json
+	doins "${FILESDIR}/pepper-flash-30.0.0.113.info"
+	doins "${FILESDIR}/manifest-30.0.0.113.json"
 	exeinto /opt/google/chrome/PepperFlash
-	doexe "${FILESDIR}/libpepflashplayer-30.0.0.113.so" libpepflashplayer.so
+	doexe "${FILESDIR}/libpepflashplayer-30.0.0.113.so"
 }
