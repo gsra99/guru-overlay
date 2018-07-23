@@ -81,11 +81,8 @@ src_install() {
 	cmake-utils_src_install
 
 	insinto /opt/google/chrome/PepperFlash
-	doins "${FILESDIR}/pepper-flash-${FLASH_VERSION}.info"
-	doins "${FILESDIR}/manifest-${FLASH_VERSION}.json"
-	dosym pepper-flash-${FLASH_VERSION}.info pepper-flash.info
-	dosym manifest-${FLASH_VERSION}.json manifest.json
+	newins "${FILESDIR}/pepper-flash-${FLASH_VERSION}.info" pepper-flash.info
+	newins "${FILESDIR}/manifest-${FLASH_VERSION}.json" manifest.json
 	exeinto /opt/google/chrome/PepperFlash
-	doexe "${FILESDIR}/libpepflashplayer-${FLASH_VERSION}.so"
-	dosym libpepflashplayer-${FLASH_VERSION}.so libpepflashplayer.so
+	newexe "${FILESDIR}/libpepflashplayer-${FLASH_VERSION}.so" libpepflashplayer.so
 }
