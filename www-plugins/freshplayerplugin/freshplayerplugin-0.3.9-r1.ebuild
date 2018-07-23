@@ -4,6 +4,7 @@
 EAPI=6
 
 inherit cmake-utils
+FLASH_VERSION="30.0.0.113"
 
 LICENSE="MIT"
 HOMEPAGE="https://github.com/i-rinat/freshplayerplugin"
@@ -80,8 +81,11 @@ src_install() {
 	cmake-utils_src_install
 
 	insinto /opt/google/chrome/PepperFlash
-	doins "${FILESDIR}/pepper-flash-30.0.0.113.info"
-	doins "${FILESDIR}/manifest-30.0.0.113.json"
+	doins "${FILESDIR}/pepper-flash-${FLASH_VERSION}.info"
+	doins "${FILESDIR}/manifest-${FLASH_VERSION}.json"
+	dosym pepper-flash-${FLASH_VERSION}.info pepper-flash.info
+	dosym manifest-${FLASH_VERSION}.json manifest.json
 	exeinto /opt/google/chrome/PepperFlash
-	doexe "${FILESDIR}/libpepflashplayer-30.0.0.113.so"
+	doexe "${FILESDIR}/libpepflashplayer-${FLASH_VERSION}.so"
+	dosym libpepflashplayer-${FLASH_VERSION}.so libpepflashplayer.so
 }
