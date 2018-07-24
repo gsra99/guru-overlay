@@ -19,5 +19,5 @@ RDEPEND="x11-misc/xdotool
 	>=dev-libs/libinput-1.8.0"
 
 all_ruby_install() {
-	ruby_fakegem_binwrapper fusuma /usr/local/bin/fusuma
+	ruby_fakegem_binwrapper fusuma
 }
