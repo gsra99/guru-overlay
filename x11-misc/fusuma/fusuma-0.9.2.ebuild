@@ -18,6 +18,6 @@ DEPEND=""
 RDEPEND="x11-misc/xdotool
 	>=dev-libs/libinput-1.8.0"
 
-#src_install() {
-#	gem install fusuma
-#}
+all_ruby_install() {
+	ruby_fakegem_binwrapper fusuma
+}
