@@ -28,10 +28,8 @@ RDEPEND="x11-misc/xdotool
 ruby_add_bdepend "
 		>=dev-ruby/bundler-1.13.0
 		dev-ruby/pry
-		dev-ruby/pry-byebug
 		>=dev-ruby/rake-12.3
-		>=dev-ruby/rspec-3.0
-		dev-ruby/rubocop"
+		>=dev-ruby/rspec-3.0"
 
 all_ruby_install() {
 	ruby_fakegem_binwrapper fusuma
