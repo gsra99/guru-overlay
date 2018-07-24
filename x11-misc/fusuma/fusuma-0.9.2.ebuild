@@ -6,9 +6,9 @@ USE_RUBY="ruby22 ruby23 ruby24 ruby25"
 
 RUBY_FAKEGEM_BINDIR="exe"
 RUBY_FAKEGEM_GEMSPEC="${PN}.gemspec"
-#RUBY_FAKEGEM_DOCDIR="spec"
-#RUBY_FAKEGEM_EXTRADOC="README.md"
-#RUBY_FAKEGEM_RECIPE_DOC="none"
+RUBY_FAKEGEM_EXTRADOC="README.md"
+RUBY_FAKEGEM_RECIPE_DOC="none"
+RUBY_FAKEGEM_RECIPE_TEST="none"
 
 inherit ruby-fakegem
 
@@ -24,12 +24,6 @@ IUSE=""
 DEPEND=""
 RDEPEND="x11-misc/xdotool
 	>=dev-libs/libinput-1.8.0"
-
-ruby_add_bdepend "
-		>=dev-ruby/bundler-1.13.0
-		dev-ruby/pry
-		>=dev-ruby/rake-12.3
-		>=dev-ruby/rspec-3.0"
 
 all_ruby_install() {
 	ruby_fakegem_binwrapper fusuma
