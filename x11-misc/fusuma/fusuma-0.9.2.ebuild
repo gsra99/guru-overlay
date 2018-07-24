@@ -7,6 +7,8 @@ USE_RUBY="ruby22 ruby23 ruby24 ruby25"
 RUBY_FAKEGEM_BINDIR="exe"
 RUBY_FAKEGEM_EXTRAINSTALL="bin"
 RUBY_FAKEGEM_GEMSPEC="fusuma.gemspec"
+RUBY_FAKEGEM_DOCDIR="spec"
+RUBY_FAKEGEM_EXTRADOC="README.md"
 
 inherit ruby-fakegem
 
@@ -17,11 +19,18 @@ SRC_URI="https://github.com/iberianpig/fusuma/archive/v${PV}.tar.gz -> ${P}.tar.
 LICENSE=""
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE=""
+IUSE="doc"
 
 DEPEND=""
 RDEPEND="x11-misc/xdotool
 	>=dev-libs/libinput-1.8.0"
+
+ruby_add_bdepend "test? ( >=dev-ruby/minitest-5.8 )"
+
+each_ruby_test() {
+	${RUBY} -Ilib:test:. -e 'gem "minitest", "~>5.8"; require "minitest/autorun"; Dir["test/test_*.rb"].each{|f| require f}' || die
+}
+
 
 all_ruby_install() {
 	ruby_fakegem_binwrapper fusuma
