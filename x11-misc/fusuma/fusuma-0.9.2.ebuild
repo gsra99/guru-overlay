@@ -21,6 +21,8 @@ DEPEND=""
 RDEPEND="x11-misc/xdotool
 	>=dev-libs/libinput-1.8.0"
 
+ruby_add_bdepend "test? ( >=dev-ruby/minitest-5.8 )"
+
 each_ruby_test() {
 	${RUBY} -Ilib:test:. -e 'gem "minitest", "~>5.8"; require "minitest/autorun"; Dir["test/test_*.rb"].each{|f| require f}' || die
 }
