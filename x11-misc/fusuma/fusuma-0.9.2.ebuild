@@ -4,7 +4,8 @@
 EAPI=6
 USE_RUBY="ruby22 ruby23 ruby24 ruby25"
 
-RUBY_FAKEGEM_EXTRAINSTALL="exe"
+RUBY_FAKEGEM_BINDIR="exe"
+RUBY_FAKEGEM_EXTRAINSTALL="bin"
 RUBY_FAKEGEM_GEMSPEC="fusuma.gemspec"
 
 inherit ruby-fakegem
