@@ -4,7 +4,7 @@
 EAPI=6
 USE_RUBY="ruby22 ruby23 ruby24 ruby25"
 
-RUBY_FAKEGEM_BINDIR="bin exe"
+RUBY_FAKEGEM_BINDIR="../bin ../exe"
 
 inherit ruby-fakegem
 
