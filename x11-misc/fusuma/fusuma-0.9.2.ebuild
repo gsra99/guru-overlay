@@ -20,7 +20,8 @@ RDEPEND="x11-misc/xdotool
 	>=dev-libs/libinput-1.8.0"
 
 all_ruby_install() {
-	ruby_fakegem_binwrapper fusuma
+	all_fakegem_install
+#	ruby_fakegem_binwrapper fusuma
 
-	newbashcomp "${FILESDIR}"/rake.bash-completion ${PN}
+#	newbashcomp "${FILESDIR}"/rake.bash-completion ${PN}
 }
