@@ -4,7 +4,7 @@
 EAPI=6
 USE_RUBY="ruby22 ruby23 ruby24 ruby25"
 
-inherit bash-completion-r1 ruby-fakegem
+inherit ruby-ng
 
 DESCRIPTION=" Multitouch gestures with libinput driver on X11"
 HOMEPAGE="https://github.com/iberianpig/fusuma"
@@ -19,9 +19,9 @@ DEPEND=""
 RDEPEND="x11-misc/xdotool
 	>=dev-libs/libinput-1.8.0"
 
-all_ruby_install() {
-	all_fakegem_install
+#all_ruby_install() {
+#	all_fakegem_install
 #	ruby_fakegem_binwrapper fusuma
 
 #	newbashcomp "${FILESDIR}"/rake.bash-completion ${PN}
-}
+#}
