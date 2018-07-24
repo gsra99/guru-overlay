@@ -3,6 +3,9 @@
 
 EAPI=6
 USE_RUBY="ruby22 ruby23 ruby24 ruby25"
+
+RUBY_FAKEGEM_TASK_TEST=""
+
 inherit ruby-fakegem
 
 DESCRIPTION=" Multitouch gestures with libinput driver on X11"
@@ -17,6 +20,10 @@ IUSE=""
 DEPEND=""
 RDEPEND="x11-misc/xdotool
 	>=dev-libs/libinput-1.8.0"
+
+each_ruby_test() {
+	${RUBY} -Ilib:test:. -e 'gem "minitest", "~>5.8"; require "minitest/autorun"; Dir["test/test_*.rb"].each{|f| require f}' || die
+}
 
 all_ruby_install() {
 	ruby_fakegem_binwrapper fusuma
