@@ -81,7 +81,6 @@ src_install() {
 	python_foreach_impl install_python
 
 	python_replicate_script "${D}"/usr/bin/firewall-{offline-cmd,cmd,applet,config}
-	python_replicate_script "${D}/usr/bin/firewallctl"
 	python_replicate_script "${D}/usr/sbin/firewalld"
 
 	# Disabling systemd, SysVinit script will be installed. But no sense
