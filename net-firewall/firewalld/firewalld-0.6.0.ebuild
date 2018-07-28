@@ -49,7 +49,7 @@ src_prepare() {
 }
 
 src_configure() {
-if !nftables?; then
+if ! use nftables ; then
 	NFT=""
 else
 	NFT="=${EROOT}sbin/nft"
