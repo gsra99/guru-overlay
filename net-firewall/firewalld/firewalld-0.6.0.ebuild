@@ -49,12 +49,6 @@ src_prepare() {
 }
 
 src_configure() {
-if ! use nftables ; then
-	NFT=""
-else
-	NFT="=${EROOT}sbin/nft"
-fi
-
 	python_setup
 
 	econf \
@@ -69,7 +63,7 @@ fi
 		--with-ipset="${EROOT}sbin/ipset" \
 		--with-iptables="${EROOT}sbin/iptables" \
 		--with-iptables-restore="${EROOT}sbin/iptables-restore" \
-		$(use_with nftables nft${NFT} ) \
+		--with-nft="${EROOT}sbin/iptables-restore" \
 		--with-systemd-unitdir="$(systemd_get_systemunitdir)"
 }
 
