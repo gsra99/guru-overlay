@@ -18,7 +18,7 @@ SRC_URI="https://github.com/firewalld/firewalld/archive/v${PV}.tar.gz
 LICENSE="GPL-2+"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64 ~x86"
-IUSE="gui systemd"
+IUSE="gui nftables systemd"
 
 COMMON_DEPEND="${PYTHON_DEPS}
 	dev-python/dbus-python[${PYTHON_USEDEP}]
@@ -28,7 +28,7 @@ COMMON_DEPEND="${PYTHON_DEPS}
 	net-firewall/ebtables
 	net-firewall/iptables[ipv6]
 	net-firewall/ipset
-	net-firewall/nftables
+	nftables? ( net-firewall/nftables )
 	gui? ( x11-libs/gtk+:3
 		dev-python/PyQt5[${PYTHON_USEDEP}] )
 	!systemd? ( >=sys-apps/openrc-0.11.5 )
@@ -63,7 +63,7 @@ src_configure() {
 		--with-ipset="${EROOT}sbin/ipset" \
 		--with-iptables="${EROOT}sbin/iptables" \
 		--with-iptables-restore="${EROOT}sbin/iptables-restore" \
-		--with-nft="${EROOT}sbin/nft"
+		$(use_with nftables nft="${EROOT}sbin/nft" ) \
 		--with-systemd-unitdir="$(systemd_get_systemunitdir)"
 }
 
