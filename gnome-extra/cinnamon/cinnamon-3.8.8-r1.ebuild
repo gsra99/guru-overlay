@@ -84,10 +84,6 @@ RDEPEND="${COMMON_DEPEND}
 
 	dev-python/dbus-python[${PYTHON_USEDEP}]
 	dev-python/pygobject:3[${PYTHON_USEDEP}]
-	$(python_gen_cond_dep 'dev-python/gconf-python:2[${PYTHON_USEDEP}]' 'python2*')
-	$(python_gen_cond_dep 'dev-python/lxml[${PYTHON_USEDEP}]' 'python2*')
-	$(python_gen_cond_dep 'dev-python/pycairo[${PYTHON_USEDEP}]' 'python2*')
-	$(python_gen_cond_dep 'dev-python/pillow[${PYTHON_USEDEP}]' 'python2*')
 
 	x11-themes/gnome-themes-standard
 	x11-themes/adwaita-icon-theme
