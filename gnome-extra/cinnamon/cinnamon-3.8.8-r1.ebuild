@@ -84,6 +84,8 @@ RDEPEND="${COMMON_DEPEND}
 
 	dev-python/dbus-python[${PYTHON_USEDEP}]
 	dev-python/pygobject:3[${PYTHON_USEDEP}]
+	dev-python/pypam[${PYTHON_USEDEP}]
+	dev-python/pexpect[${PYTHON_USEDEP}]
 
 	x11-themes/gnome-themes-standard
 	x11-themes/adwaita-icon-theme
