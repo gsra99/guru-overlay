@@ -54,6 +54,8 @@ src_install() {
 
 	# package provides .pc files
 	find "${D}" -name '*.la' -delete || die
+
+	meson_src_install
 }
 
 pkg_postinst() {
