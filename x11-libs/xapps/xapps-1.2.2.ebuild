@@ -3,7 +3,9 @@
 
 EAPI=6
 
-inherit gnome2-utils meson xdg-utils
+inherit gnome2-utils meson xdg-utils vala
+
+VALA_USE_DEPEND="vapigen"
 
 DESCRIPTION="Cross-desktop libraries and common resources"
 HOMEPAGE="https://github.com/linuxmint/xapps/"
@@ -32,6 +34,10 @@ DEPEND="${RDEPEND}
 		dev-util/gtk-doc-am
 	)
 "
+
+src_prepare() {
+	vala_src_prepare
+}
 
 src_configure() {
 	local emesonargs=(
