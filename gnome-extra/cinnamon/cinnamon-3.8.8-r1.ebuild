@@ -80,12 +80,14 @@ RDEPEND="${COMMON_DEPEND}
 	>=app-accessibility/caribou-0.3
 
 	x11-misc/xdg-utils
-	|| ( <x11-libs/xapps-1.2.2[introspection] >=x11-libs/xapps-1.2.2 )
+	|| ( <x11-libs/xapps-1.2.2[introspection]
+	>=x11-libs/xapps-1.2.2 (
+		dev-python/pypam[${PYTHON_USEDEP}]
+		dev-python/pexpect[${PYTHON_USEDEP}]
+	) )
 
 	dev-python/dbus-python[${PYTHON_USEDEP}]
 	dev-python/pygobject:3[${PYTHON_USEDEP}]
-	dev-python/pypam[${PYTHON_USEDEP}]
-	dev-python/pexpect[${PYTHON_USEDEP}]
 
 	x11-themes/gnome-themes-standard
 	x11-themes/adwaita-icon-theme
