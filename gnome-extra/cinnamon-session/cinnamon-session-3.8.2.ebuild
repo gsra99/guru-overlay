@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-inherit eutils meson
+inherit meson eutils gnome2
 
 DESCRIPTION="Cinnamon session manager"
 HOMEPAGE="http://cinnamon.linuxmint.com/"
@@ -49,11 +49,19 @@ DEPEND="${COMMON_DEPEND}
 	gnome-base/gnome-common
 "
 
+src_prepare() {
+	eapply "${FILESDIR}/${PN}-3.8.0-elogind.patch" \
+		   "${FILESDIR}/${PN}-3.8.0-elogind2.patch"
+	gnome2_src_prepare
+}
+
 src_configure() {
-	local emesonargs=(
-		-Dwith-gconf=false
-		-Dwith-docbook=$(usex doc true false)
+	meson_src_configure \
+		-Dwith-gconf=false \
+		-Dwith-docbook=$(usex doc true false) \
 		-Dwith-ipv6=$(usex ipv6 true false)
-	)
-	meson_src_configure
+}
+
+src_install() {
+	meson_src_install
 }
