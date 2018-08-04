@@ -23,9 +23,7 @@ RDEPEND="x11-themes/gtk-engines-murrine
 DEPEND="${RDEPEND}
 	dev-ruby/sass"
 
-RESTRICT=""
-
-#S=${WORKDIR}
+RESTRICT="binchecks strip"
 
 src_install() {
 	insinto /usr/share/themes

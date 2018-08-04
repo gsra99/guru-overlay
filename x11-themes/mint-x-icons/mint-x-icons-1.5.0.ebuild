@@ -24,6 +24,7 @@ S=${WORKDIR}
 src_install() {
 	insinto /usr/share/icons
 	doins -r mint-x-icons/usr/share/icons/Mint-X{,-Dark} || die
+	doins -r mint-x-icons/src/Mint-X || die
 	dodoc mint-x-icons/debian/changelog  mint-x-icons/debian/copyright
 }
 
