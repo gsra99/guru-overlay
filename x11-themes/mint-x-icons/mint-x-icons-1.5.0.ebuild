@@ -1,8 +1,8 @@
 # Copyright 1999-2011 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: 
+# $Header:
 
-EAPI="4"
+EAPI="6"
 
 inherit gnome2-utils
 
@@ -24,8 +24,6 @@ S=${WORKDIR}
 src_install() {
 	insinto /usr/share/icons
 	doins -r mint-x-icons/usr/share/icons/Mint-X{,-Dark} || die
-	insinto /usr/share/pixmaps
-	doins -r mint-x-icons/usr/share/pixmaps/pidgin || die
 	dodoc mint-x-icons/debian/changelog  mint-x-icons/debian/copyright
 }
 

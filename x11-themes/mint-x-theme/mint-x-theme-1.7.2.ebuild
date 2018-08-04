@@ -29,7 +29,7 @@ RESTRICT=""
 
 src_install() {
 	insinto /usr/share/themes
-	doins -r usr/share/themes/'Linux Mint'
-	doins -r usr/share/themes/Mint-X{,-*}/
+	doins -r usr/share/themes/'Linux Mint' || die
+	doins -r usr/share/themes/Mint-X{,-*} || die
 	dodoc debian/changelog debian/copyright
 }
