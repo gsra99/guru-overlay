@@ -17,9 +17,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND=""
-RDEPEND="${DEPEND}
-	x11-themes/faenza-icon-theme"
+RDEPEND=""
 
 RESTRICT="binchecks strip"
 
