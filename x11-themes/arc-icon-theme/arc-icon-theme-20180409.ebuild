@@ -17,7 +17,7 @@ IUSE=""
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~mips ~ppc ~ppc64 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~arm-linux ~x86-linux ~sparc-solaris ~x64-solaris ~x86-solaris"
 
 RDEPEND="
-	x11-themes/moka-icon-theme
+	x11-themes/adwaita-icon-theme
 "
 DEPEND=""
 
