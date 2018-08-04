@@ -17,14 +17,13 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-RDEPEND=""
+RDEPEND="x11-themes/faenza-icon-theme"
 
 RESTRICT="binchecks strip"
 
 src_install() {
 	insinto /usr/share/icons
 	doins -r usr/share/icons/Mint-X{,-Dark} || die
-	doins -r src/Mint-X || die
 	dodoc debian/changelog debian/copyright
 }
 
