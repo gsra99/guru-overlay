@@ -8,7 +8,7 @@ inherit autotools git-r3 gnome2-utils
 DESCRIPTION="Vertex icon theme"
 HOMEPAGE="https://github.com/0i0/arc-icon-theme"
 EGIT_REPO_URI="https://github.com/0i0/arc-icon-theme.git"
-EGIT_BRANCH="maste"
+EGIT_BRANCH="master"
 EGIT_COMMIT="e019b0b0c3311b492a092827910e00632a6026d9"
 
 LICENSE="GPL-3"
