@@ -3,13 +3,13 @@
 
 EAPI=6
 
-EGIT_REPO_URI="https://github.com/anbox/anbox.git"
-EGIT_COMMIT="2a5ea7c88b60d563ded16164520b9a2520582669"
-
 inherit flag-o-matic git-r3 udev linux-info linux-mod
 
 DESCRIPTION="Kernel modules for anbox"
 HOMEPAGE="http://anbox.io/"
+EGIT_REPO_URI="https://github.com/anbox/anbox-modules"
+EGIT_BRANCH="master"
+EGIT_COMMIT="2a5ea7c88b60d563ded16164520b9a2520582669"
 
 LICENSE="GPL-3"
 SLOT="0"
