@@ -20,7 +20,7 @@ RESTRICT="debug? ( strip ) splitdebug !custom-cflags? ( installsources ) test"
 DEPEND=""
 RDEPEND="${DEPEND}"
 
-#S="${WORKDIR}/${P}/kernel"
+S="${WORKDIR}/${P}"
 
 BUILD_TARGETS="all"
 BUILD_TARGET_ARCH="${ARCH}"
