@@ -20,8 +20,6 @@ RESTRICT="debug? ( strip ) splitdebug !custom-cflags? ( installsources ) test"
 DEPEND=""
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/${P}"
-
 BUILD_TARGETS="all"
 BUILD_TARGET_ARCH="${ARCH}"
 MODULE_NAMES="ashmem_linux(misc:${S}/ashmem) binder_linux(misc:${S}/binder)"
@@ -46,7 +44,7 @@ src_prepare() {
 	for amod in ashmem binder; do
 		sed -e '/^KERNEL_SRC/,/[^[:space:]]/{/^KERNEL_SRC/d;/^[[:space:]]*$/d}' \
 			-e 's|\(\sV=\)0\(\s\)|\11 KBUILD_VERBOSE=1\2|' \
-			-i "${WORKDIR}/${P}"/kernel/${amod}/Makefile || die
+			-i "${WORKDIR}/${P}"/${amod}/Makefile || die
 	done
 	default
 }
