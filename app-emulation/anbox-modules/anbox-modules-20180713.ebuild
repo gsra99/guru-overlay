@@ -13,7 +13,7 @@ HOMEPAGE="http://anbox.io/"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE="-custom-cflags -debug systemd"
 RESTRICT="debug? ( strip ) splitdebug !custom-cflags? ( installsources ) test"
 
