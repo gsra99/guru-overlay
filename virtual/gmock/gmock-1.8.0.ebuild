@@ -7,7 +7,7 @@ EAPI=6
 
 DESCRIPTION="Google C++ Testing Framework"
 HOMEPAGE="https://github.com/google/googletest"
-#EGIT_REPO_URI="https://github.com/gsra99/cmake-findgmock.git"
+EGIT_REPO_URI="https://github.com/gsra99/cmake-findgmock.git"
 
 LICENSE="BSD"
 SLOT="0"
@@ -19,5 +19,5 @@ RDEPEND="!dev-cpp/gmock
 
 src_install() {
 	insinto /usr/share/cmake/Modules
-	doins "${FILESDIR}"/FindGMock.cmake
+	doins FindGMock.cmake
 }
