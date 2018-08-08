@@ -20,7 +20,7 @@ IUSE=""
 RESTRICT="mirror"
 
 DEPEND="
-	dev-cpp/gmock
+	dev-cpp/gtest
 	dev-libs/boost"
 
 S="${WORKDIR}/${PN}-0.0.1+14.10.20140730"
