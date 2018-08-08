@@ -68,7 +68,7 @@ multilib_src_install_all() {
 }
 
 pkg_postinst() {
-	cp "{FILESDIR}"/FindGMock.cmake /usr/share/cmake/Modules
+	cp "{FILESDIR}/FindGMock.cmake" /usr/share/cmake/Modules/
 }
 
 pkg_postrm() {
