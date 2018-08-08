@@ -51,10 +51,15 @@ multilib_src_configure() {
 	cmake-utils_src_configure mycmakeargs
 }
 
+multilib_src_install() {
+	default
+
+	insinto /usr/share/cmake/Modules
+	doins "{FILESDIR}"/FindGMock.cmake
+}
+
 multilib_src_install_all() {
 	einstalldocs
-	insinto /usr/share/cmake/Modules
-	doins "{FILESDIR}/FindGMock.cmake"
 
 	if use doc; then
 		docinto googletest
@@ -68,3 +73,4 @@ multilib_src_install_all() {
 		dodoc googletest/samples/*.{cc,h}
 	fi
 }
+
