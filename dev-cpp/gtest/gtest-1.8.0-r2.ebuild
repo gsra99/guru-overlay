@@ -54,8 +54,8 @@ multilib_src_configure() {
 multilib_src_install() {
 	default
 
-	insinto /usr/share/cmake/Modules
-	doins "{FILESDIR}/FindGMock.cmake"
+#	insinto /usr/share/cmake/Modules
+#	doins "{FILESDIR}/FindGMock.cmake"
 }
 
 multilib_src_install_all() {
