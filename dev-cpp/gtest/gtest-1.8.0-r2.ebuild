@@ -51,13 +51,6 @@ multilib_src_configure() {
 	cmake-utils_src_configure mycmakeargs
 }
 
-multilib_src_install() {
-	default
-
-#	insinto /usr/share/cmake/Modules
-#	doins "{FILESDIR}/FindGMock.cmake"
-}
-
 multilib_src_install_all() {
 	einstalldocs
 
@@ -74,3 +67,10 @@ multilib_src_install_all() {
 	fi
 }
 
+pkg_postinst() {
+	cp "{FILESDIR}"/FindGMock.cmake /usr/share/cmake/Modules
+}
+
+pkg_postrm() {
+	rm /usr/share/cmake/Modules/FindGMock.cmake
+}
