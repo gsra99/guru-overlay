@@ -3,7 +3,7 @@
 
 EAPI=6
 
-#inherit git-r3
+inherit git-r3
 
 DESCRIPTION="Google C++ Testing Framework"
 HOMEPAGE="https://github.com/google/googletest"
