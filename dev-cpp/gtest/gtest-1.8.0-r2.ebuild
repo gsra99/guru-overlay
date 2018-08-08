@@ -6,7 +6,7 @@ EAPI=6
 # Python is required for tests and some build tasks.
 PYTHON_COMPAT=( python2_7 python3_{4,5,6} pypy )
 
-inherit python-any-r1 cmake-multilib
+inherit python-any-r1 cmake-utils multilib-minimal
 
 DESCRIPTION="Google C++ Testing Framework"
 HOMEPAGE="https://github.com/google/googletest"
@@ -51,6 +51,13 @@ multilib_src_configure() {
 	cmake-utils_src_configure mycmakeargs
 }
 
+multilib_src_install() {
+	default
+
+	insinto /usr/share/cmake/Modules
+	doins "{FILESDIR}"/FindGMock.cmake
+}
+
 multilib_src_install_all() {
 	einstalldocs
 
@@ -65,12 +72,4 @@ multilib_src_install_all() {
 		docinto examples
 		dodoc googletest/samples/*.{cc,h}
 	fi
-}
-
-pkg_postinst() {
-	cp "{FILESDIR}/FindGMock.cmake" /usr/share/cmake/Modules/
-}
-
-pkg_postrm() {
-	rm /usr/share/cmake/Modules/FindGMock.cmake
 }
