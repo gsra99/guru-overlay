@@ -17,9 +17,10 @@ SLOT="0"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86"
 IUSE="static-libs +tr1"
 
-RDEPEND=">=dev-cpp/gtest-${PV}[${MULTILIB_USEDEP},tr1(+)?]"
+RDEPEND=">=dev-cpp/gtest-${PV}[tr1(+)]"
 DEPEND="${RDEPEND}
-	test? ( ${PYTHON_DEPS} )"
+	test? ( ${PYTHON_DEPS} )
+	app-arch/unzip"
 
 DOCS=""
 
