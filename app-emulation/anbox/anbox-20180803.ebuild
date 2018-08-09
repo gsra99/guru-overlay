@@ -29,6 +29,7 @@ DEPEND="${RDEPEND}
 	dev-libs/boost:=[threads]
 	dev-libs/glib:2
 	dev-libs/properties-cpp
+	dev-libs/process-cpp
 	dev-libs/protobuf
 	media-libs/libsdl2
 	media-libs/mesa[egl,gles2]
@@ -36,7 +37,7 @@ DEPEND="${RDEPEND}
 	sys-apps/dbus
 	sys-libs/libcap
 	sys-apps/systemd[nat]
-	dev-cpp/gtest[source]"
+	dev-cpp/gtest"
 
 CONFIG_CHECK="
 	~NAMESPACES
