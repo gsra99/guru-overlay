@@ -10,6 +10,7 @@ inherit python-single-r1 cmake-utils git-r3 linux-info systemd udev versionator
 
 DESCRIPTION="Run Android applications on any GNU/Linux operating system"
 HOMEPAGE="https://anbox.io/"
+SRC_URI="https://build.anbox.io/android-images/2018/07/19/android_amd64.img"
 EGIT_REPO_URI="https://github.com/${PN}/${PN}.git"
 EGIT_BRANCH="master"
 EGIT_COMMIT="2dea391b24f66c78d8c68e44bc1776913a9a3a4d"
@@ -96,7 +97,7 @@ src_install() {
 	newins snap/gui/icon.png anbox.png
 
 	insinto /var/lib/anbox
-	newins "${DISTDIR}"/android_3_amd64.img android.img
+	newins "${DISTDIR}"/android_amd64.img android.img
 	fowners -Rc root:users /var/lib/anbox || die
 	fperms -Rc g+w /var/lib/anbox  || die
 
