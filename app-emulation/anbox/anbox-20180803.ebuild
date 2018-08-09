@@ -17,7 +17,7 @@ EGIT_COMMIT="2dea391b24f66c78d8c68e44bc1776913a9a3a4d"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="test"
+IUSE=""
 RESTRICT="mirror"
 
 RDEPEND="dev-util/android-tools
@@ -27,20 +27,16 @@ DEPEND="${RDEPEND}
 	app-emulation/anbox-modules
 	app-emulation/lxc
 	dev-libs/boost:=[threads]
-	dev-libs/dbus-cpp
 	dev-libs/glib:2
 	dev-libs/properties-cpp
 	dev-libs/protobuf
-	dev-util/cmake-extras
-	media-libs/glm
 	media-libs/libsdl2
 	media-libs/mesa[egl,gles2]
 	media-libs/sdl2-image
 	sys-apps/dbus
 	sys-libs/libcap
 	sys-apps/systemd[nat]
-	test? ( dev-cpp/gmock
-		dev-cpp/gtest )"
+	dev-cpp/gtest"
 
 CONFIG_CHECK="
 	~NAMESPACES
@@ -63,8 +59,7 @@ pkg_setup() {
 src_prepare() {
 	cmake-utils_src_prepare
 
-	! use test && \
-		truncate -s0 cmake/FindGMock.cmake tests/CMakeLists.txt
+	truncate -s0 cmake/FindGMock.cmake tests/CMakeLists.txt
 }
 
 src_install() {
