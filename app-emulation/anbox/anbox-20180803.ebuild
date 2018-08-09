@@ -23,7 +23,7 @@ RESTRICT="mirror"
 
 RDEPEND="dev-util/android-tools
 	net-firewall/iptables
-	dev-libs/dbus-cpp"
+	sys-fs/squashfs-tools"
 
 DEPEND="${RDEPEND}
 	${PYTHON_DEPS}
@@ -51,6 +51,7 @@ CONFIG_CHECK="
 	~UTS_NS
 	~BRIDGE
 	~NF_NAT_MASQUERADE_IPV4
+	~SQUASHFS
 	~!BINDER
 	~!ASHMEM
 "
