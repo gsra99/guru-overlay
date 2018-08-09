@@ -68,6 +68,6 @@ multilib_src_install_all() {
 
 	if use source; then
 	insinto "/usr/share/googletest"
-	doins -r google{test,mock}/src/*.{cc,h}
+	doins -r google{test,mock}/src/*
 	fi
 }
