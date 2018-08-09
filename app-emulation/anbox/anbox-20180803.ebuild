@@ -22,7 +22,9 @@ IUSE=""
 RESTRICT="mirror"
 
 RDEPEND="dev-util/android-tools
-	net-firewall/iptables"
+	net-firewall/iptables
+	dev-libs/dbus-cpp"
+
 DEPEND="${RDEPEND}
 	${PYTHON_DEPS}
 	app-emulation/anbox-modules
