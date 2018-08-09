@@ -72,3 +72,11 @@ src_prepare() {
 
 	cmake-utils_src_prepare
 }
+
+src_configure() {
+	local mycmakeargs=(
+		-DDBUS_CPP_VERSION_MAJOR=5
+	)
+
+	cmake-utils_src_configure
+}
