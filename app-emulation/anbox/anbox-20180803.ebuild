@@ -36,7 +36,7 @@ DEPEND="${RDEPEND}
 	sys-apps/dbus
 	sys-libs/libcap
 	sys-apps/systemd[nat]
-	dev-cpp/gtest"
+	dev-cpp/gtest[source]"
 
 CONFIG_CHECK="
 	~NAMESPACES
