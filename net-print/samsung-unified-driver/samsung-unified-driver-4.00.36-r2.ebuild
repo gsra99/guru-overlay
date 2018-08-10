@@ -18,7 +18,7 @@ RESTRICT="mirror strip"
 REQUIRED_USE="network? ( cups )
 	qt4? ( cups )"
 
-DEPEND=""
+DEPEND="!net-print/samsung-unified-driver:2"
 # libstdc++.so.5 is needed only by libscmcss.so which apparently is not required
 # for normal printing/scanning operations and ldd doesn't show any binary that needs it.
 # So, skip virtual/libstdc++ as we skip libscmcss.so installation below.
