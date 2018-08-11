@@ -30,7 +30,7 @@ RDEPEND="virtual/libusb:0
 		!net-print/splix
 	)
 	qt4? (
-		dev-qt/qtcore:4
+		dev-qt/qtcore:4[qt3support]
 		media-libs/tiff
 	)
 	scanner? (
