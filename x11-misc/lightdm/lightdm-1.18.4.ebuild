@@ -102,7 +102,6 @@ src_configure() {
 		--with-user-session=${_session}
 		--with-greeter-session=${_greeter}
 		--with-greeter-user=${_user}
-		--with-html-dir="${EPREFIX}"/usr/share/doc/${PF}/html
 	)
 	econf "${myeconfargs[@]}"
 }
