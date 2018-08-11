@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=6
+EAPI=5
 
 inherit linux-info multilib
 
@@ -69,8 +69,6 @@ src_unpack() {
 }
 
 src_prepare() {
-	default
-
 	find . -type d -exec chmod 755 '{}' \;
 	find . -type f -exec chmod 644 '{}' \;
 
