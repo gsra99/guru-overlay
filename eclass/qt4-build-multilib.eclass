@@ -1,10 +1,10 @@
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/eclass/qt4-build-multilib.eclass,v 1.28 2015/06/16 21:38:00 pesa Exp $
 
+# @DEAD
 # @ECLASS: qt4-build-multilib.eclass
 # @MAINTAINER:
-# Qt herd <qt@gentoo.org>
+# qt@gentoo.org
 # @AUTHOR:
 # Davide Pesavento <pesa@gentoo.org>
 # @BLURB: Eclass for Qt4 split ebuilds with multilib support.
@@ -56,7 +56,6 @@ DEPEND="
 "
 RDEPEND="
 	dev-qt/qtchooser
-	abi_x86_32? ( !app-emulation/emul-linux-x86-qtlibs[-abi_x86_32(-)] )
 "
 
 
@@ -113,10 +112,13 @@ multilib_src_install_all()	{ qt4_multilib_src_install_all; }
 # @DESCRIPTION:
 # Unpacks the sources.
 qt4-build-multilib_src_unpack() {
-	if [[ $(gcc-major-version) -lt 4 ]] || [[ $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 4 ]]; then
-		ewarn
-		ewarn "Using a GCC version lower than 4.4 is not supported."
-		ewarn
+	if tc-is-gcc; then
+		if [[ $(gcc-major-version) -lt 4 ]] || \
+		   [[ $(gcc-major-version) -eq 4 && $(gcc-minor-version) -lt 4 ]]; then
+			ewarn
+			ewarn "Using a GCC version lower than 4.4 is not supported"
+			ewarn
+		fi
 	fi
 
 	if [[ ${PN} == qtwebkit ]]; then
@@ -155,6 +157,12 @@ qt4-build-multilib_src_prepare() {
 			|| die "sed failed (skip X11 tests)"
 	fi
 
+	# Qt4 is not safe to build with C++14 (the new gcc-6 default).
+	# Upstream has addressed this for Qt5, but while we continue to
+	# support Qt4, we need to ensure everything is built in C++98 mode.
+	# See bugs 582522, 582618, 583662, 583744.
+	append-cxxflags -std=gnu++98
+
 	if [[ ${PN} == qtcore ]]; then
 		# Bug 373061
 		# qmake bus errors with -O2 or -O3 but -O1 works
@@ -172,7 +180,7 @@ qt4-build-multilib_src_prepare() {
 	if [[ ${PN} == qtdeclarative ]]; then
 		# Bug 551560
 		# gcc-4.8 ICE with -Os, fixed in 4.9
-		if use x86 && [[ $(gcc-version) == 4.8 ]]; then
+		if use x86 && tc-is-gcc && [[ $(gcc-version) == 4.8 ]]; then
 			replace-flags -Os -O2
 		fi
 	fi
@@ -189,6 +197,10 @@ qt4-build-multilib_src_prepare() {
 	if use ppc64; then
 		append-flags -mminimal-toc
 	fi
+
+	# Teach configure about gcc-6 and later
+	sed -i -e 's:5\*|:[5-9]*|:' \
+		configure || die "sed gcc version failed"
 
 	# Read also AR from the environment
 	sed -i -e 's/^SYSTEM_VARIABLES="/&AR /' \
@@ -466,8 +478,6 @@ qt4_multilib_src_install() {
 			# convenience symlinks
 			dosym qt4-"${CHOST}".conf /etc/xdg/qtchooser/4.conf
 			dosym qt4-"${CHOST}".conf /etc/xdg/qtchooser/qt4.conf
-			# TODO bug 522646: write an eselect module to manage default.conf
-			dosym qt4.conf /etc/xdg/qtchooser/default.conf
 		fi
 	fi
 
@@ -581,9 +591,13 @@ qt4_prepare_env() {
 	QT4_EXAMPLESDIR=${QT4_DATADIR}/examples
 	QT4_DEMOSDIR=${QT4_DATADIR}/demos
 	QT4_SYSCONFDIR=${EPREFIX}/etc/qt4
-	QMAKE_LIBDIR_QT=${QT4_LIBDIR}
 
+	# are these still needed?
+	QMAKE_LIBDIR_QT=${QT4_LIBDIR}
 	export XDG_CONFIG_HOME="${T}"
+
+	# can confuse qmake if set (bug 583352)
+	unset QMAKESPEC
 }
 
 # @FUNCTION: qt4_foreach_target_subdir
@@ -637,10 +651,11 @@ qt4_qmake() {
 	local projectdir=${PWD/#${BUILD_DIR}/${S}}
 
 	"${BUILD_DIR}"/bin/qmake \
+		"${projectdir}" \
 		CONFIG+=nostrip \
 		LIBS+=-L"${QT4_LIBDIR}" \
-		"${projectdir}" \
-		|| die "qmake failed (${projectdir})"
+		"${myqmakeargs[@]}" \
+		|| die "qmake failed (${projectdir#${S}/})"
 }
 
 # @FUNCTION: qt4_install_module_qconfigs
@@ -822,10 +837,8 @@ qt4_get_mkspec() {
 	esac
 
 	# Add -64 for 64-bit prefix profiles
-	if use amd64-linux || use ia64-linux || use ppc64-linux ||
+	if use amd64-linux || use ppc64-linux ||
 		use x64-macos ||
-		use sparc64-freebsd || use x64-freebsd || use x64-openbsd ||
-		use ia64-hpux ||
 		use sparc64-solaris || use x64-solaris
 	then
 		[[ -d ${S}/mkspecs/${spec}-64 ]] && spec+=-64
