@@ -94,6 +94,8 @@ src_prepare() {
 }
 
 src_install() {
+	default
+
 	SOPT="/opt/Samsung/mfp"
 	if [ "${ABI}" == "amd64" ]; then
 		SARCH="x86_64"

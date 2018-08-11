@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=5
+EAPI=6
 
 inherit linux-info multilib
 
@@ -70,6 +70,8 @@ src_prepare() {
 }
 
 src_install() {
+	default
+
 	if [ "${ABI}" == "amd64" ]; then
 		SARCH="x86_64"
 	elif [ "${ABI}" == "x86" ]; then
