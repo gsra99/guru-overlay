@@ -65,13 +65,13 @@ src_unpack() {
 }
 
 src_prepare() {
+	default
+
 	find . -type d -exec chmod 755 '{}' \;
 	find . -type f -exec chmod 644 '{}' \;
 }
 
 src_install() {
-	default
-
 	if [ "${ABI}" == "amd64" ]; then
 		SARCH="x86_64"
 	elif [ "${ABI}" == "x86" ]; then
