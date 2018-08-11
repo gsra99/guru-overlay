@@ -69,6 +69,8 @@ src_unpack() {
 }
 
 src_prepare() {
+	default
+
 	find . -type d -exec chmod 755 '{}' \;
 	find . -type f -exec chmod 644 '{}' \;
 
@@ -94,8 +96,6 @@ src_prepare() {
 }
 
 src_install() {
-	default
-
 	SOPT="/opt/Samsung/mfp"
 	if [ "${ABI}" == "amd64" ]; then
 		SARCH="x86_64"
