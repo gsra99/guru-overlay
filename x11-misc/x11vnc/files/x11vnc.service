@@ -1,7 +1,10 @@
 [Unit]
 Description=VNC Server for X11
 Requires=graphical.target
-After=graphical.target
+After=display-manager.service
 
 [Service]
 ExecStart=/usr/bin/x11vnc
+
+[Install]
+WantedBy=multi-user.target
