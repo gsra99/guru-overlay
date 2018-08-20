@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-inherit autotools systemd vcs-snapshot
+inherit autotools vcs-snapshot
 
 DESCRIPTION="A VNC server for real X displays"
 HOMEPAGE="https://libvnc.github.io/"
@@ -11,7 +11,7 @@ SRC_URI="https://github.com/LibVNC/x11vnc/archive/${PV}.tar.gz -> ${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="alpha amd64 arm ~arm64 hppa ia64 ~mips ppc ppc64 ~s390 ~sh sparc x86 ~x86-fbsd ~amd64-linux ~arm-linux ~x86-linux ~sparc-solaris ~x64-solaris ~x86-solaris"
-IUSE="crypt fbcon libressl ssl xinerama zeroconf"
+IUSE="crypt fbcon libressl ssl systemd xinerama zeroconf"
 
 RDEPEND=">=net-libs/libvncserver-0.9.8[ssl?]
 	x11-libs/libX11
@@ -39,9 +39,6 @@ src_prepare() {
 src_configure() {
 	# --without-v4l because of missing video4linux 2.x support wrt #389079
 	econf \
-		--localstatedir=/var \
-		--with-systemdunitdir=$(systemd_get_systemunitdir) \
-		--with-tmpfilesdir="${EPREFIX}"/usr/lib/tmpfiles.d \
 		$(use_with crypt) \
 		$(use_with fbcon fbdev) \
 		$(use_with ssl) \
@@ -53,6 +50,11 @@ src_configure() {
 
 src_install() {
 	default
-	newinitd "${FILESDIR}/x11vnc.init.d" ${PN}
-	newconfd "${FILESDIR}/x11vnc.conf.d" ${PN}
+	if ! use systemd; then
+		newinitd "${FILESDIR}"/${PN}.init.d ${PN}
+		newconfd "${FILESDIR}"/${PN}.conf.d ${PN}
+	else
+		insinto /lib/systemd/system
+		doins "${FILESDIR}"/${PN}.service
+	fi
 }
