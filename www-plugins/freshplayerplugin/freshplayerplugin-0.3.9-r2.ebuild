@@ -51,9 +51,9 @@ DEPEND="${COMMON_DEPEND}
 	dev-util/ragel
 	virtual/pkgconfig
 	"
-RDEPEND="${COMMON_DEPEND}
-	www-plugins/adobe-flash:22[abi_x86_64,ppapi(+)]
-	"
+#RDEPEND="${COMMON_DEPEND}
+#	www-plugins/adobe-flash:22[abi_x86_64,ppapi(+)]
+#	"
 
 PATCHES=( "${FILESDIR}/0.3.5-cmake.patch" "${FILESDIR}/0.3.9-ioctl.patch" )
 DOCS=( ChangeLog data/freshwrapper.conf.example README.md )
