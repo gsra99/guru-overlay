@@ -17,13 +17,13 @@ RESTRICT="mirror"
 inherit rpm eutils
 
 S="${WORKDIR}"
-MY_PV="${PV}.36746"
+REVISION=36746
 
 src_install() {
 	cd "${S}/usr/bin"
 	dobin vncviewer
 
-	cd "${S}/usr/share/doc/${PN}-vnc-viewer-${MY_PV}"
+	cd "${S}/usr/share/doc/${PN}-vnc-viewer-${PV}.${REVISION}"
 	dodoc *.txt
 
 	cd "${S}/usr/share/man/man1"
