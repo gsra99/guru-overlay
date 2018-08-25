@@ -23,7 +23,7 @@ src_install() {
 	dobin vncviewer
 
 	cd "${S}/usr/share/doc/${PN}-vnc-viewer-${PV}.*"
-	dodoc LICENSE_en.txt README.txt
+	dodoc *.txt
 
 	cd "${S}/usr/share/man/man1"
 	doman vncviewer.1.gz
