@@ -12,7 +12,7 @@ EGIT_BRANCH="master"
 
 LICENSE=""
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
 IUSE=""
 
 DEPEND="x11-misc/lightdm[qt5]"
