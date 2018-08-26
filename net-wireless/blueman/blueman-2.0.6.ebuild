@@ -4,19 +4,18 @@
 EAPI="6"
 
 PYTHON_COMPAT=( python{3_4,3_5,3_6,3_7} )
-inherit autotools git-r3 gnome2-utils linux-info python-single-r1 systemd
+inherit gnome2-utils linux-info python-single-r1 systemd
 
 DESCRIPTION="Simple and intuitive GTK+ Bluetooth Manager"
 HOMEPAGE="https://github.com/blueman-project/blueman"
 
 if [[ ${PV} == "9999" ]] ; then
+	inherit autotools git-r3
 	EGIT_REPO_URI="https://github.com/blueman-project/blueman.git"
 	KEYWORDS=""
 else
-	EGIT_REPO_URI="https://github.com/blueman-project/blueman.git"
-	EGIT_BRANCH="2-0-stable"
-	EGIT_COMMIT="09ff8a4551b4567db85cc234e08ee262138b9615"
-	KEYWORDS="amd64 ~ppc ~ppc64 x86"
+	SRC_URI="https://github.com/blueman-project/${PN}/releases/download/${PV/_/.}/${P/_/.}.tar.xz"
+	KEYWORDS="~amd64 ~ppc ~ppc64 ~x86"
 fi
 
 LICENSE="GPL-3"
@@ -77,7 +76,7 @@ pkg_setup() {
 
 src_prepare() {
 	default
-	eautoreconf
+	[[ ${PV} == 9999 ]] && eautoreconf
 }
 
 src_configure() {
