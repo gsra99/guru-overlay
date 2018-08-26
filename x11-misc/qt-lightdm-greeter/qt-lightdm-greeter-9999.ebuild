@@ -7,7 +7,7 @@ inherit git-r3 cmake-utils
 
 DESCRIPTION="qt-lightdm-greeter is a simple frontend for the lightdm displaymanager, written in c++ and qt5."
 HOMEPAGE="https://github.com/surlykke/qt-lightdm-greeter"
-EGIT_URI="https://github.com/surlykke/qt-lightdm-greeter.git"
+EGIT_REPO_URI="https://github.com/surlykke/qt-lightdm-greeter.git"
 EGIT_BRANCH="master"
 
 LICENSE=""
