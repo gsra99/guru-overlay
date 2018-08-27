@@ -5,7 +5,7 @@ EAPI=6
 
 inherit eutils git-r3
 
-EGIT_REPO_URI="git://anongit.freedesktop.org/xorg/app/edid-decode"
+EGIT_REPO_URI="git://linuxtv.org/edid-decode.git"
 
 DESCRIPTION="Edid decoder"
 HOMEPAGE="https://cgit.freedesktop.org/xorg/app/edid-decode"
