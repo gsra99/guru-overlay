@@ -16,3 +16,5 @@ KEYWORDS=""
 IUSE=""
 
 DEPEND="virtual/libc"
+RDEPEND="app-text/dos2unix
+	app-shells/zsh"
