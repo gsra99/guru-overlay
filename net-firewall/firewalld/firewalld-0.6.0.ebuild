@@ -4,7 +4,7 @@
 EAPI=6
 PYTHON_COMPAT=( python{2_7,3_4,3_5,3_6} )
 
-inherit autotools gnome2-utils python-r1 python-utils-r1 systemd bash-completion-r1
+inherit autotools gnome2-utils python-single-r1 systemd bash-completion-r1
 
 DESCRIPTION="A firewall daemon with D-BUS interface providing a dynamic firewall"
 HOMEPAGE="http://www.firewalld.org/"
@@ -70,10 +70,11 @@ src_install() {
 		emake -C src DESTDIR="${D}" pythondir="$(python_get_sitedir)" install
 		python_optimize
 	}
-	python_foreach_impl install_python
+	#python_foreach_impl install_python
 
-	python_replicate_script "${D}"/usr/bin/firewall-{offline-cmd,cmd,applet,config}
-	python_replicate_script "${D}/usr/sbin/firewalld"
+	#python_replicate_script "${D}"/usr/bin/firewall-{offline-cmd,cmd,applet,config}
+	#python_replicate_script "${D}/usr/sbin/firewalld"
+	install_python
 
 	# Get rid of junk
 	rm -rf "${D}/etc/rc.d/" || die
