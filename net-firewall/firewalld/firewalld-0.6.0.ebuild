@@ -70,10 +70,6 @@ src_install() {
 		emake -C src DESTDIR="${D}" pythondir="$(python_get_sitedir)" install
 		python_optimize
 	}
-	#python_foreach_impl install_python
-
-	#python_replicate_script "${D}"/usr/bin/firewall-{offline-cmd,cmd,applet,config}
-	#python_replicate_script "${D}/usr/sbin/firewalld"
 	install_python
 
 	# Get rid of junk
