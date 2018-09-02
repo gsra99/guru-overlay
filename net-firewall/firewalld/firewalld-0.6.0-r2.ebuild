@@ -40,6 +40,19 @@ RESTRICT="test" # bug 650760
 
 src_prepare() {
 	default
+
+	# python 2-and-3 shebang fixing craziness
+	local p
+	python_setup 'python3*'
+	for p in $(grep -rl '#!.*python3'); do
+		python_fix_shebang "${p}"
+	done
+
+	python_setup 'python2*'
+	for p in $(grep -rl '#!.*python[^3]'); do
+		python_fix_shebang "${p}"
+	done
+
 	eautoreconf
 }
 
