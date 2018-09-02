@@ -38,8 +38,6 @@ DEPEND="${RDEPEND}
 
 RESTRICT="test" # bug 650760
 
-PATCHES=( "${FILESDIR}"/${PN}-0.5.1-errorcodes{1,2}.patch )
-
 src_prepare() {
 	default
 	eautoreconf
