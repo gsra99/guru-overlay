@@ -58,6 +58,7 @@ DEPEND="${RDEPEND}
 src_prepare() {
 	# make colord and wacom optional
 	eapply "${FILESDIR}"/${PN}-3.0.1-optional.patch
+	eapply "${FILESDIR}"/${PN}-3.8.0-accountservice.patch
 
 	# Disable broken test
 	sed -e '/g_test_add_func ("\/color\/edid/d' \
@@ -74,6 +75,7 @@ src_configure() {
 		--enable-gudev \
 		--enable-polkit \
 		--enable-logind \
+		--disable-accountservice \
 		$(use_enable colord color) \
 		$(use_enable cups) \
 		$(use_enable smartcard smartcard-support) \
