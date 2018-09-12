@@ -5,7 +5,7 @@ EAPI=6
 GNOME2_LA_PUNT="yes"
 PYTHON_COMPAT=( python3_{4,5,6} )
 
-inherit eutils meson python-any-r1 virtualx
+inherit meson eutils gnome2 python-any-r1 virtualx
 
 DESCRIPTION="A file manager for Cinnamon, forked from Nautilus"
 HOMEPAGE="http://cinnamon.linuxmint.com/"
@@ -14,13 +14,14 @@ SRC_URI="https://github.com/linuxmint/nemo/archive/${PV}.tar.gz -> ${P}.tar.gz"
 LICENSE="GPL-2+ LGPL-2+ FDL-1.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="exif +nls packagekit tracker xmp"
+IUSE="exif +introspection +nls packagekit selinux tracker xmp"
+RESTRICT=test
 
 COMMON_DEPEND="
 	>=dev-libs/glib-2.37.3:2[dbus]
 	>=gnome-extra/cinnamon-desktop-2.6.1:0=
 	>=x11-libs/pango-1.28.3
-	>=x11-libs/gtk+-3.9.10:3[introspection]
+	>=x11-libs/gtk+-3.9.10:3[introspection?]
 	>=dev-libs/libxml2-2.7.8:2
 
 	gnome-base/dconf:0=
@@ -32,10 +33,10 @@ COMMON_DEPEND="
 	>=x11-libs/xapps-1.0.4
 
 	exif? ( >=media-libs/libexif-0.6.20:= )
-	>=dev-libs/gobject-introspection-1.0:=
+	introspection? ( >=dev-libs/gobject-introspection-0.6.4:= )
 	tracker? ( >=app-misc/tracker-0.12:= )
 	xmp? ( >=media-libs/exempi-2.2.0:= )
-	sys-libs/libselinux
+	selinux? ( sys-libs/libselinux )
 "
 RDEPEND="${COMMON_DEPEND}
 	x11-themes/adwaita-icon-theme
@@ -61,18 +62,21 @@ DEPEND="${COMMON_DEPEND}
 	dev-util/gtk-doc
 	gnome-base/gnome-common
 "
-src_configure() {
-	local emesonargs=(
-		-Dexif=$(usex exif true false)
-		-Dxmp=$(usex xmp true false)
-		-Dtracker=$(usex tracker true false)
-	)
-	meson_src_configure
+# For eautoreconf
+#	gnome-base/gnome-common, dev-util/gtk-doc (not only -am!)
+
+src_prepare() {
+	gnome2_src_prepare
 }
 
-src_test() {
-	"${EROOT}${GLIB_COMPILE_SCHEMAS}" --allow-any-name "${S}/libnemo-private" || die
+src_configure() {
+	meson_src_configure \
+		-Dexif=$(usex exif true false) \
+		-Dtracker=$(usex tracker true false) \
+		-Dxmp=$(usex xmp true false) \
+		-Dselinux=$(usex selinux true false)
+}
 
-	cd src # we don't care about translation tests
-	GSETTINGS_SCHEMA_DIR="${S}/libnemo-private" virtx emake check
+src_install() {
+	meson_src_install
 }
