@@ -19,6 +19,8 @@ IUSE=""
 DEPEND="
 	>=dev-qt/qtsvg-5.10.0
 	>=dev-qt/qtdbus-5.10.0
+	>=dev-libs/glib-2.50.3-r1:2
+	>=gnome-base/gnome-keyring-3.20.0
 "
 
 RDEPEND="${DEPEND}
@@ -38,5 +40,5 @@ src_compile() {
 
 src_install() {
 	default
-	dobin ${MY_PN}/${MY_PN}
+	newbin ${MY_PN}/${MY_PN} molch-encfs-manager
 }
