@@ -3,7 +3,7 @@
 
 EAPI=6
 
-inherit qmake-utils cmake-utils
+inherit eutils qmake-utils
 
 MY_PN="MolchEncfsManager"
 
@@ -33,9 +33,9 @@ src_configure() {
 }
 
 src_compile() {
-	cmake-utils_src_compile
+	emake
 }
 
-src_instal() {
-	cmake-utils_src_install
+src_install() {
+	emake -C ${MY_PN} INSTALL_ROOT="${D}" install
 }
