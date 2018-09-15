@@ -35,3 +35,7 @@ src_configure() {
 src_compile() {
 	emake
 }
+
+src_instal() {
+	emake INSTALL_ROOT="${D}" install
+}
