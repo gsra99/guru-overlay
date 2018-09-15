@@ -22,7 +22,7 @@ DEPEND="
 "
 
 RDEPEND="${DEPEND}
-	>=dev-qt/linguist-tools-5.10.0
+	>=dev-qt/qtnetwork-5.10.0
 	>=sys-fs/encfs-1.9.2
 "
 
@@ -37,5 +37,6 @@ src_compile() {
 }
 
 src_install() {
-	emake -C ${MY_PN} INSTALL_ROOT="${D}" install
+	default
+	dobin ${MY_PN}/${MY_PN}
 }
