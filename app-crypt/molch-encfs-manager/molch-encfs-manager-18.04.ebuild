@@ -5,9 +5,11 @@ EAPI=6
 
 inherit qmake-utils eutils
 
+MY_PN="MolchEncfsManager"
+
 DESCRIPTION="The Molch Encfs Manager (or short MEncfsM) is an easy to use yet powerful tool to manage and mount encfs encrypted folders (stashes)."
 HOMEPAGE="https://moritzmolch.com/apps/mencfsm/index.html"
-SRC_URI="https://moritzmolch.com/apps/download/mencfsm/${PV}/${P}.tar.gz"
+SRC_URI="https://moritzmolch.com/apps/download/mencfsm/${PV}/${MY_PN}-${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -24,7 +26,7 @@ RDEPEND="${DEPEND}
 	>=sys-fs/encfs-1.9.2
 "
 
-S="${WORKDIR}/MolchEncfsManager-${PV}"
+S="${WORKDIR}/${MY_PN}-${PV}"
 
 src_configure() {
 	eqmake5
