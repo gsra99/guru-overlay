@@ -37,5 +37,5 @@ src_compile() {
 }
 
 src_instal() {
-	emake INSTALL_ROOT="${D}" install
+	emake -C ${MY_PN} INSTALL_ROOT="${D}" install
 }
