@@ -6,7 +6,7 @@ ETYPE="sources"
 K_WANT_GENPATCHES="base extras experimental"
 K_GENPATCHES_VER="85"
 
-inherit kernel-2 eutils
+inherit kernel-2
 detect_version
 detect_arch
 
@@ -17,11 +17,15 @@ IUSE="experimental"
 DESCRIPTION="Full sources including the Gentoo patchset for the ${KV_MAJOR}.${KV_MINOR} kernel tree"
 SRC_URI="${KERNEL_URI} ${GENPATCHES_URI} ${ARCH_URI}"
 
+UNIPATCH_LIST="${FILESDIR}/001-synaptics_rmi4_smb.patch"
+
 src_prepare() {
-	default
-	EPATCH_SOURCE="${FILESDIR}"
-	EPATCH_OPTS="-p1"
-	epatch "001-synaptics_rmi4_smb.patch"
+	kernel-2_src_prepare
+	unipatch
+#	default
+#	EPATCH_SOURCE="${FILESDIR}"
+#	EPATCH_OPTS="-p1"
+#	epatch "001-synaptics_rmi4_smb.patch"
 }
 
 pkg_postinst() {
