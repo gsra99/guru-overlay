@@ -22,10 +22,6 @@ UNIPATCH_LIST="${FILESDIR}/001-synaptics_rmi4_smb.patch"
 src_prepare() {
 	kernel-2_src_prepare
 	unipatch
-#	default
-#	EPATCH_SOURCE="${FILESDIR}"
-#	EPATCH_OPTS="-p1"
-#	epatch "001-synaptics_rmi4_smb.patch"
 }
 
 pkg_postinst() {
