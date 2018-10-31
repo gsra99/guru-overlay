@@ -6,7 +6,7 @@ ETYPE="sources"
 K_WANT_GENPATCHES="base extras experimental"
 K_GENPATCHES_VER="85"
 
-inherit kernel-2
+inherit kernel-2 eutils
 detect_version
 detect_arch
 
