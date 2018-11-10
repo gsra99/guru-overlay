@@ -16,7 +16,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND=">=x11-libs/xapps-${PV}"
+DEPEND=">=x11-libs/xapps-1.4.0"
 RDEPEND="${DEPEND}
 	dev-python/psutil[${PYTHON_USEDEP}]"
 

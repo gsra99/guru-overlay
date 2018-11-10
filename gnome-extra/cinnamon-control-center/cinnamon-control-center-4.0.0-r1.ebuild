@@ -25,9 +25,9 @@ COMMON_DEPEND="
 	>=dev-libs/glib-2.31:2
 	dev-libs/libxml2:2
 	>=gnome-base/libgnomekbd-2.91.91:0=
-	>=gnome-extra/cinnamon-desktop-${PV}
-	>=gnome-extra/cinnamon-menus-${PV}
-	>=gnome-extra/cinnamon-settings-daemon-${PV}
+	>=gnome-extra/cinnamon-desktop-4.0.0
+	>=gnome-extra/cinnamon-menus-4.0.0
+	>=gnome-extra/cinnamon-settings-daemon-4.0.0
 	>=gnome-extra/nm-applet-0.9.8
 	media-libs/fontconfig
 	>=net-misc/networkmanager-0.9.8:=

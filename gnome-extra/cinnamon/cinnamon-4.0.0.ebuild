@@ -36,9 +36,9 @@ COMMON_DEPEND="${PYTHON_DEPS}
 	dev-libs/libxml2:2
 	gnome-base/gconf:2[introspection]
 	gnome-base/librsvg
-	>=gnome-extra/cinnamon-desktop-${PV}[introspection]
-	>=gnome-extra/cinnamon-menus-${PV}[introspection]
-	>=gnome-extra/cjs-${PV}
+	>=gnome-extra/cinnamon-desktop-4.0.0[introspection]
+	>=gnome-extra/cinnamon-menus-4.0.0[introspection]
+	>=gnome-extra/cjs-4.0.0
 	>=media-libs/clutter-1.10:1.0[introspection]
 	media-libs/cogl:1.0=[introspection]
 	>=gnome-base/gsettings-desktop-schemas-2.91.91
@@ -52,7 +52,7 @@ COMMON_DEPEND="${PYTHON_DEPS}
 	>=x11-libs/startup-notification-0.11
 	x11-libs/libX11
 	>=x11-libs/libXfixes-5.0
-	>=x11-wm/muffin-${PV}[introspection]
+	>=x11-wm/muffin-4.0.0[introspection]
 "
 # Runtime-only deps are probably incomplete and approximate.
 # Each block:
@@ -74,8 +74,8 @@ RDEPEND="${COMMON_DEPEND}
 	>=gnome-base/libgnomekbd-2.91.4[introspection]
 	|| ( sys-power/upower[introspection] sys-power/upower-pm-utils[introspection] )
 
-	>=gnome-extra/cinnamon-session-${PV}
-	>=gnome-extra/cinnamon-settings-daemon-${PV}
+	>=gnome-extra/cinnamon-session-4.0.0
+	>=gnome-extra/cinnamon-settings-daemon-4.0.0
 
 	>=app-accessibility/caribou-0.3
 
@@ -91,13 +91,13 @@ RDEPEND="${COMMON_DEPEND}
 	x11-themes/gnome-themes-standard
 	x11-themes/adwaita-icon-theme
 
-	>=gnome-extra/nemo-${PV}
-	>=gnome-extra/cinnamon-control-center-${PV}
-	>=gnome-extra/cinnamon-screensaver-${PV}
+	>=gnome-extra/nemo-4.0.0
+	>=gnome-extra/cinnamon-control-center-4.0.0
+	>=gnome-extra/cinnamon-screensaver-4.0.0
 
 	gnome-extra/polkit-gnome
 
-	nls? ( >=gnome-extra/cinnamon-translations-${PV} )
+	nls? ( >=gnome-extra/cinnamon-translations-4.0.0 )
 "
 DEPEND="${COMMON_DEPEND}
 	dev-util/gtk-doc

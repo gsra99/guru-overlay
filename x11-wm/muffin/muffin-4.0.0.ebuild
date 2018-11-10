@@ -19,7 +19,7 @@ COMMON_DEPEND="
 	x11-libs/gdk-pixbuf:2[introspection?]
 	>=x11-libs/gtk+-3.9.12:3[X,introspection?]
 	>=dev-libs/glib-2.37.3:2[dbus]
-	>=gnome-extra/cinnamon-desktop-${PV}[introspection?]
+	>=gnome-extra/cinnamon-desktop-4.0.0[introspection?]
 	>=gnome-base/gsettings-desktop-schemas-3.3.0[introspection?]
 	>=media-libs/clutter-1.14.3:1.0=[X,introspection?]
 	>=media-libs/cogl-1.13.3:1.0=[introspection?]

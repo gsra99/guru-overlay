@@ -37,7 +37,7 @@ COMMON_DEPEND="
 "
 
 RDEPEND="${COMMON_DEPEND}
-	>=gnome-extra/cinnamon-desktop-${PV}[systemd=]
+	>=gnome-extra/cinnamon-desktop-4.0.0[systemd=]
 	!systemd? ( sys-auth/elogind[policykit] )
 "
 DEPEND="${COMMON_DEPEND}

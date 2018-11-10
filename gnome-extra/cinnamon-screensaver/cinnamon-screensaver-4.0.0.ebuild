@@ -19,7 +19,7 @@ KEYWORDS="~amd64 ~x86"
 COMMON_DEPEND="
 	>=dev-libs/glib-2.37.3:2[dbus]
 	>=x11-libs/gtk+-3.1.4:3[introspection]
-	>=gnome-extra/cinnamon-desktop-${PV}[systemd=]
+	>=gnome-extra/cinnamon-desktop-4.0.0[systemd=]
 	>=gnome-base/gsettings-desktop-schemas-0.1.7
 	>=gnome-base/libgnomekbd-3.6
 	>=dev-libs/dbus-glib-0.78

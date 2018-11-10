@@ -19,7 +19,7 @@ RESTRICT=test
 
 COMMON_DEPEND="
 	>=dev-libs/glib-2.37.3:2[dbus]
-	>=gnome-extra/cinnamon-desktop-${PV}
+	>=gnome-extra/cinnamon-desktop-4.0.0
 	>=x11-libs/pango-1.28.3
 	>=x11-libs/gtk+-3.9.10:3[introspection?]
 	>=dev-libs/libxml2-2.7.8:2
@@ -40,7 +40,7 @@ COMMON_DEPEND="
 "
 RDEPEND="${COMMON_DEPEND}
 	x11-themes/adwaita-icon-theme
-	nls? ( >=gnome-extra/cinnamon-translations-${PV} )
+	nls? ( >=gnome-extra/cinnamon-translations-4.0.0 )
 "
 
 PDEPEND=">=gnome-base/gvfs-0.1.2"
