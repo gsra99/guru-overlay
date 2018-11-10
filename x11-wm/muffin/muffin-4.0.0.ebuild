@@ -21,7 +21,7 @@ COMMON_DEPEND="
 	>=dev-libs/glib-2.37.3:2[dbus]
 	>=gnome-extra/cinnamon-desktop-4.0.0[introspection?]
 	>=gnome-base/gsettings-desktop-schemas-3.3.0[introspection?]
-	>=media-libs/clutter-1.14.3:1.0=[X,introspection?]
+	>=media-libs/clutter-1.14.3:1.0=[X,wayland,introspection?]
 	>=media-libs/cogl-1.13.3:1.0=[wayland,introspection?]
 	>=media-libs/libcanberra-0.26[gtk3]
 	>=x11-libs/libXcomposite-0.3
