@@ -75,6 +75,7 @@ src_configure() {
 		--enable-xsync \
 		--enable-verbose-mode \
 		--with-libcanberra \
+		--disable-clutter-doc \
 		$(use_enable introspection) \
 		$(use_enable xinerama)
 }
