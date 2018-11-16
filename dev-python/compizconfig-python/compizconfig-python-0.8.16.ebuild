@@ -28,8 +28,8 @@ DEPEND="${RDEPEND}
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 src_prepare() {
-   default
-   eautoreconf
+	default
+	eautoreconf
 }
 
 src_install() {

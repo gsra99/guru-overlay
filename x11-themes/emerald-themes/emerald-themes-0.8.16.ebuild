@@ -13,10 +13,10 @@ LICENSE="GPL-2+ GPL-3+"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 RDEPEND=">=x11-wm/emerald-0.8.12
-		<x11-wm/emerald-0.9
+	<x11-wm/emerald-0.9
 "
 
 src_prepare() {
-   default
-   eautoreconf
+	default
+	eautoreconf
 }
