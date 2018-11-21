@@ -49,6 +49,7 @@ DEPEND="
 		dev-qt/qtdbus:5
 		)"
 RDEPEND="${DEPEND}
+		media-libs/libraw
 		x11-themes/hicolor-icon-theme
 		dev-libs/openssl
 		dev-libs/libgcrypt
