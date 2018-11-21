@@ -4,7 +4,7 @@
 
 EAPI=6
 
-inherit eutils multilib qmake-utils autotools versionator git-r3
+inherit eutils multilib qmake-utils autotools versionator git-r3 java-pkg-opt-2
 
 DESCRIPTION="A Qt-based program for syncing your MEGA account in your PC. This is the official app."
 HOMEPAGE="http://mega.co.nz"
@@ -64,6 +64,7 @@ RDEPEND="${DEPEND}
 		curl? ( net-misc/curl[ssl,curl_ssl_openssl] )
 		freeimage? ( media-libs/freeimage )
 		readline? ( sys-libs/readline:0 )
+		java? ( >=virtual/jdk-1.5 )
 		"
 
 PATCHES=( )
@@ -87,11 +88,20 @@ if [[ ${PV} != *9999* ]];then
 		eapply_user
 		cd src/MEGASync/mega
 		eautoreconf
+		java-pkg-opt-2_src_prepare
 	}
 fi
 
 src_configure(){
 	cd "${S}"/src/MEGASync/mega
+	local myconf=()
+	if use java; then
+		myconf+=( $(use_enable java) )
+		export JAVACFLAGS="$(java-pkg_javac-args)"
+		export JNI_CFLAGS="$(java-pkg_get-jni-cflags)"
+	else
+		myconf+=( --disable-java )
+	fi
 	econf \
 		"--disable-silent-rules" \
 		"--disable-curl-checks" \
@@ -107,9 +117,9 @@ src_configure(){
 		$(use_with freeimage) \
 		$(use_with readline) \
 		$(use_enable examples) \
-		$(use_enable java) \
 		$(use_enable php) \
 		$(use_enable python) \
+		"${myconf[@]}" \
 		"--enable-chat" \
 		"--enable-gcc-hardening" 
 	cd ../..
