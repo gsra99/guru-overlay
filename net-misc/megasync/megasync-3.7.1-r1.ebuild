@@ -70,6 +70,10 @@ RDEPEND="${DEPEND}
 PATCHES=( )
 
 if [[ ${PV} != *9999* ]];then
+	pkg_setup() {
+		java-pkg-opt-2_pkg_setup
+	}
+
 	src_prepare(){
 		#default
 		# Not needed, since using git submodules
@@ -88,7 +92,6 @@ if [[ ${PV} != *9999* ]];then
 		eapply_user
 		cd src/MEGASync/mega
 		eautoreconf
-		java-pkg-opt-2_src_prepare
 	}
 fi
 
@@ -96,8 +99,7 @@ src_configure(){
 	cd "${S}"/src/MEGASync/mega
 	local myconf=()
 	if use java; then
-		myconf+=( $(use_enable java) )
-		export JAVA_HOME="$(JAVA_HOME)"
+		myconf+=( $(use_enable java) --with-java-include-dir=${JAVA_HOME} )
 	else
 		myconf+=( --disable-java )
 	fi
