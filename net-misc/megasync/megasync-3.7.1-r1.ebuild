@@ -4,7 +4,7 @@
 
 EAPI=6
 
-inherit eutils multilib qmake-utils autotools versionator git-r3 java-pkg-opt-2
+inherit eutils multilib qmake-utils autotools versionator git-r3
 
 DESCRIPTION="A Qt-based program for syncing your MEGA account in your PC. This is the official app."
 HOMEPAGE="http://mega.co.nz"
@@ -70,10 +70,6 @@ RDEPEND="${DEPEND}
 PATCHES=( )
 
 if [[ ${PV} != *9999* ]];then
-	pkg_setup() {
-		java-pkg-opt-2_pkg_setup
-	}
-
 	src_prepare(){
 		#default
 		# Not needed, since using git submodules
@@ -99,7 +95,7 @@ src_configure(){
 	cd "${S}"/src/MEGASync/mega
 	local myconf=()
 	if use java; then
-		myconf+=( $(use_enable java) --with-java-include-dir=${JAVA_HOME} )
+		myconf+=( $(use_enable java) --with-java-include-dir="${JAVA_HOME}" )
 	else
 		myconf+=( --disable-java )
 	fi
