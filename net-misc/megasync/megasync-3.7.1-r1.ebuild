@@ -97,8 +97,7 @@ src_configure(){
 	local myconf=()
 	if use java; then
 		myconf+=( $(use_enable java) )
-		export JAVACFLAGS="$(java-pkg_javac-args)"
-		export JNI_CFLAGS="$(java-pkg_get-jni-cflags)"
+		export JAVA_HOME="$(JAVA_HOME)"
 	else
 		myconf+=( --disable-java )
 	fi
