@@ -95,7 +95,7 @@ src_configure(){
 	cd "${S}"/src/MEGASync/mega
 	local myconf=()
 	if use java; then
-		myconf+=( $(use_enable java) --with-java-include-dir="${JAVA_HOME}/include" )
+		myconf+=( --enable-java --with-java-include-dir="${JAVA_HOME}/include" )
 	else
 		myconf+=( --disable-java )
 	fi
