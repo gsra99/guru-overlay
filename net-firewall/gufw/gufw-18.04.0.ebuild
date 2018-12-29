@@ -3,9 +3,9 @@
 
 EAPI=6
 PYTHON_COMPAT=( python3_{5,6,7} )
-PYTHON_REQ_USE="ipv6"
+PYTHON_REQ_USE="ipv6(+)"
 
-inherit versionator distutils-r1
+inherit versionator distutils-r1 gnome2-utils
 
 MY_PV_12=$(get_version_component_range 1-2)
 DESCRIPTION="A program used to manage a netfilter firewall"
@@ -32,4 +32,12 @@ S="${WORKDIR}/gui-ufw-${PV}"
 
 python_install() {
         distutils-r1_python_install --prefix=/usr
+}
+
+pkg_postinst() {
+	gnome2_icon_cache_update
+}
+
+pkg_postrm() {
+	gnome2_icon_cache_update
 }
