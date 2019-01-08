@@ -148,7 +148,8 @@ if [[ -n ${MOZCONFIG_OPTIONAL_WIFI} ]]; then
 		kernel_linux? ( >=sys-apps/dbus-0.60
 			>=dev-libs/dbus-glib-0.72
 			|| ( net-misc/networkmanager
-			net-misc/connman[networkmanager] ) )
+			net-misc/connman[networkmanager] )
+		)
 	)"
 fi
 
