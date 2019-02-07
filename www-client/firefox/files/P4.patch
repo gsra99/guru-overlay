@@ -1,0 +1,466 @@
+# Bug 1487811 - P4: Implement CDM10 -> CDM9 compat layer. r=cpearce, a=RyanVM
+# Implement a compatibility layer so that we can expose a CDM10 interface while still using CDM9. Notably, this layer checks to make sure the new encryption scheme introduced with CDM10 is not used with CDM9.
+
+diff --git a/dom/media/gmp/ChromiumCDMChild.cpp b/dom/media/gmp/ChromiumCDMChild.cpp
+--- a/dom/media/gmp/ChromiumCDMChild.cpp
++++ b/dom/media/gmp/ChromiumCDMChild.cpp
+@@ -21,17 +21,17 @@ namespace mozilla {
+ namespace gmp {
+ 
+ ChromiumCDMChild::ChromiumCDMChild(GMPContentChild* aPlugin)
+     : mPlugin(aPlugin) {
+   MOZ_ASSERT(IsOnMessageLoopThread());
+   GMP_LOG("ChromiumCDMChild:: ctor this=%p", this);
+ }
+ 
+-void ChromiumCDMChild::Init(cdm::ContentDecryptionModule_9* aCDM,
++void ChromiumCDMChild::Init(cdm::ContentDecryptionModule_10* aCDM,
+                             const nsCString& aStorageId) {
+   MOZ_ASSERT(IsOnMessageLoopThread());
+   mCDM = aCDM;
+   MOZ_ASSERT(mCDM);
+   mStorageId = aStorageId;
+ }
+ 
+ void ChromiumCDMChild::TimerExpired(void* aContext) {
+@@ -377,17 +377,19 @@ mozilla::ipc::IPCResult ChromiumCDMChild
+     const bool& aAllowDistinctiveIdentifier,
+     const bool& aAllowPersistentState) {
+   MOZ_ASSERT(IsOnMessageLoopThread());
+   GMP_LOG("ChromiumCDMChild::RecvInit(distinctiveId=%s, persistentState=%s)",
+           aAllowDistinctiveIdentifier ? "true" : "false",
+           aAllowPersistentState ? "true" : "false");
+   mPersistentStateAllowed = aAllowPersistentState;
+   if (mCDM) {
+-    mCDM->Initialize(aAllowDistinctiveIdentifier, aAllowPersistentState);
++    mCDM->Initialize(aAllowDistinctiveIdentifier, aAllowPersistentState,
++                     // We do not yet support hardware secure codecs
++                     false);
+   }
+   return IPC_OK();
+ }
+ 
+ mozilla::ipc::IPCResult ChromiumCDMChild::RecvSetServerCertificate(
+     const uint32_t& aPromiseId, nsTArray<uint8_t>&& aServerCert)
+ 
+ {
+@@ -520,19 +522,34 @@ mozilla::ipc::IPCResult ChromiumCDMChild
+     // CDM will callback by OnResolveKeyStatusPromise when it successfully
+     // executes.
+     policy.min_hdcp_version = ToCDMHdcpVersion(aMinHdcpVersion);
+     mCDM->GetStatusForPolicy(aPromiseId, policy);
+   }
+   return IPC_OK();
+ }
+ 
++static cdm::EncryptionScheme ConvertToCdmEncryptionScheme(
++    const GMPEncryptionScheme& aEncryptionScheme) {
++  switch (aEncryptionScheme) {
++    case GMPEncryptionScheme::kGMPEncryptionNone:
++      return cdm::EncryptionScheme::kUnencrypted;
++    case GMPEncryptionScheme::kGMPEncryptionCenc:
++      return cdm::EncryptionScheme::kCenc;
++    case GMPEncryptionScheme::kGMPEncryptionCbcs:
++      return cdm::EncryptionScheme::kCbcs;
++    default:
++      MOZ_ASSERT_UNREACHABLE("Cannot convert invalid encryption scheme!");
++      return cdm::EncryptionScheme::kUnencrypted;
++  }
++}
++
+ static void InitInputBuffer(const CDMInputBuffer& aBuffer,
+                             nsTArray<cdm::SubsampleEntry>& aSubSamples,
+-                            cdm::InputBuffer_1& aInputBuffer) {
++                            cdm::InputBuffer_2& aInputBuffer) {
+   aInputBuffer.data = aBuffer.mData().get<uint8_t>();
+   aInputBuffer.data_size = aBuffer.mData().Size<uint8_t>();
+ 
+   if (aBuffer.mEncryptionScheme() > GMPEncryptionScheme::kGMPEncryptionNone) {
+     // Cbcs is not yet supported, so we expect only cenc if the buffer us
+     // encrypted
+     MOZ_ASSERT(aBuffer.mEncryptionScheme() ==
+                GMPEncryptionScheme::kGMPEncryptionCenc);
+@@ -544,16 +561,18 @@ static void InitInputBuffer(const CDMInp
+ 
+     aSubSamples.SetCapacity(aBuffer.mClearBytes().Length());
+     for (size_t i = 0; i < aBuffer.mCipherBytes().Length(); i++) {
+       aSubSamples.AppendElement(cdm::SubsampleEntry{aBuffer.mClearBytes()[i],
+                                                     aBuffer.mCipherBytes()[i]});
+     }
+     aInputBuffer.subsamples = aSubSamples.Elements();
+     aInputBuffer.num_subsamples = aSubSamples.Length();
++    aInputBuffer.encryption_scheme =
++        ConvertToCdmEncryptionScheme(aBuffer.mEncryptionScheme());
+   }
+   aInputBuffer.timestamp = aBuffer.mTimestamp();
+ }
+ 
+ bool ChromiumCDMChild::HasShmemOfSize(size_t aSize) const {
+   for (const ipc::Shmem& shmem : mBuffers) {
+     if (shmem.Size<uint8_t>() == aSize) {
+       return true;
+@@ -598,17 +617,17 @@ mozilla::ipc::IPCResult ChromiumCDMChild
+   if (aBuffer.mClearBytes().Length() != aBuffer.mCipherBytes().Length()) {
+     GMP_LOG(
+         "ChromiumCDMChild::RecvDecrypt() clear/cipher bytes length doesn't "
+         "match");
+     Unused << SendDecryptFailed(aId, cdm::kDecryptError);
+     return IPC_OK();
+   }
+ 
+-  cdm::InputBuffer_1 input = {};
++  cdm::InputBuffer_2 input = {};
+   nsTArray<cdm::SubsampleEntry> subsamples;
+   InitInputBuffer(aBuffer, subsamples, input);
+ 
+   WidevineDecryptedBlock output;
+   cdm::Status status = mCDM->Decrypt(input, &output);
+ 
+   // CDM should have allocated a cdm::Buffer for output.
+   CDMShmemBuffer* buffer =
+@@ -637,25 +656,27 @@ mozilla::ipc::IPCResult ChromiumCDMChild
+     const CDMVideoDecoderConfig& aConfig) {
+   MOZ_ASSERT(IsOnMessageLoopThread());
+   MOZ_ASSERT(!mDecoderInitialized);
+   if (!mCDM) {
+     GMP_LOG("ChromiumCDMChild::RecvInitializeVideoDecoder() no CDM");
+     Unused << SendOnDecoderInitDone(cdm::kInitializationError);
+     return IPC_OK();
+   }
+-  cdm::VideoDecoderConfig_1 config = {};
++  cdm::VideoDecoderConfig_2 config = {};
+   config.codec = static_cast<cdm::VideoCodec>(aConfig.mCodec());
+   config.profile = static_cast<cdm::VideoCodecProfile>(aConfig.mProfile());
+   config.format = static_cast<cdm::VideoFormat>(aConfig.mFormat());
+   config.coded_size =
+       mCodedSize = {aConfig.mImageWidth(), aConfig.mImageHeight()};
+   nsTArray<uint8_t> extraData(aConfig.mExtraData());
+   config.extra_data = extraData.Elements();
+   config.extra_data_size = extraData.Length();
++  config.encryption_scheme =
++      ConvertToCdmEncryptionScheme(aConfig.mEncryptionScheme());
+   cdm::Status status = mCDM->InitializeVideoDecoder(config);
+   GMP_LOG("ChromiumCDMChild::RecvInitializeVideoDecoder() status=%u", status);
+   Unused << SendOnDecoderInitDone(status);
+   mDecoderInitialized = status == cdm::kSuccess;
+   return IPC_OK();
+ }
+ 
+ mozilla::ipc::IPCResult ChromiumCDMChild::RecvDeinitializeVideoDecoder() {
+@@ -699,17 +720,17 @@ mozilla::ipc::IPCResult ChromiumCDMChild
+ 
+   // The output frame may not have the same timestamp as the frame we put in.
+   // We may need to input a number of frames before we receive output. The
+   // CDM's decoder reorders to ensure frames output are in presentation order.
+   // So we need to store the durations of the frames input, and retrieve them
+   // on output.
+   mFrameDurations.Insert(aBuffer.mTimestamp(), aBuffer.mDuration());
+ 
+-  cdm::InputBuffer_1 input = {};
++  cdm::InputBuffer_2 input = {};
+   nsTArray<cdm::SubsampleEntry> subsamples;
+   InitInputBuffer(aBuffer, subsamples, input);
+ 
+   WidevineVideoFrame frame;
+   cdm::Status rv = mCDM->DecryptAndDecodeFrame(input, &frame);
+   GMP_LOG("ChromiumCDMChild::RecvDecryptAndDecodeFrame() t=%" PRId64
+           " CDM decoder rv=%d",
+           aBuffer.mTimestamp(), rv);
+@@ -781,17 +802,17 @@ void ChromiumCDMChild::ReturnOutput(Wide
+ mozilla::ipc::IPCResult ChromiumCDMChild::RecvDrain() {
+   MOZ_ASSERT(IsOnMessageLoopThread());
+   if (!mCDM) {
+     GMP_LOG("ChromiumCDMChild::RecvDrain() no CDM");
+     Unused << SendDrainComplete();
+     return IPC_OK();
+   }
+   WidevineVideoFrame frame;
+-  cdm::InputBuffer_1 sample = {};
++  cdm::InputBuffer_2 sample = {};
+   cdm::Status rv = mCDM->DecryptAndDecodeFrame(sample, &frame);
+   GMP_LOG("ChromiumCDMChild::RecvDrain();  DecryptAndDecodeFrame() rv=%d", rv);
+   if (rv == cdm::kSuccess) {
+     MOZ_ASSERT(frame.Format() != cdm::kUnknownVideoFormat);
+     ReturnOutput(frame);
+   } else {
+     Unused << SendDrainComplete();
+   }
+diff --git a/dom/media/gmp/ChromiumCDMChild.h b/dom/media/gmp/ChromiumCDMChild.h
+--- a/dom/media/gmp/ChromiumCDMChild.h
++++ b/dom/media/gmp/ChromiumCDMChild.h
+@@ -19,17 +19,17 @@ class GMPContentChild;
+ class ChromiumCDMChild : public PChromiumCDMChild,
+                          public cdm::Host_9,
+                          public cdm::Host_10 {
+  public:
+   NS_INLINE_DECL_THREADSAFE_REFCOUNTING(ChromiumCDMChild);
+ 
+   explicit ChromiumCDMChild(GMPContentChild* aPlugin);
+ 
+-  void Init(cdm::ContentDecryptionModule_9* aCDM, const nsCString& aStorageId);
++  void Init(cdm::ContentDecryptionModule_10* aCDM, const nsCString& aStorageId);
+ 
+   void TimerExpired(void* aContext);
+ 
+   // Shared cdm::Host_9 and cdm::Host10 implementation
+   cdm::Buffer* Allocate(uint32_t aCapacity) override;
+   void SetTimer(int64_t aDelayMs, void* aContext) override;
+   cdm::Time GetCurrentWallTime() override;
+   void OnResolveKeyStatusPromise(uint32_t aPromiseId,
+@@ -113,17 +113,17 @@ class ChromiumCDMChild : public PChromiu
+ 
+   template <typename MethodType, typename... ParamType>
+   void CallMethod(MethodType, ParamType&&...);
+ 
+   template <typename MethodType, typename... ParamType>
+   void CallOnMessageLoopThread(const char* const, MethodType, ParamType&&...);
+ 
+   GMPContentChild* mPlugin = nullptr;
+-  cdm::ContentDecryptionModule_9* mCDM = nullptr;
++  cdm::ContentDecryptionModule_10* mCDM = nullptr;
+ 
+   typedef SimpleMap<uint64_t> DurationMap;
+   DurationMap mFrameDurations;
+   nsTArray<uint32_t> mLoadSessionPromiseIds;
+ 
+   cdm::Size mCodedSize = {0, 0};
+   nsTArray<ipc::Shmem> mBuffers;
+ 
+diff --git a/dom/media/gmp/GMPContentChild.cpp b/dom/media/gmp/GMPContentChild.cpp
+--- a/dom/media/gmp/GMPContentChild.cpp
++++ b/dom/media/gmp/GMPContentChild.cpp
+@@ -100,32 +100,229 @@ mozilla::ipc::IPCResult GMPContentChild:
+     return IPC_FAIL_NO_REASON(this);
+   }
+ 
+   vec->Init(static_cast<GMPVideoEncoder*>(ve));
+ 
+   return IPC_OK();
+ }
+ 
++// Convert CDM10 calls to CDM9 calls, massage args where needed
++class ChromiumCDM9BackwardsCompat : public cdm::ContentDecryptionModule_10 {
++ public:
++  explicit ChromiumCDM9BackwardsCompat(cdm::Host_10* aHost,
++                                       cdm::ContentDecryptionModule_9* aCDM)
++      : mCDM(aCDM), mHost(aHost) {}
++
++  void Initialize(bool aAllowDistinctiveIdentifier, bool aAllowPersistentState,
++                  bool /* aUseHardwareSecureCodec */) override {
++    // aUseHardwareSecureCodec is not used by CDM9
++    mCDM->Initialize(aAllowDistinctiveIdentifier, aAllowPersistentState);
++  }
++
++  void GetStatusForPolicy(uint32_t aPromiseId,
++                          const cdm::Policy& policy) override {
++    mCDM->GetStatusForPolicy(aPromiseId, policy);
++  }
++
++  void SetServerCertificate(uint32_t aPromiseId,
++                            const uint8_t* aServerCertificateData,
++                            uint32_t aServerCertificateDataSize) override {
++    mCDM->SetServerCertificate(aPromiseId, aServerCertificateData,
++                               aServerCertificateDataSize);
++  }
++
++  void CreateSessionAndGenerateRequest(uint32_t aPromiseId,
++                                       cdm::SessionType aSessionType,
++                                       cdm::InitDataType aInitDataType,
++                                       const uint8_t* aInitData,
++                                       uint32_t aInitDataSize) override {
++    mCDM->CreateSessionAndGenerateRequest(
++        aPromiseId, aSessionType, aInitDataType, aInitData, aInitDataSize);
++  }
++
++  void LoadSession(uint32_t aPromiseId, cdm::SessionType aSessionType,
++                   const char* aSessionId, uint32_t aSessionIdSize) override {
++    mCDM->LoadSession(aPromiseId, aSessionType, aSessionId, aSessionIdSize);
++  }
++
++  void UpdateSession(uint32_t aPromiseId, const char* aSessionId,
++                     uint32_t aSessionIdSize, const uint8_t* aResponse,
++                     uint32_t aResponseSize) override {
++    mCDM->UpdateSession(aPromiseId, aSessionId, aSessionIdSize, aResponse,
++                        aResponseSize);
++  }
++
++  void CloseSession(uint32_t aPromiseId, const char* aSessionId,
++                    uint32_t aSessionIdSize) override {
++    mCDM->CloseSession(aPromiseId, aSessionId, aSessionIdSize);
++  }
++
++  void RemoveSession(uint32_t aPromiseId, const char* aSessionId,
++                     uint32_t aSessionIdSize) override {
++    mCDM->RemoveSession(aPromiseId, aSessionId, aSessionIdSize);
++  }
++
++  void TimerExpired(void* aContext) override { mCDM->TimerExpired(aContext); }
++
++  cdm::Status Decrypt(const cdm::InputBuffer_2& aEncryptedBuffer,
++                      cdm::DecryptedBlock* aDecryptedBuffer) override {
++    // Handle possible encryption mismatch
++    if (!IsEncryptionSchemeSupported(aEncryptedBuffer.encryption_scheme)) {
++      return cdm::Status::kDecryptError;
++    }
++
++    return mCDM->Decrypt(ConvertToInputBuffer_1(aEncryptedBuffer),
++                         aDecryptedBuffer);
++  }
++
++  cdm::Status InitializeAudioDecoder(
++      const cdm::AudioDecoderConfig_2& aAudioDecoderConfig) override {
++    // Handle possible encryption mismatch
++    if (!IsEncryptionSchemeSupported(aAudioDecoderConfig.encryption_scheme)) {
++      return cdm::Status::kInitializationError;
++    }
++
++    return mCDM->InitializeAudioDecoder(
++        ConverToAudioDecoderConfig_1(aAudioDecoderConfig));
++  }
++
++  cdm::Status InitializeVideoDecoder(
++      const cdm::VideoDecoderConfig_2& aVideoDecoderConfig) override {
++    // Handle possible encryption mismatch
++    if (!IsEncryptionSchemeSupported(aVideoDecoderConfig.encryption_scheme)) {
++      return cdm::Status::kInitializationError;
++    }
++
++    return mCDM->InitializeVideoDecoder(
++        ConvertToVideoDecoderConfig_1(aVideoDecoderConfig));
++  }
++
++  void DeinitializeDecoder(cdm::StreamType aDecoderType) override {
++    mCDM->DeinitializeDecoder(aDecoderType);
++  }
++
++  void ResetDecoder(cdm::StreamType aDecoderType) override {
++    mCDM->ResetDecoder(aDecoderType);
++  }
++
++  cdm::Status DecryptAndDecodeFrame(const cdm::InputBuffer_2& aEncryptedBuffer,
++                                    cdm::VideoFrame* aVideoFrame) override {
++    // Handle possible encryption mismatch
++    if (!IsEncryptionSchemeSupported(aEncryptedBuffer.encryption_scheme)) {
++      return cdm::Status::kDecryptError;
++    }
++
++    return mCDM->DecryptAndDecodeFrame(ConvertToInputBuffer_1(aEncryptedBuffer),
++                                       aVideoFrame);
++  }
++
++  cdm::Status DecryptAndDecodeSamples(
++      const cdm::InputBuffer_2& aEncryptedBuffer,
++      cdm::AudioFrames* aAudioFrames) override {
++    // Handle possible encryption mismatch
++    if (!IsEncryptionSchemeSupported(aEncryptedBuffer.encryption_scheme)) {
++      return cdm::Status::kDecryptError;
++    }
++
++    return mCDM->DecryptAndDecodeSamples(
++        ConvertToInputBuffer_1(aEncryptedBuffer), aAudioFrames);
++  }
++
++  void OnPlatformChallengeResponse(
++      const cdm::PlatformChallengeResponse& aResponse) override {
++    mCDM->OnPlatformChallengeResponse(aResponse);
++  }
++
++  void OnQueryOutputProtectionStatus(cdm::QueryResult aResult,
++                                     uint32_t aLinkMask,
++                                     uint32_t aOutputProtectionMask) override {
++    mCDM->OnQueryOutputProtectionStatus(aResult, aLinkMask,
++                                        aOutputProtectionMask);
++  }
++
++  void OnStorageId(uint32_t aVersion, const uint8_t* aStorageId,
++                   uint32_t aStorageIdSize) override {
++    mCDM->OnStorageId(aVersion, aStorageId, aStorageIdSize);
++  }
++
++  void Destroy() override {
++    mCDM->Destroy();
++    delete this;
++  }
++
++  cdm::ContentDecryptionModule_9* mCDM;
++  cdm::Host_10* mHost;
++
++ private:
++  // CDM9 supports non-encrypted or cenc encrypted media, anything else should
++  // be rejected.
++  static bool IsEncryptionSchemeSupported(
++      const cdm::EncryptionScheme& aEncryptionScheme) {
++    return aEncryptionScheme == cdm::EncryptionScheme::kUnencrypted ||
++           aEncryptionScheme == cdm::EncryptionScheme::kCenc;
++  }
++
++  // Conversion functions that drop the encryption scheme member. CDMs prior to
++  // 10 assumed no encryption or cenc encryption (if encryption is present). So
++  // we can drop the scheme member if we check to make sure it was one of these
++  // two options.
++  static cdm::InputBuffer_1 ConvertToInputBuffer_1(
++      const cdm::InputBuffer_2& aInputBuffer) {
++    MOZ_ASSERT(
++        IsEncryptionSchemeSupported(aInputBuffer.encryption_scheme),
++        "Encryption scheme should be checked before attempting conversion!");
++    return {aInputBuffer.data,       aInputBuffer.data_size,
++            aInputBuffer.key_id,     aInputBuffer.key_id_size,
++            aInputBuffer.iv,         aInputBuffer.iv_size,
++            aInputBuffer.subsamples, aInputBuffer.num_subsamples,
++            aInputBuffer.timestamp};
++  }
++
++  static cdm::AudioDecoderConfig_1 ConverToAudioDecoderConfig_1(
++      const cdm::AudioDecoderConfig_2& aAudioConfig) {
++    MOZ_ASSERT(
++        IsEncryptionSchemeSupported(aAudioConfig.encryption_scheme),
++        "Encryption scheme should be checked before attempting conversion!");
++    return {aAudioConfig.codec,
++            aAudioConfig.channel_count,
++            aAudioConfig.bits_per_channel,
++            aAudioConfig.samples_per_second,
++            aAudioConfig.extra_data,
++            aAudioConfig.extra_data_size};
++  }
++
++  static cdm::VideoDecoderConfig_1 ConvertToVideoDecoderConfig_1(
++      const cdm::VideoDecoderConfig_2& aVideoConfig) {
++    MOZ_ASSERT(
++        IsEncryptionSchemeSupported(aVideoConfig.encryption_scheme),
++        "Encryption scheme should be checked before attempting conversion!");
++    return {aVideoConfig.codec,      aVideoConfig.profile,
++            aVideoConfig.format,     aVideoConfig.coded_size,
++            aVideoConfig.extra_data, aVideoConfig.extra_data_size};
++  }
++};  // class ChromiumCDM9BackwardsCompat
++
+ mozilla::ipc::IPCResult GMPContentChild::RecvPChromiumCDMConstructor(
+     PChromiumCDMChild* aActor) {
+-  // TODO: Update to create 10 and have backward compat instance of 9 for
+-  // fallback
+   ChromiumCDMChild* child = static_cast<ChromiumCDMChild*>(aActor);
++  // TODO: Once we support CDM10, create one here, for now try and create CDM9
+   cdm::Host_9* host9 = child;
+ 
+   void* cdm = nullptr;
+-  // Create version 9 CDM first.
+   GMPErr err = mGMPChild->GetAPI(CHROMIUM_CDM_API_BACKWARD_COMPAT, host9, &cdm);
+   if (err != GMPNoErr || !cdm) {
+     NS_WARNING("GMPGetAPI call failed trying to get CDM.");
+     return IPC_FAIL_NO_REASON(this);
+   }
++  cdm::Host_10* host10 = child;
++  cdm = new ChromiumCDM9BackwardsCompat(
++      host10, static_cast<cdm::ContentDecryptionModule_9*>(cdm));
+ 
+-  child->Init(static_cast<cdm::ContentDecryptionModule_9*>(cdm),
++  child->Init(static_cast<cdm::ContentDecryptionModule_10*>(cdm),
+               mGMPChild->mStorageId);
+ 
+   return IPC_OK();
+ }
+ 
+ void GMPContentChild::CloseActive() {
+   // Invalidate and remove any remaining API objects.
+   const ManagedContainer<PGMPVideoDecoderChild>& videoDecoders =
+

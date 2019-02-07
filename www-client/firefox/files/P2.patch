@@ -1,0 +1,537 @@
+# Bug 1487811 - P2: Remove CDM8 interface specific IPDL. r=cpearce, a=RyanVM
+# Remove members only used by CDM8 from the IPDL and remove code that depended on the removed IPDL. Rename various instances of 'error' to 'exception' as from CDM9 'exception' is used exclusively to refer to promise failure states.
+
+diff --git a/dom/media/gmp/ChromiumCDMCallback.h b/dom/media/gmp/ChromiumCDMCallback.h
+--- a/dom/media/gmp/ChromiumCDMCallback.h
++++ b/dom/media/gmp/ChromiumCDMCallback.h
+@@ -37,17 +37,14 @@ class ChromiumCDMCallback {
+       const nsCString& aSessionId,
+       nsTArray<mozilla::gmp::CDMKeyInformation>&& aKeysInfo) = 0;
+ 
+   virtual void ExpirationChange(const nsCString& aSessionId,
+                                 double aSecondsSinceEpoch) = 0;
+ 
+   virtual void SessionClosed(const nsCString& aSessionId) = 0;
+ 
+-  virtual void LegacySessionError(const nsCString& aSessionId, nsresult aError,
+-                                  uint32_t aSystemCode,
+-                                  const nsCString& aMessage) = 0;
+   virtual void Terminated() = 0;
+ 
+   virtual void Shutdown() = 0;
+ };
+ 
+ #endif
+diff --git a/dom/media/gmp/ChromiumCDMCallbackProxy.cpp b/dom/media/gmp/ChromiumCDMCallbackProxy.cpp
+--- a/dom/media/gmp/ChromiumCDMCallbackProxy.cpp
++++ b/dom/media/gmp/ChromiumCDMCallbackProxy.cpp
+@@ -36,20 +36,20 @@ void ChromiumCDMCallbackProxy::ResolveLo
+ }
+ 
+ void ChromiumCDMCallbackProxy::ResolvePromise(uint32_t aPromiseId) {
+   DispatchToMainThread("ChromiumCDMProxy::ResolvePromise",
+                        &ChromiumCDMProxy::ResolvePromise, aPromiseId);
+ }
+ 
+ void ChromiumCDMCallbackProxy::RejectPromise(uint32_t aPromiseId,
+-                                             nsresult aError,
++                                             nsresult aException,
+                                              const nsCString& aErrorMessage) {
+   DispatchToMainThread("ChromiumCDMProxy::RejectPromise",
+-                       &ChromiumCDMProxy::RejectPromise, aPromiseId, aError,
++                       &ChromiumCDMProxy::RejectPromise, aPromiseId, aException,
+                        aErrorMessage);
+ }
+ 
+ static dom::MediaKeyMessageType ToDOMMessageType(uint32_t aMessageType) {
+   switch (static_cast<cdm::MessageType>(aMessageType)) {
+     case cdm::kLicenseRequest:
+       return dom::MediaKeyMessageType::License_request;
+     case cdm::kLicenseRenewal:
+@@ -129,26 +129,16 @@ void ChromiumCDMCallbackProxy::Expiratio
+ }
+ 
+ void ChromiumCDMCallbackProxy::SessionClosed(const nsCString& aSessionId) {
+   DispatchToMainThread("ChromiumCDMProxy::OnSessionClosed",
+                        &ChromiumCDMProxy::OnSessionClosed,
+                        NS_ConvertUTF8toUTF16(aSessionId));
+ }
+ 
+-void ChromiumCDMCallbackProxy::LegacySessionError(const nsCString& aSessionId,
+-                                                  nsresult aError,
+-                                                  uint32_t aSystemCode,
+-                                                  const nsCString& aMessage) {
+-  DispatchToMainThread("ChromiumCDMProxy::OnSessionError",
+-                       &ChromiumCDMProxy::OnSessionError,
+-                       NS_ConvertUTF8toUTF16(aSessionId), aError, aSystemCode,
+-                       NS_ConvertUTF8toUTF16(aMessage));
+-}
+-
+ void ChromiumCDMCallbackProxy::Terminated() {
+   DispatchToMainThread("ChromiumCDMProxy::Terminated",
+                        &ChromiumCDMProxy::Terminated);
+ }
+ 
+ void ChromiumCDMCallbackProxy::Shutdown() {
+   DispatchToMainThread("ChromiumCDMProxy::Shutdown",
+                        &ChromiumCDMProxy::Shutdown);
+diff --git a/dom/media/gmp/ChromiumCDMCallbackProxy.h b/dom/media/gmp/ChromiumCDMCallbackProxy.h
+--- a/dom/media/gmp/ChromiumCDMCallbackProxy.h
++++ b/dom/media/gmp/ChromiumCDMCallbackProxy.h
+@@ -23,34 +23,31 @@ class ChromiumCDMCallbackProxy : public 
+   void ResolveLoadSessionPromise(uint32_t aPromiseId,
+                                  bool aSuccessful) override;
+ 
+   void ResolvePromiseWithKeyStatus(uint32_t aPromiseId,
+                                    uint32_t aKeyStatus) override;
+ 
+   void ResolvePromise(uint32_t aPromiseId) override;
+ 
+-  void RejectPromise(uint32_t aPromiseId, nsresult aError,
++  void RejectPromise(uint32_t aPromiseId, nsresult aException,
+                      const nsCString& aErrorMessage) override;
+ 
+   void SessionMessage(const nsACString& aSessionId, uint32_t aMessageType,
+                       nsTArray<uint8_t>&& aMessage) override;
+ 
+   void SessionKeysChange(
+       const nsCString& aSessionId,
+       nsTArray<mozilla::gmp::CDMKeyInformation>&& aKeysInfo) override;
+ 
+   void ExpirationChange(const nsCString& aSessionId,
+                         double aSecondsSinceEpoch) override;
+ 
+   void SessionClosed(const nsCString& aSessionId) override;
+ 
+-  void LegacySessionError(const nsCString& aSessionId, nsresult aError,
+-                          uint32_t aSystemCode,
+-                          const nsCString& aMessage) override;
+   void Terminated() override;
+ 
+   void Shutdown() override;
+ 
+  private:
+   template <class Func, class... Args>
+   void DispatchToMainThread(const char* const aLabel, Func aFunc,
+                             Args&&... aArgs);
+diff --git a/dom/media/gmp/ChromiumCDMParent.cpp b/dom/media/gmp/ChromiumCDMParent.cpp
+--- a/dom/media/gmp/ChromiumCDMParent.cpp
++++ b/dom/media/gmp/ChromiumCDMParent.cpp
+@@ -335,27 +335,27 @@ void ChromiumCDMParent::ResolvePromise(u
+ }
+ 
+ ipc::IPCResult ChromiumCDMParent::RecvOnResolvePromise(
+     const uint32_t& aPromiseId) {
+   ResolvePromise(aPromiseId);
+   return IPC_OK();
+ }
+ 
+-void ChromiumCDMParent::RejectPromise(uint32_t aPromiseId, nsresult aError,
++void ChromiumCDMParent::RejectPromise(uint32_t aPromiseId, nsresult aException,
+                                       const nsCString& aErrorMessage) {
+   GMP_LOG("ChromiumCDMParent::RejectPromise(this=%p, pid=%u)", this,
+           aPromiseId);
+   // Note: The MediaKeys rejects all pending DOM promises when it
+   // initiates shutdown.
+   if (!mCDMCallback || mIsShutdown) {
+     return;
+   }
+ 
+-  mCDMCallback->RejectPromise(aPromiseId, aError, aErrorMessage);
++  mCDMCallback->RejectPromise(aPromiseId, aException, aErrorMessage);
+ }
+ 
+ static nsresult ToNsresult(uint32_t aException) {
+   switch (static_cast<cdm::Exception>(aException)) {
+     case cdm::Exception::kExceptionNotSupportedError:
+       return NS_ERROR_DOM_NOT_SUPPORTED_ERR;
+     case cdm::Exception::kExceptionInvalidStateError:
+       return NS_ERROR_DOM_INVALID_STATE_ERR;
+@@ -364,19 +364,19 @@ static nsresult ToNsresult(uint32_t aExc
+     case cdm::Exception::kExceptionQuotaExceededError:
+       return NS_ERROR_DOM_QUOTA_EXCEEDED_ERR;
+   };
+   MOZ_ASSERT_UNREACHABLE("Invalid cdm::Exception enum value.");
+   return NS_ERROR_DOM_TIMEOUT_ERR;  // Note: Unique placeholder.
+ }
+ 
+ ipc::IPCResult ChromiumCDMParent::RecvOnRejectPromise(
+-    const uint32_t& aPromiseId, const uint32_t& aError,
++    const uint32_t& aPromiseId, const uint32_t& aException,
+     const uint32_t& aSystemCode, const nsCString& aErrorMessage) {
+-  RejectPromise(aPromiseId, ToNsresult(aError), aErrorMessage);
++  RejectPromise(aPromiseId, ToNsresult(aException), aErrorMessage);
+   return IPC_OK();
+ }
+ 
+ ipc::IPCResult ChromiumCDMParent::RecvOnSessionMessage(
+     const nsCString& aSessionId, const uint32_t& aMessageType,
+     nsTArray<uint8_t>&& aMessage) {
+   GMP_LOG("ChromiumCDMParent::RecvOnSessionMessage(this=%p, sid=%s)", this,
+           aSessionId.get());
+@@ -417,31 +417,18 @@ ipc::IPCResult ChromiumCDMParent::RecvOn
+   if (!mCDMCallback || mIsShutdown) {
+     return IPC_OK();
+   }
+ 
+   mCDMCallback->SessionClosed(aSessionId);
+   return IPC_OK();
+ }
+ 
+-ipc::IPCResult ChromiumCDMParent::RecvOnLegacySessionError(
+-    const nsCString& aSessionId, const uint32_t& aError,
+-    const uint32_t& aSystemCode, const nsCString& aMessage) {
+-  GMP_LOG("ChromiumCDMParent::RecvOnLegacySessionError(this=%p)", this);
+-  if (!mCDMCallback || mIsShutdown) {
+-    return IPC_OK();
+-  }
+-
+-  mCDMCallback->LegacySessionError(aSessionId, ToNsresult(aError), aSystemCode,
+-                                   aMessage);
+-  return IPC_OK();
+-}
+-
+-DecryptStatus ToDecryptStatus(uint32_t aError) {
+-  switch (static_cast<cdm::Status>(aError)) {
++DecryptStatus ToDecryptStatus(uint32_t aStatus) {
++  switch (static_cast<cdm::Status>(aStatus)) {
+     case cdm::kSuccess:
+       return DecryptStatus::Ok;
+     case cdm::kNoKey:
+       return DecryptStatus::NoKeyErr;
+     default:
+       return DecryptStatus::GenericErr;
+   }
+ }
+diff --git a/dom/media/gmp/ChromiumCDMParent.h b/dom/media/gmp/ChromiumCDMParent.h
+--- a/dom/media/gmp/ChromiumCDMParent.h
++++ b/dom/media/gmp/ChromiumCDMParent.h
+@@ -100,20 +100,16 @@ class ChromiumCDMParent final : public P
+                                       const uint32_t& aMessageType,
+                                       nsTArray<uint8_t>&& aMessage) override;
+   ipc::IPCResult RecvOnSessionKeysChange(
+       const nsCString& aSessionId,
+       nsTArray<CDMKeyInformation>&& aKeysInfo) override;
+   ipc::IPCResult RecvOnExpirationChange(
+       const nsCString& aSessionId, const double& aSecondsSinceEpoch) override;
+   ipc::IPCResult RecvOnSessionClosed(const nsCString& aSessionId) override;
+-  ipc::IPCResult RecvOnLegacySessionError(const nsCString& aSessionId,
+-                                          const uint32_t& aError,
+-                                          const uint32_t& aSystemCode,
+-                                          const nsCString& aMessage) override;
+   ipc::IPCResult RecvDecrypted(const uint32_t& aId, const uint32_t& aStatus,
+                                ipc::Shmem&& aData) override;
+   ipc::IPCResult RecvDecryptFailed(const uint32_t& aId,
+                                    const uint32_t& aStatus) override;
+   ipc::IPCResult RecvOnDecoderInitDone(const uint32_t& aStatus) override;
+   ipc::IPCResult RecvDecodedShmem(const CDMVideoFrame& aFrame,
+                                   ipc::Shmem&& aShmem) override;
+   ipc::IPCResult RecvDecodedData(const CDMVideoFrame& aFrame,
+diff --git a/dom/media/gmp/PChromiumCDM.ipdl b/dom/media/gmp/PChromiumCDM.ipdl
+--- a/dom/media/gmp/PChromiumCDM.ipdl
++++ b/dom/media/gmp/PChromiumCDM.ipdl
+@@ -9,20 +9,23 @@ include GMPTypes;
+ namespace mozilla {
+ namespace gmp {
+ 
+ async protocol PChromiumCDM
+ {
+   manager PGMPContent;
+ child:
+ 
+-  // cdm::ContentDecryptionModule8
++  // cdm::ContentDecryptionModule9
+   async Init(bool aAllowDistinctiveIdentifier,
+              bool aAllowPersistentState);
+ 
++  async GetStatusForPolicy(uint32_t aPromiseId,
++                           nsCString aMinHdcpVersion);
++
+   async SetServerCertificate(uint32_t aPromiseId,
+                              uint8_t[] aServerCert);
+ 
+   async CreateSessionAndGenerateRequest(uint32_t aPromiseId,
+                                         uint32_t aSessionType,
+                                         uint32_t aInitDataType,
+                                         uint8_t[] aInitData);
+ 
+@@ -52,63 +55,54 @@ child:
+ 
+   async Drain();
+ 
+   async Destroy();
+ 
+   async GiveBuffer(Shmem aShmem);
+ 
+   async PurgeShmems();
+-
+-  // cdm::ContentDecryptionModule9
+-  async GetStatusForPolicy(uint32_t aPromiseId,
+-                           nsCString aMinHdcpVersion);
++  
+ 
+ parent:
+   async __delete__();
+ 
+   // cdm::Host9
+   async OnResolvePromiseWithKeyStatus(uint32_t aPromiseId, uint32_t aKeyStatus);
+ 
+-  // cdm::Host8
+   async OnResolveNewSessionPromise(uint32_t aPromiseId, nsCString aSessionId);
+ 
+   async OnResolvePromise(uint32_t aPromiseId);
+ 
+   async OnRejectPromise(uint32_t aPromiseId,
+-                        uint32_t aError,
++                        uint32_t aException,
+                         uint32_t aSystemCode,
+                         nsCString aErrorMessage);
+ 
+   async OnSessionMessage(nsCString aSessionId,
+                          uint32_t aMessageType,
+                          uint8_t[] aMessage);
+ 
+   async OnSessionKeysChange(nsCString aSessionId,
+                             CDMKeyInformation[] aKeysInfo);
+ 
+   async OnExpirationChange(nsCString aSessionId,
+                            double aSecondsSinceEpoch);
+ 
+   async OnSessionClosed(nsCString aSessionId);
+ 
+-  async OnLegacySessionError(nsCString aSessionId,
+-                             uint32_t aError,
+-                             uint32_t aSystemCode,
+-                             nsCString aMessage);
+-
+   async ResolveLoadSessionPromise(uint32_t aPromiseId, bool aSuccessful);
+ 
+-  // Return values of cdm::ContentDecryptionModule8::Decrypt
++  // Return values of cdm::ContentDecryptionModule9::Decrypt
+   async Decrypted(uint32_t aId, uint32_t aStatus, Shmem aDecryptedData);
+   async DecryptFailed(uint32_t aId, uint32_t aStatus);
+ 
+   async OnDecoderInitDone(uint32_t aStatus);
+ 
+-  // Return values of cdm::ContentDecryptionModule8::DecryptAndDecodeFrame
++  // Return values of cdm::ContentDecryptionModule9::DecryptAndDecodeFrame
+   async DecodedShmem(CDMVideoFrame aFrame, Shmem aData);
+   async DecodedData(CDMVideoFrame aFrame, uint8_t[] aData);
+   async DecodeFailed(uint32_t aStatus);
+ 
+   async ResetVideoDecoderComplete();
+ 
+   async DrainComplete();
+ 
+diff --git a/dom/media/gtest/TestCDMStorage.cpp b/dom/media/gtest/TestCDMStorage.cpp
+--- a/dom/media/gtest/TestCDMStorage.cpp
++++ b/dom/media/gtest/TestCDMStorage.cpp
+@@ -222,17 +222,17 @@ private:
+ 
+ NS_IMPL_ISUPPORTS(ClearCDMStorageTask, nsIRunnable, nsIObserver)
+ 
+ static void
+ ClearCDMStorage(already_AddRefed<nsIRunnable> aContinuation,
+                 nsIThread* aTarget, PRTime aSince = -1)
+ {
+   RefPtr<ClearCDMStorageTask> task(
+-    new ClearCDMStorageTask(Move(aContinuation), aTarget, aSince));
++      new ClearCDMStorageTask(std::move(aContinuation), aTarget, aSince));
+   SystemGroup::Dispatch(TaskCategory::Other, task.forget());
+ }
+ 
+ static void
+ SimulatePBModeExit()
+ {
+   // SystemGroup::EventTargetFor() doesn't support NS_DISPATCH_SYNC.
+   NS_DispatchToMainThread(new NotifyObserversTask("last-pb-context-exited"), NS_DISPATCH_SYNC);
+@@ -304,20 +304,19 @@ GetNodeId(const nsAString& aOrigin,
+   origin.Append(NS_ConvertUTF8toUTF16(suffix));
+ 
+   nsAutoString topLevelOrigin;
+   topLevelOrigin.Assign(aTopLevelOrigin);
+   topLevelOrigin.Append(NS_ConvertUTF8toUTF16(suffix));
+ 
+   // We rely on the fact that the GetNodeId implementation for
+   // GeckoMediaPluginServiceParent is synchronous.
+-  nsresult rv = service->GetNodeId(origin,
+-                                   topLevelOrigin,
+-                                   NS_LITERAL_STRING("gmp-fake"),
+-                                   Move(callback));
++  nsresult rv =
++      service->GetNodeId(origin, topLevelOrigin, NS_LITERAL_STRING("gmp-fake"),
++                         std::move(callback));
+   EXPECT_TRUE(NS_SUCCEEDED(rv) && NS_SUCCEEDED(result));
+   return nodeId;
+ }
+ 
+ static bool
+ IsCDMStorageIsEmpty()
+ {
+   RefPtr<GeckoMediaPluginServiceParent> service =
+@@ -431,38 +430,40 @@ class CDMStorageTest
+ 
+   void CreateDecryptor(const nsAString& aOrigin,
+                        const nsAString& aTopLevelOrigin,
+                        bool aInPBMode,
+                        const nsCString& aUpdate)
+   {
+     nsTArray<nsCString> updates;
+     updates.AppendElement(aUpdate);
+-    CreateDecryptor(aOrigin, aTopLevelOrigin, aInPBMode, Move(updates));
++    CreateDecryptor(aOrigin, aTopLevelOrigin, aInPBMode, std::move(updates));
+   }
+ 
+   void CreateDecryptor(const nsAString& aOrigin,
+                        const nsAString& aTopLevelOrigin,
+                        bool aInPBMode,
+                        nsTArray<nsCString>&& aUpdates) {
+-    CreateDecryptor(GetNodeId(aOrigin, aTopLevelOrigin, NS_LITERAL_STRING("gmp-fake"), aInPBMode), Move(aUpdates));
++    CreateDecryptor(GetNodeId(aOrigin, aTopLevelOrigin,
++                              NS_LITERAL_STRING("gmp-fake"), aInPBMode),
++                    std::move(aUpdates));
+   }
+ 
+   void CreateDecryptor(const NodeId& aNodeId,
+                        nsTArray<nsCString>&& aUpdates) {
+     RefPtr<GeckoMediaPluginService> service =
+       GeckoMediaPluginService::GetGeckoMediaPluginService();
+     EXPECT_TRUE(service);
+ 
+     nsTArray<nsCString> tags;
+     tags.AppendElement(NS_LITERAL_CSTRING("fake"));
+ 
+     RefPtr<CDMStorageTest> self = this;
+     RefPtr<gmp::GetCDMParentPromise> promise =
+-          service->GetCDM(aNodeId, Move(tags), nullptr);
++        service->GetCDM(aNodeId, std::move(tags), nullptr);
+     auto thread = GetAbstractGMPThread();
+     promise->Then(thread,
+                   __func__,
+                   [self, aUpdates](RefPtr<gmp::ChromiumCDMParent> cdm) {
+                     self->mCDM = cdm;
+                     EXPECT_TRUE(!!self->mCDM);
+                     self->mCallback.reset(new CallbackProxy(self));
+                     nsCString failureReason;
+@@ -570,38 +571,35 @@ class CDMStorageTest
+ 
+     UniquePtr<NodeInfo> siteInfo(
+         new NodeInfo(NS_LITERAL_CSTRING("http://example1.com"),
+                      pattern));
+     // Collect nodeIds that are expected to remain for later comparison.
+     EnumerateCDMStorageDir(NS_LITERAL_CSTRING("id"),
+                            NodeIdCollector(siteInfo.get()));
+     // Invoke "Forget this site" on the main thread.
+-    SystemGroup::Dispatch(TaskCategory::Other,
+-                          NewRunnableMethod<UniquePtr<NodeInfo>&&>(
+-                            "CDMStorageTest::TestForgetThisSite_Forget",
+-                            this,
+-                            &CDMStorageTest::TestForgetThisSite_Forget,
+-                            Move(siteInfo)));
++    SystemGroup::Dispatch(
++        TaskCategory::Other,
++        NewRunnableMethod<UniquePtr<NodeInfo>&&>(
++            "CDMStorageTest::TestForgetThisSite_Forget", this,
++            &CDMStorageTest::TestForgetThisSite_Forget, std::move(siteInfo)));
+   }
+ 
+   void TestForgetThisSite_Forget(UniquePtr<NodeInfo>&& aSiteInfo) {
+     RefPtr<GeckoMediaPluginServiceParent> service =
+         GeckoMediaPluginServiceParent::GetSingleton();
+     service->ForgetThisSiteNative(NS_ConvertUTF8toUTF16(aSiteInfo->siteToForget),
+                                   aSiteInfo->mPattern);
+ 
+     nsCOMPtr<nsIThread> thread;
+     service->GetThread(getter_AddRefs(thread));
+ 
+     nsCOMPtr<nsIRunnable> r = NewRunnableMethod<UniquePtr<NodeInfo>&&>(
+-      "CDMStorageTest::TestForgetThisSite_Verify",
+-      this,
+-      &CDMStorageTest::TestForgetThisSite_Verify,
+-      Move(aSiteInfo));
++        "CDMStorageTest::TestForgetThisSite_Verify", this,
++        &CDMStorageTest::TestForgetThisSite_Verify, std::move(aSiteInfo));
+     thread->Dispatch(r, NS_DISPATCH_NORMAL);
+ 
+     nsCOMPtr<nsIRunnable> f = NewRunnableMethod(
+       "CDMStorageTest::SetFinished", this, &CDMStorageTest::SetFinished);
+     thread->Dispatch(f, NS_DISPATCH_NORMAL);
+   }
+ 
+   class NodeIdVerifier {
+@@ -970,35 +968,35 @@ class CDMStorageTest
+     update.Append(data);
+     CreateDecryptor(NS_LITERAL_STRING("http://fuz.com"),
+                     NS_LITERAL_STRING("http://baz.com"),
+                     false,
+                     update);
+   }
+ 
+   void Expect(const nsCString& aMessage, already_AddRefed<nsIRunnable> aContinuation) {
+-    mExpected.AppendElement(ExpectedMessage(aMessage, Move(aContinuation)));
++    mExpected.AppendElement(
++        ExpectedMessage(aMessage, std::move(aContinuation)));
+   }
+ 
+   void AwaitFinished() {
+     mozilla::SpinEventLoopUntil([&]() -> bool { return mFinished; });
+     mFinished = false;
+   }
+ 
+   void ShutdownThen(already_AddRefed<nsIRunnable> aContinuation) {
+     EXPECT_TRUE(!!mCDM);
+     if (!mCDM) {
+       return;
+     }
+     EXPECT_FALSE(mNodeId.IsEmpty());
+     RefPtr<GMPShutdownObserver> task(new GMPShutdownObserver(
+-      NewRunnableMethod(
+-        "CDMStorageTest::Shutdown", this, &CDMStorageTest::Shutdown),
+-      Move(aContinuation),
+-      mNodeId));
++        NewRunnableMethod("CDMStorageTest::Shutdown", this,
++                          &CDMStorageTest::Shutdown),
++        std::move(aContinuation), mNodeId));
+     SystemGroup::Dispatch(TaskCategory::Other, task.forget());
+   }
+ 
+   void Shutdown() {
+     if (mCDM) {
+       mCDM->Shutdown();
+       mCDM = nullptr;
+       mNodeId = EmptyCString();
+@@ -1085,32 +1083,27 @@ private:
+     void RejectPromise(uint32_t aPromiseId,
+                        nsresult aError,
+                        const nsCString& aErrorMessage) override {  }
+ 
+     void SessionMessage(const nsACString& aSessionId,
+                         uint32_t aMessageType,
+                         nsTArray<uint8_t>&& aMessage) override
+     {
+-      mRunner->SessionMessage(aSessionId, aMessageType, Move(aMessage));
++      mRunner->SessionMessage(aSessionId, aMessageType, std::move(aMessage));
+     }
+ 
+     void SessionKeysChange(const nsCString& aSessionId,
+                            nsTArray<mozilla::gmp::CDMKeyInformation>&& aKeysInfo) override { }
+ 
+     void ExpirationChange(const nsCString& aSessionId,
+                           double aSecondsSinceEpoch) override { }
+ 
+     void SessionClosed(const nsCString& aSessionId) override { }
+ 
+-    void LegacySessionError(const nsCString& aSessionId,
+-                            nsresult aError,
+-                            uint32_t aSystemCode,
+-                            const nsCString& aMessage) override { }
+-
+     void Terminated() override { mRunner->Terminated(); }
+ 
+     void Shutdown() override { mRunner->Shutdown(); }
+ 
+   private:
+ 
+     // Warning: Weak ref.
+     CDMStorageTest* mRunner;
+
