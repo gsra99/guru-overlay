@@ -69,6 +69,10 @@ DEPEND="${RDEPEND}
 	x86? ( ${ASM_DEPEND} virtual/opengl )"
 
 S="${WORKDIR}/firefox-${PV%_*}"
+PATCHES="${FILESDIR}/P1.patch
+	${FILESDIR}/P2.patch
+	${FILESDIR}/P3.patch
+	${FILESDIR}/P4.patch"
 
 QA_PRESTRIPPED="usr/lib*/${PN}/firefox"
 
@@ -127,8 +131,8 @@ src_prepare() {
 	rm -v "${WORKDIR}"/firefox/2005_ffmpeg4.patch \
 		"${WORKDIR}"/firefox/2012_update-cc-to-honor-CC.patch \
 		|| die "Failed to remove unused patches"
+	eapply ${PATCHES}
 	eapply "${WORKDIR}/firefox"
-	eapply "${FILESDIR}/{P1,P2,P3,P4}.patch"
 
 	# Enable gnomebreakpad
 	if use debug ; then
