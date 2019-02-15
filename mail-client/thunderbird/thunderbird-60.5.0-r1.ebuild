@@ -12,10 +12,7 @@ PYTHON_COMPAT=( python3_{5,6,7} )
 PYTHON_REQ_USE='ncurses,sqlite,ssl,threads(+)'
 
 # This list can be updated using scripts/get_langs.sh from the mozilla overlay
-MOZ_LANGS=(ar ast be bg br ca cs cy da de el en en-GB en-US es-AR
-es-ES et eu fi fr fy-NL ga-IE gd gl he hr hsb hu hy-AM id is it
-ja ko lt nb-NO nl nn-NO pl pt-BR pt-PT rm ro ru si sk sl sq sr
-sv-SE tr uk vi zh-CN zh-TW )
+MOZ_LANGS=(ar ast be bg br ca cs cy da de el en en-GB en-US es-AR es-ES et eu fi fr fy-NL ga-IE gd gl he hr hsb hu hy-AM id is it ja ko lt nb-NO nl nn-NO pl pt-BR pt-PT rm ro ru si sk sl sq sr sv-SE tr uk vi zh-CN zh-TW )
 
 # Convert the ebuild version to the upstream mozilla version, used by mozlinguas
 MOZ_PV="${PV/_beta/b}"
@@ -37,7 +34,7 @@ inherit check-reqs flag-o-matic toolchain-funcs gnome2-utils llvm mozcoreconf-v6
 DESCRIPTION="Thunderbird Mail Client"
 HOMEPAGE="https://www.mozilla.org/thunderbird"
 
-KEYWORDS="~amd64 x86 ~x86-fbsd ~amd64-linux ~x86-linux"
+KEYWORDS="amd64 x86 ~x86-fbsd ~amd64-linux ~x86-linux"
 SLOT="0"
 LICENSE="MPL-2.0 GPL-2 LGPL-2.1"
 IUSE="bindist clang dbus debug hardened jack lightning neon pulseaudio
