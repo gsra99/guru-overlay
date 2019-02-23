@@ -60,7 +60,7 @@ RDEPEND="${DEPEND}
 		java? ( >=virtual/jdk-1.5 )
 		"
 
-PATCHES=( "${FILESDIR}/${PN}-3.7.1-ffmpeg.patch" )
+PATCHES=( )
 
 if [[ ${PV} != *9999* ]];then
 	src_prepare(){
