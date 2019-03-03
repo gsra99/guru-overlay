@@ -1,5 +1,6 @@
---- a/modules/gui/qt/components/controller.cpp
-+++ b/modules/gui/qt/components/controller.cpp
+diff -Naur a/modules/gui/qt/components/controller.cpp b/modules/gui/qt/components/controller.cpp
+--- a/modules/gui/qt/components/controller.cpp	2018-07-19 09:54:50.000000000 +0100
++++ b/modules/gui/qt/components/controller.cpp	2019-03-03 16:23:26.638571320 +0000
 @@ -807,7 +807,7 @@
  
      vout.clear();
