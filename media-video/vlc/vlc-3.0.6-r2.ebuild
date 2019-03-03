@@ -226,7 +226,7 @@ PATCHES=(
 	"${FILESDIR}"/${P}-libvpx-1.8.0.patch # bug 677606
 	"${FILESDIR}"/${P}-fdk-aac-2.0.0.patch # bug 672290
 	"${FILESDIR}"/${P}-libav.patch
-	"${FILESDIR}"/${P}-3.0.4-fullscreen-bug.patch
+	"${FILESDIR}"/${PN}-3.0.4-fullscreen-bug.patch
 )
 
 DOCS=( AUTHORS THANKS NEWS README doc/fortunes.txt )
