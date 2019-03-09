@@ -17,7 +17,7 @@ RESTRICT="mirror"
 inherit rpm eutils
 
 S="${WORKDIR}"
-REVISION=38355
+REVISION=39927
 
 src_install() {
 	cd "${S}/usr/bin"
