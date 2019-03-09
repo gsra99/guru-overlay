@@ -19,6 +19,12 @@ inherit rpm eutils xdg-utils
 S="${WORKDIR}"
 REVISION=39927
 
+src_unpack() {
+	unpack ${A}
+	cd "${S}/usr/share/man/man1"
+	gzip -d vncviewer.1.gz
+}
+
 src_install() {
 	cd "${S}/usr/bin"
 	dobin vncviewer
@@ -27,7 +33,6 @@ src_install() {
 	dodoc *.txt
 
 	cd "${S}/usr/share/man/man1"
-	gzip -d vncviewer.1.gz
 	doman vncviewer.1
 
 	cd "${S}/usr/share/icons/hicolor/48x48/apps"
