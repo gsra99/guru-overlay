@@ -20,7 +20,7 @@ S="${WORKDIR}"
 REVISION=39927
 
 src_unpack() {
-	unpack ${A}
+	rpm_unpack ${A}
 	cd "${S}/usr/share/man/man1"
 	gzip -d vncviewer.1.gz
 }
