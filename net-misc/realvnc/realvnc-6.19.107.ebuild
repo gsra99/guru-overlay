@@ -14,7 +14,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
-inherit rpm eutils
+inherit rpm eutils xdg-utils
 
 S="${WORKDIR}"
 REVISION=39927
@@ -44,4 +44,14 @@ src_install() {
 	cd "${S}/usr/share/mime/packages"
 	insinto /usr/share/mime/packages
 	doins ${PN}-vncviewer.xml
+}
+
+pkg_postinst() {
+	xdg_desktop_database_update
+	xdg_mimeinfo_database_update
+}
+
+pkg_postrm() {
+	xdg_desktop_database_update
+	xdg_mimeinfo_database_update
 }
