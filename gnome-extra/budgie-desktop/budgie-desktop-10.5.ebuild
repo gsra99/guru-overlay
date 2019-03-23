@@ -7,7 +7,7 @@ PYTHON_COMPAT=( python3_{5,6,7} )
 
 inherit eutils fdo-mime git-r3 gnome2-utils meson multiprocessing ninja-utils vala python-single-r1
 
-MY_AUTHOR="budgie-desktop"
+MY_AUTHOR="solus-project"
 DESCRIPTION="Desktop Environment based on GNOME 3"
 HOMEPAGE="https://evolve-os.com/budgie/"
 EGIT_REPO_URI="https://github.com/${MY_AUTHOR}/${PN}.git"
