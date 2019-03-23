@@ -20,6 +20,7 @@ RDEPEND="pm-utils? ( sys-power/upower-pm-utils[introspection=] )
 	 !pm-utils? ( sys-power/upower[introspection=] )
 	 >=gnome-base/gnome-menus-3.10.1:=
 	 bluetooth? ( >=net-wireless/gnome-bluetooth-3.18:= )
+	 gnome-extra/gnome-calendar
 	 gnome-base/gnome-session
 	 gnome-base/gnome-control-center
 	 gnome-base/gnome-settings-daemon
