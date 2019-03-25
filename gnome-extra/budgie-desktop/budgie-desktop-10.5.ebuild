@@ -12,14 +12,11 @@ DESCRIPTION="Desktop Environment based on GNOME 3"
 HOMEPAGE="https://evolve-os.com/budgie/"
 EGIT_REPO_URI="https://github.com/${MY_AUTHOR}/${PN}.git"
 EGIT_COMMIT="38b69f05619f0b1a681276dc258929f2fcb7a750"
-IUSE="+bluetooth +policykit +introspection pm-utils"
+IUSE="+policykit doc"
 LICENSE="GPL-2 LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-RDEPEND="pm-utils? ( sys-power/upower-pm-utils[introspection=] )
-	 !pm-utils? ( sys-power/upower[introspection=] )
-	 >=gnome-base/gnome-menus-3.22.0:=
-	 bluetooth? ( >=net-wireless/gnome-bluetooth-3.18:= )
+RDEPEND=">=gnome-base/gnome-menus-3.22.0:=
 	 gnome-base/gnome-session
 	 gnome-base/gnome-control-center
 	 gnome-base/gnome-settings-daemon
@@ -28,13 +25,13 @@ RDEPEND="pm-utils? ( sys-power/upower-pm-utils[introspection=] )
 	 media-sound/pulseaudio
 	 >=x11-libs/gtk+-3.22:3
 	 >=gnome-base/gnome-desktop-3.22.0:3
-	 policykit? ( >=sys-auth/polkit-0.110[introspection=] )
+	 policykit? ( >=sys-auth/polkit-0.110[introspection] )
 	 x11-libs/wxGTK:3.0"
 
 DEPEND="${PYTHON_DEPS}
 	$(vala_depend)
 	dev-lang/sassc
-	introspection? ( >=dev-libs/gobject-introspection-1.44.0[${PYTHON_USEDEP}] )
+	>=dev-libs/gobject-introspection-1.44.0[${PYTHON_USEDEP}]
 	>=x11-wm/mutter-3.22.0
 	media-libs/clutter:1.0
 	>=x11-libs/libwnck-3.14:3
@@ -59,9 +56,9 @@ src_prepare() {
 
 src_configure() {
 	local emesonargs=(
-		-Dwith-bluetooth=$(usex bluetooth true false)
-		-Dwith-introspection=$(usex introspection true false)
 		-Dwith-polkit=$(usex policykit true false)
+		-Dwith-gtk-doc=$(usex doc true false)
+		-Dwith-stateless=false
         )
 	PATH="${S}/tmpbin/:$PATH" meson_src_configure
 }
