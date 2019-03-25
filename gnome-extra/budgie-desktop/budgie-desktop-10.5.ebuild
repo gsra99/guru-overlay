@@ -18,16 +18,16 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 RDEPEND="pm-utils? ( sys-power/upower-pm-utils[introspection=] )
 	 !pm-utils? ( sys-power/upower[introspection=] )
-	 >=gnome-base/gnome-menus-3.10.1:=
+	 >=gnome-base/gnome-menus-3.22.0:=
 	 bluetooth? ( >=net-wireless/gnome-bluetooth-3.18:= )
 	 gnome-base/gnome-session
 	 gnome-base/gnome-control-center
 	 gnome-base/gnome-settings-daemon
-	 >=sys-apps/accountsservice-0.6
+	 >=sys-apps/accountsservice-0.6.40
 	 dev-util/desktop-file-utils
 	 media-sound/pulseaudio
-	 >=x11-libs/gtk+-3.16:3
-	 >=gnome-base/gnome-desktop-3.18.0:3
+	 >=x11-libs/gtk+-3.22:3
+	 >=gnome-base/gnome-desktop-3.22.0:3
 	 policykit? ( >=sys-auth/polkit-0.110[introspection=] )
 	 x11-libs/wxGTK:3.0"
 
@@ -35,15 +35,15 @@ DEPEND="${PYTHON_DEPS}
 	$(vala_depend)
 	dev-lang/sassc
 	introspection? ( >=dev-libs/gobject-introspection-1.44.0[${PYTHON_USEDEP}] )
-	>=x11-wm/mutter-3.25.90
+	>=x11-wm/mutter-3.22.0
 	media-libs/clutter:1.0
 	>=x11-libs/libwnck-3.14:3
 	>=dev-libs/libpeas-1.8.0:0[gtk]
 	media-libs/cogl:1.0
 	dev-libs/libgee:0.8
 	x11-themes/gnome-themes-standard
-	>=app-i18n/ibus-1.5.11[vala]
-	>=dev-libs/glib-2.44.0
+	>=app-i18n/ibus-1.5.10[vala]
+	>=dev-libs/glib-2.46.0
 	dev-util/gtk-doc
 	sys-apps/util-linux
 	dev-util/meson
