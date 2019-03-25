@@ -12,11 +12,12 @@ DESCRIPTION="Desktop Environment based on GNOME 3"
 HOMEPAGE="https://evolve-os.com/budgie/"
 EGIT_REPO_URI="https://github.com/${MY_AUTHOR}/${PN}.git"
 EGIT_COMMIT="38b69f05619f0b1a681276dc258929f2fcb7a750"
-IUSE="+policykit doc"
+IUSE="bluetooth doc +policykit"
 LICENSE="GPL-2 LGPL-2.1"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 RDEPEND=">=gnome-base/gnome-menus-3.22.0:=
+	 bluetooth? ( >=net-wireless/gnome-bluetooth-3.18:= )
 	 gnome-base/gnome-session
 	 gnome-base/gnome-control-center
 	 gnome-base/gnome-settings-daemon
@@ -59,7 +60,8 @@ src_configure() {
 		-Dwith-polkit=$(usex policykit true false)
 		-Dwith-gtk-doc=$(usex doc true false)
 		-Dwith-stateless=false
-        )
+		-Dwith-bluetooth=$(usex bluetooth true false)
+	)
 	PATH="${S}/tmpbin/:$PATH" meson_src_configure
 }
 
