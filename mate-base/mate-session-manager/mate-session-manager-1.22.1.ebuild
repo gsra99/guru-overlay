@@ -61,8 +61,8 @@ DEPEND="${COMMON_DEPEND}
 	virtual/pkgconfig"
 
 PATCHES=(
-	"${FILESDIR}"/${P}-fix-systemd-regression.patch
-	"${FILESDIR}"/${P}-elogind.patch
+	"${FILESDIR}"/${PN}-1.22.0-fix-systemd-regression.patch
+	"${FILESDIR}"/${PN}-1.22.0-elogind.patch
 )
 
 MATE_FORCE_AUTORECONF=true

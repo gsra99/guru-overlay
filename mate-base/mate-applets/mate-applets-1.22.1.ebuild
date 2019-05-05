@@ -52,7 +52,7 @@ DEPEND="${COMMON_DEPEND}
 	sys-devel/gettext:*
 	virtual/pkgconfig:*"
 
-PATCHES=( "${FILESDIR}"/${P}-cpupower.patch )
+PATCHES=( "${FILESDIR}"/${PN}-1.22.0-cpupower.patch )
 
 src_configure() {
 	mate_src_configure \
