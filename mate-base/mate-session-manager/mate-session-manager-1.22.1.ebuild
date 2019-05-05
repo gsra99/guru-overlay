@@ -61,7 +61,6 @@ DEPEND="${COMMON_DEPEND}
 	virtual/pkgconfig"
 
 PATCHES=(
-	"${FILESDIR}"/${PN}-1.22.0-fix-systemd-regression.patch
 	"${FILESDIR}"/${PN}-1.22.0-elogind.patch
 )
 
