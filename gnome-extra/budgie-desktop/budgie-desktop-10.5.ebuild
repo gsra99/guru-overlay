@@ -83,6 +83,8 @@ PATCHES=(
 	"${FILESDIR}"/libmutter.patch
 )
 
+NINJAOPTS="-j1"
+
 src_prepare() {
 	local desktop_files=$(find src/ -name *.desktop.in)
 
