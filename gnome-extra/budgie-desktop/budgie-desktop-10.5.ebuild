@@ -79,6 +79,10 @@ DEPEND="
 	gtk-doc? ( dev-util/gtk-doc )
 "
 
+PATCHES=(
+	"${FILESDIR}/libmutter-3.patch"
+)
+
 src_prepare() {
 	local desktop_files=$(find src/ -name *.desktop.in)
 
@@ -87,7 +91,7 @@ src_prepare() {
 	sed -i -e "/add_install_script.*meson_post_install\.sh/d" \
 		meson.build || die
 
-	epatch "FILESDIR/libmutter-3.patch"
+	epatch
 
 	vala_src_prepare
 	default
