@@ -22,7 +22,9 @@ elif [[ ${PV} == 8888 ]]; then
 	EGIT_REPO_URI="https://github.com/solus-project/${PN}.git"
 	KEYWORDS=""
 else
-	SRC_URI="https://github.com/solus-project/${PN}/releases/download/${PV}/${P}.tar.xz -> ${P}.tar.xz"
+	inherit git-r3
+	EGIT_REPO_URI="https://github.com/UbuntuBudgie/budgie-desktop.git"
+	EGIT_COMMIT="48d1bc4bf4bf9ba9e88860e9526f147e415cb8be"
 	KEYWORDS="~amd64 ~x86"
 fi
 
@@ -79,16 +81,9 @@ DEPEND="
 	gtk-doc? ( dev-util/gtk-doc )
 "
 
-PATCHES=(
-	"${FILESDIR}"/libmutter.patch
-)
-
 NINJAOPTS="-j1"
 
 src_prepare() {
-	mv "${S}"/vapi/libmutter-2.deps "${S}"/vapi/libmutter-3.deps
-	mv "${S}"/vapi/libmutter-2.vapi "${S}"/vapi/libmutter-3.vapi
-
 	local desktop_files=$(find src/ -name *.desktop.in)
 
 	sed -i -e "s/OnlyShowIn=Budgie/OnlyShowIn=X-Budgie/" \
