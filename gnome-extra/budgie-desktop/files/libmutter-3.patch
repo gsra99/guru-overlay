@@ -1,6 +1,6 @@
-diff -Naur budgie-desktop-10.5-old/src/wm/meson.build budgie-desktop-10.5/src/wm/meson.build
---- budgie-desktop-10.5-old/src/wm/meson.build	2019-05-13 22:06:20.782350557 +0100
-+++ budgie-desktop-10.5/src/wm/meson.build	2019-05-13 22:03:44.047875171 +0100
+diff -Naur a/src/wm/meson.build b/src/wm/meson.build
+--- a/src/wm/meson.build	2019-05-13 22:06:20.782350557 +0100
++++ b/src/wm/meson.build	2019-05-13 22:03:44.047875171 +0100
 @@ -15,8 +15,8 @@
      'wm.vala',
  ]
