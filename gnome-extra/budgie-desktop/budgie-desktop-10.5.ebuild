@@ -22,8 +22,7 @@ elif [[ ${PV} == 8888 ]]; then
 	EGIT_REPO_URI="https://github.com/solus-project/${PN}.git"
 	KEYWORDS=""
 else
-	
-SRC_URI="https://github.com/solus-project/${PN}/releases/download/${PV}/${P}.tar.xz -> ${P}.tar.xz"
+	SRC_URI="https://github.com/solus-project/${PN}/releases/download/${PV}/${P}.tar.xz -> ${P}.tar.xz"
 	KEYWORDS="~amd64 ~x86"
 fi
 
@@ -87,6 +86,8 @@ src_prepare() {
 		${desktop_files[@]} || die
 	sed -i -e "/add_install_script.*meson_post_install\.sh/d" \
 		meson.build || die
+
+	epatch "FILESDIR/libmutter-3.patch"
 
 	vala_src_prepare
 	default
