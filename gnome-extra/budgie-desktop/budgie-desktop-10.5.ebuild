@@ -22,7 +22,8 @@ elif [[ ${PV} == 8888 ]]; then
 	EGIT_REPO_URI="https://github.com/solus-project/${PN}.git"
 	KEYWORDS=""
 else
-	SRC_URI="https://github.com/solus-project/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
+	
+SRC_URI="https://github.com/solus-project/${PN}/releases/download/${PV}/${P}.tar.xz -> ${P}.tar.xz"
 	KEYWORDS="~amd64 ~x86"
 fi
 
