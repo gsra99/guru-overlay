@@ -86,8 +86,8 @@ PATCHES=(
 NINJAOPTS="-j1"
 
 src_prepare() {
-	mv "${WORKDIR}"/vapi/libmutter-2.deps "${WORKDIR}"/vapi/libmutter-3.deps
-	mv "${WORKDIR}"/vapi/libmutter-2.vapi "${WORKDIR}"/vapi/libmutter-2.vapi
+	mv "${S}"/vapi/libmutter-2.deps "${S}"/vapi/libmutter-3.deps
+	mv "${S}"/vapi/libmutter-2.vapi "${S}"/vapi/libmutter-3.vapi
 
 	local desktop_files=$(find src/ -name *.desktop.in)
 
