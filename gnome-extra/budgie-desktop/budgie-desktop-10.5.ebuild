@@ -80,12 +80,10 @@ DEPEND="
 "
 
 PATCHES=(
-	"${FILESDIR}/libmutter.patch"
+	"${FILESDIR}"/libmutter.patch
 )
 
 src_prepare() {
-	epatch
-
 	local desktop_files=$(find src/ -name *.desktop.in)
 
 	sed -i -e "s/OnlyShowIn=Budgie/OnlyShowIn=X-Budgie/" \
