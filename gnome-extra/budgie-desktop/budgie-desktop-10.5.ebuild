@@ -80,18 +80,18 @@ DEPEND="
 "
 
 PATCHES=(
-	"${FILESDIR}/libmutter-3.patch"
+	"${FILESDIR}/libmutter.patch"
 )
 
 src_prepare() {
+	epatch
+
 	local desktop_files=$(find src/ -name *.desktop.in)
 
 	sed -i -e "s/OnlyShowIn=Budgie/OnlyShowIn=X-Budgie/" \
 		${desktop_files[@]} || die
 	sed -i -e "/add_install_script.*meson_post_install\.sh/d" \
 		meson.build || die
-
-	epatch
 
 	vala_src_prepare
 	default
