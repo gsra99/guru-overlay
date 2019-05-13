@@ -96,6 +96,8 @@ src_configure() {
 		$(meson_use bluetooth with-bluetooth)
 		$(meson_use gtk-doc with-gtk-doc)
 		$(meson_use policykit with-polkit)
+		-Dwith-stateless=false
+		-Dwith-desktop-icons=none
 	)
 	meson_src_configure
 }
