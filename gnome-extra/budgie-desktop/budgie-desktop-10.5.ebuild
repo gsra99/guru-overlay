@@ -84,7 +84,7 @@ PATCHES=(
 )
 
 src_prepare() {
-	epatch
+	eapply
 
 	local desktop_files=$(find src/ -name *.desktop.in)
 
