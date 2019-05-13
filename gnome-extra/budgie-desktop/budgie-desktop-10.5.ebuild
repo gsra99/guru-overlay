@@ -86,6 +86,9 @@ PATCHES=(
 NINJAOPTS="-j1"
 
 src_prepare() {
+	mv "${WORKDIR}"/vapi/libmutter-2.deps "${WORKDIR}"/vapi/libmutter-3.deps
+	mv "${WORKDIR}"/vapi/libmutter-2.vapi "${WORKDIR}"/vapi/libmutter-2.vapi
+
 	local desktop_files=$(find src/ -name *.desktop.in)
 
 	sed -i -e "s/OnlyShowIn=Budgie/OnlyShowIn=X-Budgie/" \
