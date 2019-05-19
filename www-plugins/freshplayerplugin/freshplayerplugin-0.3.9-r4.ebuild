@@ -4,7 +4,7 @@
 EAPI=6
 
 inherit cmake-utils
-FLASH_VERSION="32.0.0.101"
+FLASH_VERSION="32.0.0.171"
 
 LICENSE="MIT"
 HOMEPAGE="https://github.com/i-rinat/freshplayerplugin"
