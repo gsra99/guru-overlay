@@ -58,7 +58,6 @@ DEPEND="${COMMON_DEPEND}
 PATCHES=(
 	"${FILESDIR}/0.3.5-cmake.patch"
 	"${FILESDIR}/0.3.9-ioctl.patch"
-	"${FILESDIR}/${PN}-0.3.9-ffmpeg-4.patch"
 )
 DOCS=( ChangeLog data/freshwrapper.conf.example README.md )
 
