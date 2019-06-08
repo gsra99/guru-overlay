@@ -41,6 +41,7 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-1.2.0_no-hardcoded-cflags.patch
 	"${FILESDIR}"/llvm-terminfo.patch
 	"${FILESDIR}"/coffeelake.patch
+	"${FILESDIR}"/cl_accelerator_intel.patch
 )
 
 DOCS=(
