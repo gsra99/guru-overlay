@@ -1,5 +1,3 @@
-diff --git a/contrib/dlz/config.dlz.in b/contrib/dlz/config.dlz.in
-index 0000000..0000000 100644
 --- a/contrib/dlz/config.dlz.in
 +++ b/contrib/dlz/config.dlz.in
 @@ -368,38 +368,82 @@ AC_ARG_WITH(dlz_ldap,

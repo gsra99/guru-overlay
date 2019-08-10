@@ -1,5 +1,3 @@
-diff --git a/m4/ax_check_openssl.m4 b/m4/ax_check_openssl.m4
-index 0000000..0000000 100644
 --- a/m4/ax_check_openssl.m4
 +++ b/m4/ax_check_openssl.m4
 @@ -41,16 +41,26 @@ AC_DEFUN([AX_CHECK_OPENSSL], [
