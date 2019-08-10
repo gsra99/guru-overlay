@@ -1,0 +1,113 @@
+diff --git a/contrib/dlz/config.dlz.in b/contrib/dlz/config.dlz.in
+index 0000000..0000000 100644
+--- a/contrib/dlz/config.dlz.in
++++ b/contrib/dlz/config.dlz.in
+@@ -368,38 +368,82 @@ AC_ARG_WITH(dlz_ldap,
+ 			       (Required to use LDAP with DLZ)]),
+     use_dlz_ldap="$withval", use_dlz_ldap="no")
+ 
+-if test "$use_dlz_ldap" = "yes"
+-then
+-	# User did not specify a path - guess it
+-	ldapdirs="/usr /usr/local /usr/pkg"
+-	for d in $ldapdirs
+-	do
+-		if test -f $d/include/ldap.h
+-		then
+-			use_dlz_ldap=$d
+-			break
+-		fi
+-	done
+-fi
+-
+-if test "$use_dlz_ldap" = "yes"
+-then
+-	AC_MSG_RESULT(not found)
+-	AC_MSG_ERROR(
+-[LDAP headers were not found in any of $ldapdirs; use --with-dlz-ldap=/path])
+-fi
+-
+ case "$use_dlz_ldap" in
+ 	no)
+ 		AC_MSG_RESULT(no)
+ 		;;
+ 	*)
+-		DLZ_ADD_DRIVER(LDAP, dlz_ldap_driver,
+-				[-I$use_dlz_ldap/include],
+-				[-L$use_dlz_ldap/lib -lldap -llber])
++		if test "yes" = "$use_dlz_ldap"
++		then
++			# User did not specify a path - guess directories
++			ldapdirs="/usr /usr/local /usr/pkg"
++		elif test -d "$use_dlz_ldap"
++		then
++			# User specified directory and it exists
++			ldapdirs="$use_dlz_ldap"
++		else
++			AC_MSG_RESULT(not found)
++			AC_MSG_ERROR([path $use_dlz_ldap does not exist])
++			ldapdirs=""
++		fi
+ 
+-		AC_MSG_RESULT(
+-[using LDAP from $use_dlz_ldap/lib and $use_dlz_ldap/include])
++		# Search for correct path.
++		# Set both to yes, so we can check them later
++		dlz_ldap_inc="yes"
++		dlz_ldap_libs="yes"
++
++		# See if the compiler can find the library without any paths.
++		AC_MSG_RESULT()
++		AC_CHECK_LIB(ldap, ldap_initialize, dlz_ldap_libs="-lldap")
++
++		for d in $ldapdirs
++		do
++			# Skip nonexistant directories
++			if test ! -d "$dd"
++			then
++				continue
++			fi
++
++			if test -f $d/include/ldap.h
++			then
++				dlz_ldap_inc="-I$d/include"
++			else
++				# Do not search for a library if there is no include.
++				continue
++			fi
++
++			# If a library has been found, search no more.
++			if test "yes" != "$dlz_ldap_libs"
++			then
++				break
++			fi
++
++			# If a library exists, blindly use it.
++			if test -f "$d/lib/libldap.so"
++			then
++				dlz_ldap_libs="-L$d/lib -lldap"
++				break
++			fi
++
++			# Start over.
++			dlz_ldap_inc="yes"
++			dlz_ldap_libs="yes"
++		done
++
++		# Done searching.  Check that everything was found.
++		if test "yes" = "$dlz_ldap_inc"
++		then
++			AC_MSG_ERROR([could not find LDAP include directory])
++		fi
++
++		if test "yes" = "$dlz_ldap_libs"
++		then
++			AC_MSG_ERROR([could not find LDAP library])
++		fi
++
++		DLZ_ADD_DRIVER(LDAP, dlz_ldap_driver, [$dlz_ldap_inc], [$dlz_ldap_libs])
++
++		AC_MSG_RESULT([using LDAP: $dlz_ldap_inc $dlz_ldap_libs])
+ 		;;
+ esac
+ 

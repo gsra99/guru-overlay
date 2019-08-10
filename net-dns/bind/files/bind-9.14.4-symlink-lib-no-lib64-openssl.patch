@@ -1,0 +1,38 @@
+diff --git a/m4/ax_check_openssl.m4 b/m4/ax_check_openssl.m4
+index 0000000..0000000 100644
+--- a/m4/ax_check_openssl.m4
++++ b/m4/ax_check_openssl.m4
+@@ -41,16 +41,26 @@ AC_DEFUN([AX_CHECK_OPENSSL], [
+         [AS_HELP_STRING([--with-openssl=DIR],
+             [root of the OpenSSL directory])],
+         [
+-	    AS_CASE([$with_openssl],
+-	        [""|y|ye|yes],[ssldirs="$default_ssldirs"],
+-	    	[n|no],[AC_MSG_ERROR([Invalid --with-openssl value])],
+-            	[*],[ssldirs="$withval"],
+-	    	[ssldirs="$default_ssldirs"]
+-	    )
++            AS_CASE([$with_openssl],
++                [""|y|ye|yes],[
++                    # if pkg-config is installed and openssl has installed
++                    # a .pc file, then use that information and don't
++                    # search ssldirs
++                    PKG_CHECK_MODULES([OPENSSL], [libcrypto],
++                        [
++                            found=true
++                            ssldirs=""
++                        ],
++                        [ssldirs="$default_ssldirs"])
++                ],
++                [n|no],[AC_MSG_ERROR([Invalid --with-openssl value])],
++                [*],[ssldirs="$withval"],
++                [ssldirs="$default_ssldirs"]
++            )
+         ], [
+             # if pkg-config is installed and openssl has installed a .pc file,
+             # then use that information and don't search ssldirs
+-	    PKG_CHECK_MODULES([OPENSSL], [crypto],
++	    PKG_CHECK_MODULES([OPENSSL], [libcrypto],
+  	        [found=true],
+ 	    	[ssldirs="$default_ssldirs"])
+ 	
