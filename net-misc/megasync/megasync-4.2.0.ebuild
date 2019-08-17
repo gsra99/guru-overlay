@@ -120,7 +120,6 @@ src_configure(){
 		$(use_enable python) \
 		"--enable-chat" \
 		"--enable-gcc-hardening" \
-		"--with-java-include-dir=/usr/lib/jvm/icedtea-bin-8/include"
 	cd ../..
 	local myeqmakeargs=(
 		MEGA.pro
