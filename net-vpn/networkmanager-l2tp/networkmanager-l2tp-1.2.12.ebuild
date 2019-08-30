@@ -23,8 +23,8 @@ RDEPEND="
 	net-dialup/ppp[eap-tls]
 	net-dialup/xl2tpd
 	>=dev-libs/glib-2.32
-	|| ( net-vpn/libreswan
-	net-vpn/strongswan )
+	|| ( net-vpn/networkmanager-libreswan
+	net-vpn/networkmanager-strongswan )
 	gnome? (
 		x11-libs/gtk+:3
 		gnome-base/libgnome-keyring
