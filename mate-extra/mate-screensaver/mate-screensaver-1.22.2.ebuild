@@ -27,7 +27,7 @@ COMMON_DEPEND="
 	gnome-base/dconf
 	>=mate-base/libmatekbd-1.17.0
 	>=mate-base/mate-desktop-1.17.0
-	>=mate-base/mate-menus-1.10.0
+	>=mate-base/mate-menus-1.21.0
 	>=sys-apps/dbus-0.30
 	>=x11-libs/gdk-pixbuf-2.14:2
 	>=x11-libs/libX11-1
@@ -44,7 +44,7 @@ COMMON_DEPEND="
 	consolekit? ( sys-auth/consolekit )
 	libnotify? ( >=x11-libs/libnotify-0.7:0 )
 	opengl? ( virtual/opengl )
-	pam? ( gnome-base/gnome-keyring virtual/pam )
+	pam? ( gnome-base/gnome-keyring sys-libs/pam )
 	!pam? ( kernel_linux? ( sys-apps/shadow ) )
 	elogind? ( sys-auth/elogind )
 	systemd? ( sys-apps/systemd:= )
@@ -68,20 +68,13 @@ src_configure() {
 		--with-xscreensaverhackdir=/usr/$(get_libdir)/misc/xscreensaver
 		$(use_with X x)
 		$(use_with consolekit console-kit)
+		$(use_with elogind)
 		$(use_with libnotify)
 		$(use_with opengl libgl)
 		$(use_with systemd)
 		$(use_enable debug)
 		$(use_enable pam)
 	)
-
-	if use elogind; then
-		myconf+=(
-			--with-systemd
-			SYSTEMD_CFLAGS=`pkg-config --cflags "libelogind" 2>/dev/null`
-			SYSTEMD_LIBS=`pkg-config --libs "libelogind" 2>/dev/null`
-		)
-	fi
 
 	mate_src_configure "${myconf[@]}"
 }
