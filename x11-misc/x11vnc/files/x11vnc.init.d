@@ -12,14 +12,12 @@ depend() {
 checkconfig() {
 
 	# Set Defaults
-	X11VNC_RFBAUTH=${X11VNC_RFBAUTH:-/etc/x11vnc/passwd}
+	X11VNC_RFBAUTH=${X11VNC_RFBAUTH:-/etc/x11vnc.pass}
 	X11VNC_RFBPORT=${X11VNC_RFBPORT:-5900}
 	X11VNC_DISPLAY=${X11VNC_DISPLAY:-:0}
-	X11VNC_LOG=${X11VNC_LOG:-/var/log/x11vnc.log}
-	X11VNC_ALLOW=${X11VNC_ALLOW:-192.168.1.,172.16.1.}
-
-	X11VNC_AUTH=${X11VNC_AUTH:-/var/run/lightdm/root/:0}
-	X11VNC_AUTH_TMP="/var/run/x11vnc-${X11VNC_DISPLAY}"
+	X11VNC_LOG=${X11VNC_LOG:-/var/log/x11vnc}
+	
+	X11VNC_AUTH="/var/run/x11vnc-${X11VNC_DISPLAY}"	
 
 	if [ -n "${X11VNC_AUTOPORT}" ]; then
 		X11VNC_PORT=""
@@ -33,8 +31,8 @@ checkconfig() {
 
 	# Attempt to find X-Auth file
 	if ! type xauth > /dev/null 2>&1 ||
-			! xauth -f ${X11VNC_AUTH} extract - "${X11VNC_DISPLAY}" > "${X11VNC_AUTH_TMP}" 2>/dev/null ||
-			[ ! -s "${X11VNC_AUTH_TMP}" ]; then
+			! xauth -f /root/.Xauthority extract - "${X11VNC_DISPLAY}" > "${X11VNC_AUTH}" 2>/dev/null ||
+			[ ! -s "${X11VNC_AUTH}" ]; then
 		# Let x11vnc guess at auth
 		X11VNC_AUTH_OPTS="--env FD_XDM=1 -auth guess"
 	else
@@ -45,38 +43,28 @@ checkconfig() {
 	if [ ! -f "${X11VNC_AUTH}" ]; then
 		eerror "Specified X-Authority file '${X11VNC_AUTH}' not found!"
 		return 1
-	fi
+	fi	
 }
 
 start() {
 	checkconfig || return 1
 
 	ebegin "Starting ${SVCNAME}"
-	start-stop-daemon -S -q -b -m -p /var/run/x11vnc.pid \
-		-x /usr/bin/x11vnc -- \
+	start-stop-daemon --start \
+		--exec /usr/bin/x11vnc -- \
 			${X11VNC_AUTH_OPTS} \
 			-rfbauth ${X11VNC_RFBAUTH} \
 			${X11VNC_RFBPORT:+-rfbport} ${X11VNC_RFBPORT} \
 			${X11VNC_AUTOPORT:+-autoport} ${X11VNC_AUTOPORT} \
 			-display ${X11VNC_DISPLAY} \
-			-allow ${X11VNC_ALLOW} \
 			-o ${X11VNC_LOG} \
-			-loop -forever \
+			-bg -forever \
 			${X11VNC_OPTS}
 	eend $?
 }
 
 stop() {
 	ebegin "Stopping ${SVCNAME}"
-	pid=`cat /var/run/x11vnc.pid`
-
-	# kill parent process
-	start-stop-daemon -K -q -p /var/run/x11vnc.pid
-
-	# kill child processes
-	if [ -n "$pid" ]; then
-	pkill -s $pid
-	fi
-
+	start-stop-daemon --stop /usr/bin/x11vnc
 	eend $?
 }

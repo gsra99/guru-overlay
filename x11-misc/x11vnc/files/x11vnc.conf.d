@@ -8,7 +8,7 @@
 #   Prior to first run, you must configure a password, to do so please
 #   run `x11vnc -storepasswd /etc/x11vnc.pass`. Replace /etc/x11vnc.pass 
 #   ith the location you have specified below
-#X11VNC_RFBAUTH="/etc/x11vnc/passwd"
+#X11VNC_RFBAUTH="/etc/x11vnc.pass"
 
 # Port to listen on for incoming connections
 #X11VNC_RFBPORT="5900"
@@ -29,9 +29,6 @@
 # Location of Xauthority file
 #X11VNC_AUTH="/var/run/lightdm/root/:0"
 
-# Allow connections from the following ip addresses
-#X11VNC_ALLOW="192.168.1.,172.16.1."
-
 # Miscelaneous options to pass to x11vnc.
 #   Do not set options that are configurable above.
 #   Check `x11vnc -help` or `man x11vnc` for more options.
@@ -39,5 +36,4 @@
 #   * If you experience crashes on logging in, try "-noxfixes"
 #   * Other suggested options include "-noxrecord" and "-ncache ##"
 #     Refer to the x11vnc man page for further explanations.
-X11VNC_OPTS="-nocursor -repeat"
-
+#X11VNC_OPTS="-nocursor -repeat"
