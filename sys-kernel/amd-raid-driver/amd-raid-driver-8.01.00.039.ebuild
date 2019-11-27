@@ -22,6 +22,7 @@ DEPEND=""
 RDEPEND="${DEPEND}"
 
 S="${EGIT_CHECKOUT_DIR}"
+MY_S="driver_sdk/src"
 PATCHES=(
 	"${FILESDIR}/rcraid.patch"
 	"${FILESDIR}/install.patch"
@@ -43,11 +44,12 @@ pkg_setup() {
 }
 
 src_compile() {
-	cd driver_sdk/src
+	cd ${MY_S}
 	set_arch_to_kernel
 	KSRC="${KV_DIR}" KVER="${KV_FULL}" emake
 }
 
 src_install() {
+	cd ${MY_S}
 	linux-mod_src_install
 }
