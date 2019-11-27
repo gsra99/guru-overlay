@@ -8,8 +8,9 @@ inherit linux-info linux-mod eutils git-r3
 DESCRIPTION=""
 HOMEPAGE=""
 
+MY_S="driver_sdk/src"
 EGIT_REPO_URI="https://github.com/gsra99/raid_linux_driver.git"
-MODULE_NAMES="rcraid(drivers/scsi:${S}:${S})"
+MODULE_NAMES="rcraid(drivers/scsi:${S}/${MY_S}:${S})/${MY_S}"
 
 LICENSE=""
 SLOT="0"
@@ -19,7 +20,6 @@ IUSE=""
 DEPEND=""
 RDEPEND="${DEPEND}"
 
-srcdir="${S}/driver_sdk/src"
 PATCHES=(
 	"${FILESDIR}/rcraid.patch"
 	"${FILESDIR}/install.patch"
