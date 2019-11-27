@@ -1,0 +1,39 @@
+diff -Naur a/driver_sdk/src/Makefile b/driver_sdk/src/Makefile
+--- a/driver_sdk/src/Makefile	2016-12-15 20:27:24.000000000 +0000
++++ b/driver_sdk/src/Makefile	2019-11-27 19:41:32.709679837 +0000
+@@ -52,6 +52,9 @@
+ endif
+ endif
+ 
++MODULE_NAME = rcraid
++MODDESTDIR := /lib/modules/$(KVER)/kernel/drivers/scsi/
++
+ PWD    := $(shell pwd)
+ 
+ .PHONY: install bbanner ibanner
+@@ -64,18 +67,13 @@
+ 	@rm -f rcraid.mod.c Module.symvers Modules.symvers
+ 	@rm -rf .tmp_versions Module.markers modules.order
+ 
+-install: ibanner
+-	@if [ -e /etc/redhat-release ]; then                             \
+-	     echo "performing Redhat install";                           \
+-	     (sh ./install_rh $(KVERS));                                 \
+-	 elif [ -e /etc/SuSE-release ]; then                             \
+-	     echo "performing SuSE install";                             \
+-	     (sh ./install_suse $(KVERS));                               \
+-	 else                                                            \
+-	     echo "performing generic install";                          \
+-	     cp rcraid.ko /lib/modules/$(KVERS)/kernel/drivers/scsi;     \
+-	     depmod -a                                                   \
+-	 fi
++install:
++	install -p -m 644 $(MODULE_NAME).ko  ${MODDESTDIR}
++	/sbin/depmod -a ${KVER}
++
++uninstall:
++	rm -f $(MODDESTDIR}/$(MODULE_NAME).ko
++	/sbin/depmod -a ${KVER}
+ 
+ bbanner:
+ 	@echo ------------------------------------------------------------
