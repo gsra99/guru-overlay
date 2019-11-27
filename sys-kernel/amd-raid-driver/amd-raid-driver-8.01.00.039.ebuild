@@ -43,7 +43,7 @@ pkg_setup() {
 }
 
 src_compile() {
-	S="${EGIT_CHECKOUT_DIR}/driver_sdk/src"
+	cd driver_sdk/src
 	set_arch_to_kernel
 	KSRC="${KV_DIR}" KVER="${KV_FULL}" emake
 }
