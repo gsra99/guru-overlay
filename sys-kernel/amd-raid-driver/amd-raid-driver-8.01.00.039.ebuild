@@ -21,6 +21,7 @@ IUSE=""
 DEPEND=""
 RDEPEND="${DEPEND}"
 
+S="${EGIT_CHECKOUT_DIR}"
 PATCHES=(
 	"${FILESDIR}/rcraid.patch"
 	"${FILESDIR}/install.patch"
