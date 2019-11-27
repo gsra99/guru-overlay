@@ -10,7 +10,7 @@ HOMEPAGE=""
 
 #MY_PN="raid_linux_driver"
 EGIT_REPO_URI="https://github.com/gsra99/raid_linux_driver.git"
-#EGIT_CHECKOUT_DIR="${WORKDIR}/${MY_PN}"
+EGIT_CHECKOUT_DIR="${WORKDIR}/${MY_PN}"
 MODULE_NAMES="rcraid(drivers/scsi:${S}:${S})"
 
 LICENSE=""
@@ -21,7 +21,7 @@ IUSE=""
 DEPEND=""
 RDEPEND="${DEPEND}"
 
-S="${WORKDIR}/driver_sdk/src"
+S="${EGIT_CHECKOUT_DIR}/driver_sdk/src"
 
 PATCHES=(
 	"${FILESDIR}/rcraid.patch"
