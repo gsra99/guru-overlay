@@ -46,7 +46,7 @@ src_compile() {
 }
 
 src_install() {
-#	cd ${MY_S}
+	cd ${MY_S}
 	insinto /lib/modules/${KVER}/drivers/scsi
 	doins rcraid.ko
 	depmod -a
