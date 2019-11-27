@@ -10,7 +10,7 @@ HOMEPAGE=""
 
 MY_S="driver_sdk/src"
 EGIT_REPO_URI="https://github.com/gsra99/raid_linux_driver.git"
-MODULE_NAMES="rcraid(drivers/scsi:${S}/${MY_S}:${S})/${MY_S}"
+MODULE_NAMES="rcraid(drivers/scsi:${S}/driver_sdk/src:${S})/driver_sdk/src"
 
 LICENSE=""
 SLOT="0"
