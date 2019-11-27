@@ -43,6 +43,10 @@ pkg_setup() {
 	linux-mod_pkg_setup
 }
 
+src_prepare() {
+	eapply -p0 ${PATCHES}
+}
+
 src_compile() {
 	set_arch_to_kernel
 	KSRC="${KV_DIR}" KVER="${KV_FULL}" emake
