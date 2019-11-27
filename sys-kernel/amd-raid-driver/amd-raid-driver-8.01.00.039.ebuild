@@ -40,8 +40,9 @@ pkg_setup() {
 	linux-mod_pkg_setup
 }
 
+S="${EGIT_CHECKOUT_DIR}/driver_sdk/src"
+
 src_compile() {
-	S="${EGIT_CHECKOUT_DIR}/driver_sdk/src"
 	set_arch_to_kernel
 	KSRC="${KV_DIR}" KVER="${KV_FULL}" emake
 }
