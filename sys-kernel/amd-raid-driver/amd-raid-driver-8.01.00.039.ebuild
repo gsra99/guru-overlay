@@ -23,7 +23,7 @@ DEPEND=""
 RDEPEND="${DEPEND}"
 
 PATCHES=(
-	"${FILESDIR}/rcraid.patch"
+#	"${FILESDIR}/rcraid.patch"
 	"${FILESDIR}/install.patch"
 )
 
