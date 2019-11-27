@@ -9,7 +9,6 @@ DESCRIPTION=""
 HOMEPAGE=""
 
 EGIT_REPO_URI="https://github.com/gsra99/raid_linux_driver.git"
-MODULE_NAMES="rcraid(drivers/scsi:${S}/driver_sdk/src:${S}/driver_sdk/src)"
 
 LICENSE=""
 SLOT="0"
@@ -41,14 +40,14 @@ pkg_setup() {
 }
 
 src_compile() {
-#	cd ${MY_S}
+	cd ${MY_S}
 	set_arch_to_kernel
-#	KSRC="${KV_DIR}" KVER="${KV_FULL}" emake
-	linux-mod_src_compile
+	KSRC="${KV_DIR}" KVER="${KV_FULL}" emake
 }
 
 src_install() {
 #	cd ${MY_S}
-#	einstall
-	linux-mod_src_install
+	insinto /lib/modules/${KVER}/drivers/scsi
+	doins rcraid.ko
+	depmod -a
 }
