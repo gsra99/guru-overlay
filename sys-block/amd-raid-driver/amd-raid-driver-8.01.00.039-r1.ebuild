@@ -20,7 +20,7 @@ DEPEND=""
 RDEPEND="${DEPEND}"
 
 MY_S="driver_sdk/src"
-S="${EGIT_COMMIT_DIT}/${MY_S}"
+S="${EGIT_COMMIT_DIR}/${MY_S}"
 PATCHES=(
 	"${FILESDIR}/rcraid.patch"
 	"${FILESDIR}/install.patch"
