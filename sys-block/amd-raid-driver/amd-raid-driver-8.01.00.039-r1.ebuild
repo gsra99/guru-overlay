@@ -41,10 +41,10 @@ pkg_setup() {
 	linux-mod_pkg_setup
 }
 
-#src_prepare() {
-#	cd ../..
-#	default
-#}
+src_prepare() {
+	cd ../..
+	default
+}
 
 src_compile() {
 #	cd ${MY_S}
