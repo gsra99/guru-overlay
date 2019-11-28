@@ -10,7 +10,6 @@ HOMEPAGE=""
 
 EGIT_REPO_URI="https://github.com/gsra99/raid_linux_driver.git"
 MY_S="${P}/driver_sdk/src"
-#S="${EGIT_COMMIT_DIR}/${MY_S}"
 MODULE_NAMES="rcraid(drivers/scsi:${S}:${S})"
 
 LICENSE=""
@@ -21,6 +20,7 @@ IUSE=""
 DEPEND=""
 RDEPEND="${DEPEND}"
 
+S="${EGIT_COMMIT_DIR}/${MY_S}"
 PATCHES=(
 	"${FILESDIR}/rcraid.patch"
 	"${FILESDIR}/install.patch"
@@ -41,10 +41,10 @@ pkg_setup() {
 	linux-mod_pkg_setup
 }
 
-src_prepare() {
+#src_prepare() {
 #	cd ../..
-	default
-}
+#	default
+#}
 
 src_compile() {
 #	cd ${MY_S}
