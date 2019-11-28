@@ -47,6 +47,6 @@ src_compile() {
 
 src_install() {
 	cd ${MY_S}
-	insinto /lib/modules/${KV_FULL}/drivers/scsi
+	insinto /lib/modules/${KV_FULL}/kernel/drivers/scsi
 	doins rcraid.ko
 }
