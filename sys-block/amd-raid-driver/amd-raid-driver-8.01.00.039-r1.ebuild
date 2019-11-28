@@ -9,7 +9,7 @@ DESCRIPTION=""
 HOMEPAGE=""
 
 EGIT_REPO_URI="https://github.com/gsra99/raid_linux_driver.git"
-MY_S="driver_sdk/src"
+MY_S="${PF}/driver_sdk/src"
 S="${EGIT_COMMIT_DIR}/${MY_S}"
 MODULE_NAMES="rcraid(drivers/scsi:${S}:${S})"
 
