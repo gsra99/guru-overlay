@@ -42,7 +42,7 @@ pkg_setup() {
 }
 
 src_prepare() {
-	cd ../..
+#	cd ../..
 	default
 }
 
