@@ -1,2 +1,0 @@
-app-emulation/wine-vanilla:2.0			mono
-app-emulation/wine-vanilla:2.8			mono
