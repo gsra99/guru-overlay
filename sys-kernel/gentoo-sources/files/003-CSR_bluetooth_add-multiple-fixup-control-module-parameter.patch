@@ -1,5 +1,3 @@
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index a9c35ebb30f8..d52a760bb2b4 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
 @@ -26,7 +26,12 @@
