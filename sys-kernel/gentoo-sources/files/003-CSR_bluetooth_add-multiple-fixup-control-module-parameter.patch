@@ -1,0 +1,370 @@
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index a9c35ebb30f8..d52a760bb2b4 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -26,7 +26,12 @@
+ #include "btrtl.h"
+ 
+ #define VERSION "0.8"
++const char *driver_name = "btusb";
+ 
++static char *fixups[8];
++static int  nfixups;
++static unsigned long disable_fixups;
++static unsigned long force_fixups;
+ static bool disable_scofix;
+ static bool force_scofix;
+ static bool enable_autosuspend = IS_ENABLED(CONFIG_BT_HCIBTUSB_AUTOSUSPEND);
+@@ -53,11 +58,22 @@ static struct usb_driver btusb_driver;
+ #define BTUSB_QCA_ROME		0x8000
+ #define BTUSB_BCM_APPLE		0x10000
+ #define BTUSB_REALTEK		0x20000
+-#define BTUSB_BCM2045		0x40000
++#define BTUSB_BCM2045		0x40000 /* May be replaced by BTUSB_BROKEN_SLK */
+ #define BTUSB_IFNUM_2		0x80000
+-#define BTUSB_CW6622		0x100000
++#define BTUSB_CW6622		0x100000 /* May be replaced by BTUSB_BROKEN_SLK */
+ #define BTUSB_MEDIATEK		0x200000
+ 
++#define BTUSB_FAKECSR		0x00400000
++
++#define BTUSB_BROKEN_SLK	0x00800000 /* HCI_QUIRK_BROKEN_STORED_LINK_KEY */
++#define BTUSB_SIM_DISC		0x01000000 /* HCI_QUIRK_SIMULTANEOUS_DISCOVERY */
++#define BTUSB_NP_SETUP		0x02000000 /* HCI_QUIRK_NON_PERSISTENT_SETUP */
++#define BTUSB_ROC			0x04000000 /* HCI_QUIRK_RESET_ON_CLOSE */
++#define BTUSB_RAWDEV		0x08000000 /* HCI_QUIRK_RAW_DEVICE */
++#define BTUSB_INQMODE		0x10000000 /* HCI_QUIRK_FIXUP_INQUIRY_MODE */
++#define BTUSB_LOCALCOMM		0x20000000 /* HCI_QUIRK_BROKEN_LOCAL_COMMANDS */
++#define BTUSB_DUPFILTER		0x40000000 /* HCI_QUIRK_STRICT_DUPLICATE_FILTER */
++
+ static const struct usb_device_id btusb_table[] = {
+ 	/* Generic Bluetooth USB device */
+ 	{ USB_DEVICE_INFO(0xe0, 0x01, 0x01) },
+@@ -3569,6 +3585,32 @@ static void btusb_check_needs_reset_resume(struct usb_interface *intf)
+ 		interface_to_usbdev(intf)->quirks |= USB_QUIRK_RESET_RESUME;
+ }
+ 
++static void parse_fixup_args(int idVendor, int idProduct, u16 bcdDevice)
++{
++	int i;
++	unsigned int vendor = 0, product = 0, bcddev = 0;
++	unsigned long force = 0, disable = 0;
++
++	for (i = 0; i < nfixups; i++) {
++		int n;
++
++		n = sscanf(fixups[i], "%lx:%lx:%x:%x:%x", &force, &disable,
++			&vendor, &product, &bcddev);
++
++		if ((!bcddev || bcddev == bcdDevice) &&
++			(!product || product == idProduct) &&
++			(!vendor || vendor == idVendor)
++		) {
++			pr_info("%s: New fixups. Device: 0x%04x:0x%04x/0x%04x. Rule %u/%u (%u terms): 0x%04x:0x%04x/0x%04x",
++					driver_name, idVendor, idProduct, bcdDevice,
++					i+1, nfixups, n, vendor, product, bcddev);
++			force_fixups = force;
++			disable_fixups = disable;
++			break;
++		}
++	}
++}
++
+ static int btusb_probe(struct usb_interface *intf,
+ 		       const struct usb_device_id *id)
+ {
+@@ -3578,6 +3620,9 @@ static int btusb_probe(struct usb_interface *intf,
+ 	struct hci_dev *hdev;
+ 	unsigned ifnum_base;
+ 	int i, err;
++	unsigned long info;
++	struct usb_device *udev;
++	u16 bcdDevice;
+ 
+ 	BT_DBG("intf %p id %p", intf, id);
+ 
+@@ -3599,11 +3644,24 @@ static int btusb_probe(struct usb_interface *intf,
+ 			id = match;
+ 	}
+ 
+-	if (id->driver_info == BTUSB_IGNORE)
++	udev = interface_to_usbdev(intf);
++	bcdDevice = le16_to_cpu(udev->descriptor.bcdDevice);
++	parse_fixup_args(id->idVendor, id->idProduct, bcdDevice);
++
++	if (force_fixups | disable_fixups) {
++		info = (id->driver_info | force_fixups) & ~disable_fixups;
++		pr_info("%s: driver flags: initial => 0x%016lx", driver_name,
++			id->driver_info);
++		pr_info("%s: driver flags: masked  => 0x%016lx", driver_name,
++			info);
++	} else {
++		info = id->driver_info;
++	}
++
++	if (info & BTUSB_IGNORE)
+ 		return -ENODEV;
+ 
+-	if (id->driver_info & BTUSB_ATH3012) {
+-		struct usb_device *udev = interface_to_usbdev(intf);
++	if (info & BTUSB_ATH3012) {
+ 
+ 		/* Old firmware would otherwise let ath3k driver load
+ 		 * patch and sysconfig files
+@@ -3639,7 +3697,7 @@ static int btusb_probe(struct usb_interface *intf,
+ 	if (!data->intr_ep || !data->bulk_tx_ep || !data->bulk_rx_ep)
+ 		return -ENODEV;
+ 
+-	if (id->driver_info & BTUSB_AMP) {
++	if (info & BTUSB_AMP) {
+ 		data->cmdreq_type = USB_TYPE_CLASS | 0x01;
+ 		data->cmdreq = 0x2b;
+ 	} else {
+@@ -3647,7 +3705,7 @@ static int btusb_probe(struct usb_interface *intf,
+ 		data->cmdreq = 0x00;
+ 	}
+ 
+-	data->udev = interface_to_usbdev(intf);
++	data->udev = udev;
+ 	data->intf = intf;
+ 
+ 	INIT_WORK(&data->work, btusb_work);
+@@ -3663,7 +3721,7 @@ static int btusb_probe(struct usb_interface *intf,
+ 	init_usb_anchor(&data->ctrl_anchor);
+ 	spin_lock_init(&data->rxlock);
+ 
+-	if (id->driver_info & BTUSB_INTEL_NEW) {
++	if (info & BTUSB_INTEL_NEW) {
+ 		data->recv_event = btusb_recv_event_intel;
+ 		data->recv_bulk = btusb_recv_bulk_intel;
+ 		set_bit(BTUSB_BOOTLOADER, &data->flags);
+@@ -3679,7 +3737,7 @@ static int btusb_probe(struct usb_interface *intf,
+ 	hdev->bus = HCI_USB;
+ 	hci_set_drvdata(hdev, data);
+ 
+-	if (id->driver_info & BTUSB_AMP)
++	if (info & BTUSB_AMP)
+ 		hdev->dev_type = HCI_AMP;
+ 	else
+ 		hdev->dev_type = HCI_PRIMARY;
+@@ -3709,23 +3767,23 @@ static int btusb_probe(struct usb_interface *intf,
+ 		goto out_free_dev;
+ 
+ 	/* Marvell devices may need a specific chip configuration */
+-	if (id->driver_info & BTUSB_MARVELL && data->oob_wake_irq) {
++	if (info & BTUSB_MARVELL && data->oob_wake_irq) {
+ 		err = marvell_config_oob_wake(hdev);
+ 		if (err)
+ 			goto out_free_dev;
+ 	}
+ #endif
+-	if (id->driver_info & BTUSB_CW6622)
++	if (info & BTUSB_CW6622)
+ 		set_bit(HCI_QUIRK_BROKEN_STORED_LINK_KEY, &hdev->quirks);
+ 
+-	if (id->driver_info & BTUSB_BCM2045)
++	if (info & BTUSB_BCM2045)
+ 		set_bit(HCI_QUIRK_BROKEN_STORED_LINK_KEY, &hdev->quirks);
+ 
+-	if (id->driver_info & BTUSB_BCM92035)
++	if (info & BTUSB_BCM92035)
+ 		hdev->setup = btusb_setup_bcm92035;
+ 
+ #ifdef CONFIG_BT_HCIBTUSB_BCM
+-	if (id->driver_info & BTUSB_BCM_PATCHRAM) {
++	if (info & BTUSB_BCM_PATCHRAM) {
+ 		hdev->manufacturer = 15;
+ 		hdev->setup = btbcm_setup_patchram;
+ 		hdev->set_diag = btusb_bcm_set_diag;
+@@ -3735,7 +3793,7 @@ static int btusb_probe(struct usb_interface *intf,
+ 		data->diag = usb_ifnum_to_if(data->udev, ifnum_base + 2);
+ 	}
+ 
+-	if (id->driver_info & BTUSB_BCM_APPLE) {
++	if (info & BTUSB_BCM_APPLE) {
+ 		hdev->manufacturer = 15;
+ 		hdev->setup = btbcm_setup_apple;
+ 		hdev->set_diag = btusb_bcm_set_diag;
+@@ -3745,7 +3803,7 @@ static int btusb_probe(struct usb_interface *intf,
+ 	}
+ #endif
+ 
+-	if (id->driver_info & BTUSB_INTEL) {
++	if (info & BTUSB_INTEL) {
+ 		hdev->manufacturer = 2;
+ 		hdev->setup = btusb_setup_intel;
+ 		hdev->shutdown = btusb_shutdown_intel;
+@@ -3757,7 +3815,7 @@ static int btusb_probe(struct usb_interface *intf,
+ 		set_bit(HCI_QUIRK_NON_PERSISTENT_DIAG, &hdev->quirks);
+ 	}
+ 
+-	if (id->driver_info & BTUSB_INTEL_NEW) {
++	if (info & BTUSB_INTEL_NEW) {
+ 		hdev->manufacturer = 2;
+ 		hdev->send = btusb_send_frame_intel;
+ 		hdev->setup = btusb_setup_intel_new;
+@@ -3771,11 +3829,11 @@ static int btusb_probe(struct usb_interface *intf,
+ 		set_bit(HCI_QUIRK_NON_PERSISTENT_DIAG, &hdev->quirks);
+ 	}
+ 
+-	if (id->driver_info & BTUSB_MARVELL)
++	if (info & BTUSB_MARVELL)
+ 		hdev->set_bdaddr = btusb_set_bdaddr_marvell;
+ 
+ #ifdef CONFIG_BT_HCIBTUSB_MTK
+-	if (id->driver_info & BTUSB_MEDIATEK) {
++	if (info & BTUSB_MEDIATEK) {
+ 		hdev->setup = btusb_mtk_setup;
+ 		hdev->shutdown = btusb_mtk_shutdown;
+ 		hdev->manufacturer = 70;
+@@ -3783,24 +3841,24 @@ static int btusb_probe(struct usb_interface *intf,
+ 	}
+ #endif
+ 
+-	if (id->driver_info & BTUSB_SWAVE) {
++	if (info & BTUSB_SWAVE) {
+ 		set_bit(HCI_QUIRK_FIXUP_INQUIRY_MODE, &hdev->quirks);
+ 		set_bit(HCI_QUIRK_BROKEN_LOCAL_COMMANDS, &hdev->quirks);
+ 	}
+ 
+-	if (id->driver_info & BTUSB_INTEL_BOOT) {
++	if (info & BTUSB_INTEL_BOOT) {
+ 		hdev->manufacturer = 2;
+ 		set_bit(HCI_QUIRK_RAW_DEVICE, &hdev->quirks);
+ 	}
+ 
+-	if (id->driver_info & BTUSB_ATH3012) {
++	if (info & BTUSB_ATH3012) {
+ 		data->setup_on_usb = btusb_setup_qca;
+ 		hdev->set_bdaddr = btusb_set_bdaddr_ath3012;
+ 		set_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks);
+ 		set_bit(HCI_QUIRK_STRICT_DUPLICATE_FILTER, &hdev->quirks);
+ 	}
+ 
+-	if (id->driver_info & BTUSB_QCA_ROME) {
++	if (info & BTUSB_QCA_ROME) {
+ 		data->setup_on_usb = btusb_setup_qca;
+ 		hdev->set_bdaddr = btusb_set_bdaddr_ath3012;
+ 		set_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks);
+@@ -3808,7 +3866,7 @@ static int btusb_probe(struct usb_interface *intf,
+ 	}
+ 
+ #ifdef CONFIG_BT_HCIBTUSB_RTL
+-	if (id->driver_info & BTUSB_REALTEK) {
++	if (info & BTUSB_REALTEK) {
+ 		hdev->setup = btrtl_setup_realtek;
+ 		hdev->shutdown = btrtl_shutdown_realtek;
+ 		hdev->cmd_timeout = btusb_rtl_cmd_timeout;
+@@ -3821,7 +3879,7 @@ static int btusb_probe(struct usb_interface *intf,
+ 	}
+ #endif
+ 
+-	if (id->driver_info & BTUSB_AMP) {
++	if (info & BTUSB_AMP) {
+ 		/* AMP controllers do not support SCO packets */
+ 		data->isoc = NULL;
+ 	} else {
+@@ -3833,23 +3891,20 @@ static int btusb_probe(struct usb_interface *intf,
+ 	if (!reset)
+ 		set_bit(HCI_QUIRK_RESET_ON_CLOSE, &hdev->quirks);
+ 
+-	if (force_scofix || id->driver_info & BTUSB_WRONG_SCO_MTU) {
++	if (force_scofix || info & BTUSB_WRONG_SCO_MTU) {
+ 		if (!disable_scofix)
+ 			set_bit(HCI_QUIRK_FIXUP_BUFFER_SIZE, &hdev->quirks);
+ 	}
+ 
+-	if (id->driver_info & BTUSB_BROKEN_ISOC)
++	if (info & BTUSB_BROKEN_ISOC)
+ 		data->isoc = NULL;
+ 
+-	if (id->driver_info & BTUSB_DIGIANSWER) {
++	if (info & BTUSB_DIGIANSWER) {
+ 		data->cmdreq_type = USB_TYPE_VENDOR;
+ 		set_bit(HCI_QUIRK_RESET_ON_CLOSE, &hdev->quirks);
+ 	}
+ 
+-	if (id->driver_info & BTUSB_CSR) {
+-		struct usb_device *udev = data->udev;
+-		u16 bcdDevice = le16_to_cpu(udev->descriptor.bcdDevice);
+-
++	if (info & BTUSB_CSR) {
+ 		/* Old firmware would otherwise execute USB reset */
+ 		if (bcdDevice < 0x117)
+ 			set_bit(HCI_QUIRK_RESET_ON_CLOSE, &hdev->quirks);
+@@ -3861,15 +3916,13 @@ static int btusb_probe(struct usb_interface *intf,
+ 		set_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks);
+ 	}
+ 
+-	if (id->driver_info & BTUSB_SNIFFER) {
+-		struct usb_device *udev = data->udev;
+-
++	if (info & BTUSB_SNIFFER) {
+ 		/* New sniffer firmware has crippled HCI interface */
+-		if (le16_to_cpu(udev->descriptor.bcdDevice) > 0x997)
++		if (bcdDevice > 0x997)
+ 			set_bit(HCI_QUIRK_RAW_DEVICE, &hdev->quirks);
+ 	}
+ 
+-	if (id->driver_info & BTUSB_INTEL_BOOT) {
++	if (info & BTUSB_INTEL_BOOT) {
+ 		/* A bug in the bootloader causes that interrupt interface is
+ 		 * only enabled after receiving SetInterface(0, AltSetting=0).
+ 		 */
+@@ -3880,6 +3933,46 @@ static int btusb_probe(struct usb_interface *intf,
+ 		}
+ 	}
+ 
++	if (disable_fixups & BTUSB_BROKEN_SLK)
++		clear_bit(HCI_QUIRK_BROKEN_STORED_LINK_KEY, &hdev->quirks);
++	else if (force_fixups & BTUSB_BROKEN_SLK)
++		set_bit(HCI_QUIRK_BROKEN_STORED_LINK_KEY, &hdev->quirks);
++
++	if (disable_fixups & BTUSB_ROC)
++		clear_bit(HCI_QUIRK_RESET_ON_CLOSE, &hdev->quirks);
++	else if (force_fixups & BTUSB_ROC)
++		set_bit(HCI_QUIRK_RESET_ON_CLOSE, &hdev->quirks);
++
++	if (disable_fixups & BTUSB_SIM_DISC)
++		clear_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks);
++	else if (force_fixups & BTUSB_SIM_DISC)
++		set_bit(HCI_QUIRK_SIMULTANEOUS_DISCOVERY, &hdev->quirks);
++
++	if (disable_fixups & BTUSB_NP_SETUP)
++		clear_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks);
++	else if (force_fixups & BTUSB_NP_SETUP)
++		set_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks);
++
++	if (disable_fixups & BTUSB_RAWDEV)
++		clear_bit(HCI_QUIRK_RAW_DEVICE, &hdev->quirks);
++	else if (force_fixups & BTUSB_RAWDEV)
++		set_bit(HCI_QUIRK_RAW_DEVICE, &hdev->quirks);
++
++	if (disable_fixups & BTUSB_INQMODE)
++		clear_bit(HCI_QUIRK_FIXUP_INQUIRY_MODE, &hdev->quirks);
++	else if (force_fixups & BTUSB_INQMODE)
++		set_bit(HCI_QUIRK_FIXUP_INQUIRY_MODE, &hdev->quirks);
++
++	if (disable_fixups & BTUSB_LOCALCOMM)
++		clear_bit(HCI_QUIRK_BROKEN_LOCAL_COMMANDS, &hdev->quirks);
++	else if (force_fixups & BTUSB_LOCALCOMM)
++		set_bit(HCI_QUIRK_BROKEN_LOCAL_COMMANDS, &hdev->quirks);
++
++	if (disable_fixups & BTUSB_DUPFILTER)
++		clear_bit(HCI_QUIRK_STRICT_DUPLICATE_FILTER, &hdev->quirks);
++	else if (force_fixups & BTUSB_DUPFILTER)
++		set_bit(HCI_QUIRK_STRICT_DUPLICATE_FILTER, &hdev->quirks);
++
+ 	if (data->isoc) {
+ 		err = usb_driver_claim_interface(&btusb_driver,
+ 						 data->isoc, data);
+@@ -4116,6 +4209,9 @@ static struct usb_driver btusb_driver = {
+ 
+ module_usb_driver(btusb_driver);
+ 
++module_param_array(fixups, charp, &nfixups, 0644);
++MODULE_PARM_DESC(disable_fixups, "Control up to 8 fixups (final = default | force_fixups & ~disable_fixups). Syntax: fixups=<force_hex>[:<disable_hex>[:<vendor_hex>[:<model_hex>[:<bcdDevice>]]]]");
++
+ module_param(disable_scofix, bool, 0644);
+ MODULE_PARM_DESC(disable_scofix, "Disable fixup of wrong SCO buffer size");
+ 
