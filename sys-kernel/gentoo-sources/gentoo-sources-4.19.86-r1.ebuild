@@ -19,7 +19,7 @@ SRC_URI="${KERNEL_URI} ${GENPATCHES_URI} ${ARCH_URI}"
 
 UNIPATCH_LIST="${FILESDIR}/001-synaptics_rmi4_smb.patch
                ${FILESDIR}/002-CSR_bluetooth.patch
-               ${FILESDIR}/003-CSR_bluetooth_add-multiple-fixup-control-module-parameter.patch
+               ${FILESDIR}/003-CSR_bluetooth-multiple-fixup-control-module-parameter.patch
 "
 
 src_prepare() {
