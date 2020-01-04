@@ -42,9 +42,9 @@ pkg_setup() {
 }
 
 src_compile() {
-	cd ${MY_S}
-	set_arch_to_portage
-	emake KVERS="${KV_FULL}"
+#	cd ${MY_S}
+	set_arch_to_kernel
+	emake -C ${MY_S} KVERS="${KV_FULL}"
 }
 
 src_install() {
