@@ -32,24 +32,14 @@ src_unpack() {
 
 pkg_setup() {
 	kernel_is -gt 5 3 9 && die "Kernels higher than 5.3.9 are not supported"
-#	eselected="${KV_MAJOR}.${KV_MINOR}"
-#	get_running_version
-#	running="${KV_MAJOR}.${KV_MINOR}"
-#	if [ "${eselected}" != "${running}" ]; then
-#		die "Please ensure the eselected kernel source and running kernel are the same version, then try again." 
-#	fi
 	linux-mod_pkg_setup
 }
 
 src_compile() {
-#	cd ${MY_S}
 	set_arch_to_kernel
 	emake -C ${MY_S} KVERS="${KV_FULL}"
 }
 
 src_install() {
-#	cd ${MY_S}
-#	insinto /lib/modules/${KV_FULL}/kernel/drivers/scsi
-#	doins rcraid.ko
 	linux-mod_src_install
 }
