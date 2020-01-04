@@ -29,7 +29,7 @@ src_unpack() {
 }
 
 pkg_setup() {
-	kernel_is -gt 5 3 9 && die "Kernels higher than 5.3.9 are not supported"
+	kernel_is -gt 5 4 7 && die "Kernels higher than 5.4.7 are not supported"
 	eselected="${KV_MAJOR}.${KV_MINOR}"
 	get_running_version
 	running="${KV_MAJOR}.${KV_MINOR}"
