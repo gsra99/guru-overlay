@@ -44,7 +44,7 @@ pkg_setup() {
 src_compile() {
 #	cd ${MY_S}
 	set_arch_to_portage
-	emake -C ${MY_S} KVERS="${KV_FULL}"
+	KSRC="${KV_DIR}" KVER="${KV_FULL}" emake -C ${MY_S}
 }
 
 src_install() {
