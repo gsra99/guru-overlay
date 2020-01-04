@@ -19,16 +19,8 @@ DEPEND=""
 RDEPEND="${DEPEND}"
 
 MY_S="src"
-PATCHES=(
-	"${FILESDIR}/rcraid.patch"
-	"${FILESDIR}/install.patch"
-)
 
 MODULE_NAMES="rcraid(misc:${S}:${S}/${MY_S})"
-
-src_unpack() {
-	git-r3_src_unpack
-}
 
 pkg_setup() {
 	kernel_is -gt 5 4 9 && die "Kernels higher than 5.4.9 are not supported"
@@ -38,8 +30,4 @@ pkg_setup() {
 src_compile() {
 	set_arch_to_kernel
 	emake -C ${MY_S} KVERS="${KV_FULL}"
-}
-
-src_install() {
-	linux-mod_src_install
 }
