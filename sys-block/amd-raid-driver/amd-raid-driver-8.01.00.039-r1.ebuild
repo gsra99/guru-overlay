@@ -24,7 +24,7 @@ PATCHES=(
 	"${FILESDIR}/install.patch"
 )
 
-MODULE_NAMES="rcraid(misc:${S}/driver_sdk/src:${S}/driver_sdk/src"
+MODULE_NAMES="rcraid(misc:${S}:${S}/${MY_S})"
 
 src_unpack() {
 	git-r3_src_unpack
@@ -44,7 +44,7 @@ pkg_setup() {
 src_compile() {
 #	cd ${MY_S}
 	set_arch_to_kernel
-	emake KVERS="${KV_FULL}"
+	emake -C ${MY_S} KVERS="${KV_FULL}"
 }
 
 src_install() {
