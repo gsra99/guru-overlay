@@ -17,7 +17,7 @@ RESTRICT="mirror"
 inherit rpm eutils xdg-utils
 
 S="${WORKDIR}"
-REVISION=41730
+REVISION=42122
 
 src_unpack() {
 	rpm_unpack ${A}
