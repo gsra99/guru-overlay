@@ -1,0 +1,22 @@
+diff -Naur a/src/Makefile b/src/Makefile
+--- a/src/Makefile	2020-01-04 20:17:28.927505961 +0000
++++ b/src/Makefile	2020-01-04 20:20:42.559096573 +0000
+@@ -20,7 +20,7 @@
+ RC_USER=$(shell whoami)
+ RC_DATE=$(shell /bin/date)
+ RC_BUILD_DATE=$(shell /bin/date +'%b %d %Y')
+-PLATFORM=$(shell uname -i)
++PLATFORM=$(shell uname -m)
+ 
+ EXTRA_CFLAGS += -D__LINUX__
+ EXTRA_CFLAGS += -DRC_AHCI_SUPPORT -DRC_AMD_AHCI -DRC_AHCI_AUTOSENSE
+
+@@ -30,6 +30,7 @@
+ EXTRA_CFLAGS += -DRC_MPT2
+ EXTRA_CFLAGS += -DRC_DETECT_AND_BLOCK_PROMISE_RAID
+ EXTRA_CFLAGS += -DRC_DRIVER_BUILD_DATE='"${RC_BUILD_DATE}"'
++EXTRA_CFLAGS += -fno-pie
++EXTRA_CFLAGS += -Wno-incompatible-pointer-types
+ 
+ # Build against an installed kernel object tree.
+ # Either set the kernel version here or pass in the version.
