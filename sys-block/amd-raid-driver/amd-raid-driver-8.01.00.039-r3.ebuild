@@ -12,7 +12,7 @@ EGIT_REPO_URI="https://github.com/thopiekar/rcraid-dkms.git"
 
 LICENSE=""
 SLOT="0"
-KEYWORDS="amd64 x86"
+KEYWORDS=""
 IUSE=""
 
 DEPEND=""
