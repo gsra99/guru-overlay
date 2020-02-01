@@ -35,6 +35,11 @@ pkg_setup() {
 	linux-mod_pkg_setup
 }
 
+src_prepare() {
+	rm ${S}/Module.symvers
+	default
+}
+
 #src_compile() {
 #	set_arch_to_kernel
 #	emake -C ${MY_S} KVERS="${KV_FULL}"
