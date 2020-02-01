@@ -31,7 +31,7 @@ pkg_setup() {
 	set_arch_to_kernel
 	MODULE_NAMES="rcraid(misc:${S}:${S}/src)"
 	BUILD_TARGETS="clean all"
-	BUILD_PARAMS="-j1 -C src KVERS=${KV_FULL}"
+	BUILD_PARAMS="-C ${S} SUBDIRS=${S}/src KVERS=${KV_FULL}"
 	linux-mod_pkg_setup
 }
 
