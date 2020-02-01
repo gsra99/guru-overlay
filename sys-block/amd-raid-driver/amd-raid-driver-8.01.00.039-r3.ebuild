@@ -31,19 +31,9 @@ pkg_setup() {
 	set_arch_to_kernel
 	MODULE_NAMES="rcraid(misc:${S}:${S}/src)"
 	BUILD_TARGETS="clean all"
-	BUILD_PARAMS="-C src KVERS=${KV_FULL}"
+	BUILD_PARAMS="-j1 -C src KVERS=${KV_FULL}"
 	linux-mod_pkg_setup
 }
-
-src_prepare() {
-	default
-	rm ${S}/Module.symvers
-}
-
-#src_compile() {
-#	set_arch_to_kernel
-#	emake -C ${MY_S} KVERS="${KV_FULL}"
-#}
 
 src_install() {
 	linux-mod_src_install
