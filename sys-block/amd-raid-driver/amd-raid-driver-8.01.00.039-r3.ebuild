@@ -36,8 +36,8 @@ pkg_setup() {
 }
 
 src_prepare() {
-	rm ${S}/Module.symvers
 	default
+	rm ${S}/Module.symvers
 }
 
 #src_compile() {
