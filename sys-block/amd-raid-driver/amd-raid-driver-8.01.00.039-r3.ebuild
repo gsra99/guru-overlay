@@ -33,6 +33,7 @@ pkg_setup() {
 	BUILD_TARGETS="clean all"
 	BUILD_PARAMS="-C src KVERS=${KV_FULL}"
 	linux-mod_pkg_setup
+	linux-info_pkg_setup
 }
 
 src_install() {
