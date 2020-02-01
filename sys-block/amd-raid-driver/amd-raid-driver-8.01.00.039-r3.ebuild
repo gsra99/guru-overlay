@@ -24,7 +24,7 @@ PATCHES=(
 
 pkg_setup() {
 	linux-info_pkg_setup
-	kernel_is -ge 5 0 0 && die "Kernels higher than or equal to 5.0.0 are not supported"
+	kernel_is -ge 5 0 0 && die "Kernels 5.0.0 or higher are not supported"
 	MODULE_NAMES="rcraid(misc:${S}:${S}/src)"
 	BUILD_TARGETS="clean all"
 	BUILD_PARAMS="-C src KVERS=${KV_FULL}"
