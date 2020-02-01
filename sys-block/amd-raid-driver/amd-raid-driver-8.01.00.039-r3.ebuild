@@ -28,7 +28,7 @@ src_unpack() {
 
 pkg_setup() {
 	kernel_is -gt 5 4 9 && die "Kernels higher than 5.4.9 are not supported"
-	set_arch_to_kernel
+#	set_arch_to_kernel
 	linux-info_pkg_setup
 	MODULE_NAMES="rcraid(misc:${S}:${S}/src)"
 	BUILD_TARGETS="clean all"
