@@ -30,7 +30,7 @@ pkg_setup() {
 	kernel_is -gt 5 4 9 && die "Kernels higher than 5.4.9 are not supported"
 	set_arch_to_kernel
 	MODULE_NAMES="rcraid(misc:${S}:${S}/src)"
-	BUILD_PARAMS="-C ${S}/src KVERS=${KV_FULL}"
+	BUILD_PARAMS="-C src KVERS=${KV_FULL}"
 	linux-mod_pkg_setup
 }
 
