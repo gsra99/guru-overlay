@@ -40,7 +40,10 @@ RDEPEND="
 	>=x11-libs/libXrandr-1.3
 	virtual/libintl
 	introspection? ( >=dev-libs/gobject-introspection-0.6.7:= )
-	wayland? ( dev-libs/wayland )"
+	wayland? (
+		dev-libs/wayland
+		dev-libs/gtk-layer-shell
+	)"
 
 DEPEND="${RDEPEND}
 	app-text/docbook-xml-dtd:4.1.2
