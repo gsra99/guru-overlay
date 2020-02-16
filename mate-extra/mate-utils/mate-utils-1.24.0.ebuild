@@ -47,8 +47,6 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig
 	x11-base/xorg-proto"
 
-PATCHES=( "${FILESDIR}/${PN}-1.22.1-make-inkscape-optional.patch" )
-
 src_prepare() {
 	# Make apps visible in all DEs.
 	LC_ALL=C find . -iname '*.desktop.in*' -exec \
