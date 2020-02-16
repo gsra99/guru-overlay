@@ -79,8 +79,6 @@ pkg_setup() {
 }
 
 src_prepare() {
-	eapply "${FILESDIR}"/${PV}-gdbus-fixes.patch #700538, included in 2.62.3+
-
 	if use test; then
 		# TODO: Review the test exclusions, especially now with meson
 		# Disable tests requiring dev-util/desktop-file-utils when not installed, bug #286629, upstream bug #629163
