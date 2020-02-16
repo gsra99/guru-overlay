@@ -22,7 +22,7 @@ REQUIRED_USE="t1lib? ( dvi )"
 RDEPEND="
 	>=app-text/poppler-0.22[cairo]
 	dev-libs/atk
-	>=dev-libs/glib-2.50:2
+	>=dev-libs/glib-2.62:2
 	>=dev-libs/libxml2-2.5:2
 	sys-libs/zlib
 	x11-libs/gdk-pixbuf:2
