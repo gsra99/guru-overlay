@@ -15,7 +15,7 @@ DESCRIPTION="The MATE panel"
 LICENSE="GPL-2 FDL-1.1 LGPL-2"
 SLOT="0"
 
-IUSE="X +introspection"
+IUSE="X +introspection wayland"
 
 RDEPEND="
 	dev-libs/atk
@@ -29,17 +29,18 @@ RDEPEND="
 	>=mate-base/mate-menus-1.21.0
 	>=sys-apps/dbus-1.1.2
 	>=x11-libs/cairo-1
-	>=x11-libs/gdk-pixbuf-2.7.1:2
+	>=x11-libs/gdk-pixbuf-2.25.2:2
 	>=x11-libs/gtk+-3.22:3[introspection?]
 	x11-libs/libICE
 	x11-libs/libSM
-	>=x11-libs/libwnck-3.0:3[introspection?]
+	>=x11-libs/libwnck-3.4.6:3[introspection?]
 	x11-libs/libX11
 	>=x11-libs/pango-1.15.4:0[introspection?]
 	x11-libs/libXau
 	>=x11-libs/libXrandr-1.3
 	virtual/libintl
-	introspection? ( >=dev-libs/gobject-introspection-0.6.7:= )"
+	introspection? ( >=dev-libs/gobject-introspection-0.6.7:= )
+	wayland? ( dev-libs/wayland )"
 
 DEPEND="${RDEPEND}
 	app-text/docbook-xml-dtd:4.1.2
@@ -58,5 +59,6 @@ src_configure() {
 		--libexecdir=/usr/libexec/mate-applets \
 		--disable-deprecation-flags \
 		$(use_enable X x11) \
-		$(use_enable introspection)
+		$(use_enable introspection) \
+		$(use_enable wayland)
 }
