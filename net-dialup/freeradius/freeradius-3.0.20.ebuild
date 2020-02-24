@@ -229,7 +229,7 @@ src_install() {
 	fowners -R root:radius /etc/raddb/mods-available
 	fowners -R root:radius /etc/raddb/mods-config
 	fowners -R root:radius /etc/raddb/mods-enabled
-	fowners -R root:radius /etc/raddb/certs
+	fowners root:radius /etc/raddb/certs
 
 	pamd_mimic_system radiusd auth account password session
 
