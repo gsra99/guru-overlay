@@ -29,7 +29,7 @@ src_install() {
 	cd "${S}/usr/bin"
 	dobin vncviewer
 
-	cd "${S}/usr/share/doc/${PN}-vnc-viewer-${PV}.*"
+	cd "${S}/usr/share/doc/${PN}-vnc-viewer-${PV}".*
 	dodoc *.txt
 
 	cd "${S}/usr/share/man/man1"
