@@ -18,9 +18,9 @@ IUSE=""
 DEPEND=""
 RDEPEND="${DEPEND}"
 
-PATCHES=(
-	"${FILESDIR}/Makefile.patch"
-)
+#PATCHES=(
+#	"${FILESDIR}/Makefile.patch"
+#)
 
 pkg_setup() {
 	linux-info_pkg_setup
