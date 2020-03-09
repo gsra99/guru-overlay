@@ -9,6 +9,7 @@ DESCRIPTION=""
 HOMEPAGE=""
 
 EGIT_REPO_URI="https://github.com/thopiekar/rcraid-dkms.git"
+EGIT_COMMIT="ceed0653154be1d4472246831ed0d9c9086f6182"
 
 LICENSE=""
 SLOT="0"
