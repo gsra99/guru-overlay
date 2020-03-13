@@ -17,7 +17,7 @@ else
 	#SDK_COMMIT="e8e66e9f030febfb35c9e4dd503d69091e28fc04"
 	#MY_PV="$(replace_all_version_separators _)"
 	EGIT_REPO_URI="https://github.com/meganz/MEGAsync"
-	EGIT_COMMIT="v${PV}.${RTAG}"
+	EGIT_COMMIT="v${PV}${RTAG}"
 	EGIT_SUBMODULES=( '*' )
 	#SRC_URI="https://github.com/meganz/MEGAsync/archive/v${PV}.0_Linux.tar.gz -> ${P}.tar.gz
 	#https://github.com/meganz/sdk/archive/${SDK_COMMIT}.tar.gz -> ${PN}-sdk-20170215.tar.gz"
