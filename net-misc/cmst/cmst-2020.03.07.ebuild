@@ -23,7 +23,7 @@ RDEPEND="${DEPEND}
 	net-misc/connman
 "
 
-S="${WORKDIR}/${PN}-${P}"
+#S="${WORKDIR}/${PN}-${P}"
 
 src_configure() {
 	export USE_LIBPATH="${EPREFIX}/usr/$(get_libdir)/${PN}"
