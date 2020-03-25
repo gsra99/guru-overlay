@@ -92,7 +92,6 @@ RDEPEND="${COMMONDEPEND}
 	x11-themes/hicolor-icon-theme"
 PATCHES=(
 	"${FILESDIR}/access_violation.patch"
-	"${FILESDIR}/compiz-0.9.14.0-alt-ascii-to-utf8.patch"
 	"${FILESDIR}/compiz-0.9.14.1-python-sitearch.patch"
 )
 
