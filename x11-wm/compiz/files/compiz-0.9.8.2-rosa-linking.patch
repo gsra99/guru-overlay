@@ -1,0 +1,11 @@
+--- compiz-0.9.8.2/gtk/window-decorator/CMakeLists.txt.orig	2012-09-14 17:47:22.925001292 +0400
++++ compiz-0.9.8.2/gtk/window-decorator/CMakeLists.txt	2012-09-14 17:49:49.303001480 +0400
+@@ -47,6 +47,8 @@
+     add_library (gtk_window_decorator_settings_notified_interface
+ 		 ${CMAKE_CURRENT_SOURCE_DIR}/gwd-settings-notified-interface.c)
+ 
++    target_link_libraries (gtk_window_decorator_settings_notified_interface glib-2.0 gobject-2.0)
++
+     set (GTK_WINDOW_DECORATOR_ADDITIONAL_LIBRARIES
+ 	 gtk_window_decorator_settings_notified_interface
+ 	 gtk_window_decorator_settings_interface
