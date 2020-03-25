@@ -11,7 +11,11 @@ if [[ ${PV} == 9999* ]]; then
 	EGIT_REPO_URI="https://git.launchpad.net/${PN}"
 	S="${WORKDIR}/${P}"
 else
-	SRC_URI="http://launchpad.net/${PN}/$(ver_cut 1-3)/${PV}/+download/${P}.tar.xz"
+	#SRC_URI="http://launchpad.net/${PN}/$(ver_cut 1-3)/${PV}/+download/${P}.tar.xz"
+	inherit git-r3
+	EGIT_REPO_URI="https://git.launchpad.net/${PN}"
+	EGIT_COMMIT="1%0.9.14.1+20.04.20200211-0ubuntu1"
+	S="${WORKDIR}/${P}"
 fi
 
 KEYWORDS="~amd64 ~x86"
@@ -92,7 +96,6 @@ RDEPEND="${COMMONDEPEND}
 	x11-themes/hicolor-icon-theme"
 PATCHES=(
 	"${FILESDIR}/access_violation.patch"
-	"${FILESDIR}/compiz-0.9.14.1-python-sitearch.patch"
 )
 
 pkg_pretend() {
