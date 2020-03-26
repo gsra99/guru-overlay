@@ -19,7 +19,7 @@ DESCRIPTION="OpenGL window and compositing manager"
 HOMEPAGE="http://www.compiz.org/"
 
 LICENSE="GPL-2 LGPL-2.1 MIT"
-SLOT="0"
+SLOT="0.9"
 
 IUSE="+cairo debug dbus fuse gles gnome gtk kde +svg test"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
