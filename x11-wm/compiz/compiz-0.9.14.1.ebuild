@@ -4,20 +4,16 @@
 EAPI=7
 PYTHON_COMPAT=( python3_{4,5,6} )
 
-inherit cmake-utils eutils gnome2-utils xdg-utils python-single-r1 toolchain-funcs
+inherit cmake-utils eutils gnome2-utils xdg-utils python-single-r1 toolchain-funcs git-r3
 
 if [[ ${PV} == 9999* ]]; then
-	inherit git-r3
 	EGIT_REPO_URI="https://git.launchpad.net/${PN}"
-	S="${WORKDIR}/${P}"
 else
-	#SRC_URI="http://launchpad.net/${PN}/$(ver_cut 1-3)/${PV}/+download/${P}.tar.xz"
-	inherit git-r3
 	EGIT_REPO_URI="https://git.launchpad.net/${PN}"
 	EGIT_COMMIT="1%0.9.14.1+20.04.20200211-0ubuntu1"
-	S="${WORKDIR}/${P}"
 fi
 
+S="${WORKDIR}/${P}"
 KEYWORDS="~amd64 ~x86"
 DESCRIPTION="OpenGL window and compositing manager"
 HOMEPAGE="http://www.compiz.org/"

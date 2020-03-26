@@ -10,7 +10,7 @@ HOMEPAGE="https://gitlab.com/compiz"
 SRC_URI="https://github.com/compiz-reloaded/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2+ LGPL-2.1 MIT"
-SLOT="0"
+SLOT="0.8"
 KEYWORDS="~amd64 ~x86"
 IUSE="+cairo dbus fuse gsettings +gtk gtk3 inotify marco mate +svg"
 REQUIRED_USE="marco? ( gsettings )
