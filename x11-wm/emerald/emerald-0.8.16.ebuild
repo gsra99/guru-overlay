@@ -21,7 +21,6 @@ PDEPEND="
 
 RDEPEND="
 	>=x11-wm/compiz-0.8.12
-	<=x11-wm/compiz-0.9
 	gtk3? (
 		x11-libs/gtk+:3
 		x11-libs/libwnck:3
