@@ -79,6 +79,7 @@ src_install() {
 
 	rm -r etc usr/share/menu || die
 	mv usr/share/doc/${MY_PN} usr/share/doc/${PF} || die
+	mv usr/share/appdata usr/share/metainfo || die
 
 	sed -i "/Icon=brave-browser/c Icon=brave-bin" usr/share/applications/brave-browser.desktop || die
 
@@ -112,6 +113,7 @@ pkg_preinst() {
 pkg_postinst() {
 	gnome2_icon_cache_update
 	xdg_desktop_database_update
+	xdg_mimeinfo_database_update
 	elog "If upgrading from an 0.25.x release or earlier, note that Brave has changed configuration folders."
 	elog "you will have to import your browser data from Settings -> People -> Import Bookmarks and Settings"
 	elog "then choose \"Brave (old)\". All your settings, bookmarks, and passwords should return."
@@ -120,4 +122,5 @@ pkg_postinst() {
 pkg_postrm() {
 	gnome2_icon_cache_update
 	xdg_desktop_database_update
+	xdg_mimeinfo_database_update
 }
