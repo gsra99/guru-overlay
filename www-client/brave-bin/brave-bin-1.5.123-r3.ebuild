@@ -89,7 +89,7 @@ src_install() {
 	gzip -d usr/share/man/man1/${MY_PN}-stable.1.gz || die
 	if [[ -L usr/share/man/man1/${MY_PN}.1.gz ]]; then
 		rm usr/share/man/man1/${MY_PN}.1.gz || die
-		dosym ${PN}.1 usr/share/man/man1/${MY_PN}.1
+		dosym ${MY_PN}.1 usr/share/man/man1/${PN}.1
 	fi
 
 	pushd "${BRAVE_HOME}/locales" > /dev/null || die
