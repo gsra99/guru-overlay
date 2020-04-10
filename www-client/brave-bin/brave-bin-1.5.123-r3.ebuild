@@ -61,7 +61,7 @@ RDEPEND="
 QA_PREBUILT="*"
 QA_DESKTOP_FILE="usr/share/applications/google-chrome.*\\.desktop"
 S=${WORKDIR}
-BRAVE_HOME="opt/${MY_PN}"
+BRAVE_HOME="opt/brave.com/brave"
 
 pkg_pretend() {
 	# Protect against people using autounmask overzealously
@@ -81,10 +81,10 @@ src_install() {
 	mv usr/share/doc/${MY_PN} usr/share/doc/${PF} || die
 
 	gzip -d usr/share/doc/${PF}/changelog.gz || die
-	gzip -d usr/share/man/man1/${MY_PN}.1.gz || die
-	if [[ -L usr/share/man/man1/google-chrome.1.gz ]]; then
-		rm usr/share/man/man1/google-chrome.1.gz || die
-		dosym ${MY_PN}.1 usr/share/man/man1/google-chrome.1
+	gzip -d usr/share/man/man1/${MY_PN}-stabe.1.gz || die
+	if [[ -L usr/share/man/man1/${MY_PN}.1.gz ]]; then
+		rm usr/share/man/man1/${MY_PN}.1.gz || die
+		dosym ${MY_PN}.1 usr/share/man/man1/brave-browser.1
 	fi
 
 	pushd "${BRAVE_HOME}/locales" > /dev/null || die
