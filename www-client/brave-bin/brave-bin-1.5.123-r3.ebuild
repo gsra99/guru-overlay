@@ -7,7 +7,7 @@ CHROMIUM_LANGS="am ar bg bn ca cs da de el en-GB en-US es es-419 et fa fi fil fr
 	hi hr hu id it ja kn ko lt lv ml mr ms nb nl pl pt-BR pt-PT ro ru sk sl sr
 	sv sw ta te th tr uk vi zh-CN zh-TW"
 
-inherit chromium-2 eutils gnome2-utils pax-utils unpacker xdg-utils
+inherit chromium-2 eutils pax-utils unpacker xdg-utils
 
 DESCRIPTION="Brave Web Browser"
 HOMEPAGE="https://brave.com"
@@ -81,7 +81,9 @@ src_install() {
 	mv usr/share/doc/${MY_PN} usr/share/doc/${PF} || die
 	mv usr/share/appdata usr/share/metainfo || die
 
-#	sed -i "/Icon=brave-browser/c Icon=brave-bin" usr/share/applications/${MY_PN}.desktop || die
+	sed -i \
+		-e 's|^TargetEnvironment|X-&|g' \
+		usr/share/applications/${MY_PN}.desktop || die
 
 	gzip -d usr/share/doc/${PF}/changelog.gz || die
 	gzip -d usr/share/man/man1/${MY_PN}-stable.1.gz || die
@@ -102,19 +104,17 @@ src_install() {
 	pax-mark m "${BRAVE_HOME}/brave"
 }
 
-pkg_preinst() {
-	gnome2_icon_savelist
-}
-
 pkg_postinst() {
-	gnome2_icon_cache_update
 	xdg_desktop_database_update
+	xdg_icon_cache_update
+	xdg_mimeinfo_database_update
 	elog "If upgrading from an 0.25.x release or earlier, note that Brave has changed configuration folders."
 	elog "you will have to import your browser data from Settings -> People -> Import Bookmarks and Settings"
 	elog "then choose \"Brave (old)\". All your settings, bookmarks, and passwords should return."
 }
 
 pkg_postrm() {
-	gnome2_icon_cache_update
 	xdg_desktop_database_update
+	xdg_icon_cache_update
+	xdg_mimeinfo_database_update
 }
