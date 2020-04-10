@@ -87,7 +87,7 @@ src_install() {
 		dosym ${MY_PN}.1 usr/share/man/man1/google-chrome.1
 	fi
 
-	pushd "${CHROME_HOME}/locales" > /dev/null || die
+	pushd "${BRAVE_HOME}/locales" > /dev/null || die
 	chromium_remove_language_paks
 	popd > /dev/null || die
 
@@ -97,10 +97,10 @@ src_install() {
 
 	local size
 	for size in 16 24 32 48 64 128 256 ; do
-		newicon -s ${size} "${CHROME_HOME}/product_logo_${size}${suffix}.png" ${PN}.png
+		newicon -s ${size} "${BRAVE_HOME}/product_logo_${size}${suffix}.png" ${PN}.png
 	done
 
-	pax-mark m "${CHROME_HOME}/chrome"
+	pax-mark m "${BRAVE_HOME}/brave"
 }
 
 pkg_preinst() {
