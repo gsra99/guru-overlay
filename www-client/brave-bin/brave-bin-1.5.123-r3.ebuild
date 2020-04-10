@@ -12,7 +12,7 @@ inherit chromium-2 eutils gnome2-utils pax-utils unpacker xdg-utils
 DESCRIPTION="Brave Web Browser"
 HOMEPAGE="https://brave.com"
 
-KEYWORDS="-* ~amd64"
+KEYWORDS="-* amd64"
 
 MY_PN="brave-browser"
 
