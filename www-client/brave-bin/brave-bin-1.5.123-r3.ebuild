@@ -81,26 +81,22 @@ src_install() {
 	mv usr/share/doc/${MY_PN} usr/share/doc/${PF} || die
 	mv usr/share/appdata usr/share/metainfo || die
 
-	sed -i "/Icon=brave-browser/c Icon=brave-bin" usr/share/applications/brave-browser.desktop || die
+#	sed -i "/Icon=brave-browser/c Icon=brave-bin" usr/share/applications/${MY_PN}.desktop || die
 
 	gzip -d usr/share/doc/${PF}/changelog.gz || die
 	gzip -d usr/share/man/man1/${MY_PN}-stable.1.gz || die
 	if [[ -L usr/share/man/man1/${MY_PN}.1.gz ]]; then
 		rm usr/share/man/man1/${MY_PN}.1.gz || die
-		dosym ${MY_PN}.1 usr/share/man/man1/brave-browser.1
+		dosym ${PN}.1 usr/share/man/man1/${MY_PN}.1
 	fi
 
 	pushd "${BRAVE_HOME}/locales" > /dev/null || die
 	chromium_remove_language_paks
 	popd > /dev/null || die
 
-	local suffix=
-	[[ ${PN} == google-chrome-beta ]] && suffix=_beta
-	[[ ${PN} == google-chrome-unstable ]] && suffix=_dev
-
 	local size
 	for size in 16 24 32 48 64 128 256 ; do
-		newicon -s ${size} "${BRAVE_HOME}/product_logo_${size}${suffix}.png" ${PN}.png
+		newicon -s ${size} "${BRAVE_HOME}/product_logo_${size}.png" ${MY_PN}.png
 	done
 
 	pax-mark m "${BRAVE_HOME}/brave"
