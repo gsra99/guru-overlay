@@ -6,20 +6,15 @@ PYTHON_COMPAT=( python3_{6,7,8} )
 
 inherit cmake-utils eutils gnome2-utils xdg-utils python-single-r1 toolchain-funcs git-r3
 
-if [[ ${PV} == 9999* ]]; then
-	EGIT_REPO_URI="https://git.launchpad.net/${PN}"
-else
-	EGIT_REPO_URI="https://git.launchpad.net/${PN}"
-	EGIT_COMMIT="1%0.9.14.1+20.10.20200427-0ubuntu1"
-fi
+EGIT_REPO_URI="https://git.launchpad.net/${PN}"
+EGIT_COMMIT="1%0.9.14.1+20.04.20200211-0ubuntu1"
 
-S="${WORKDIR}/${P}"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
 DESCRIPTION="OpenGL window and compositing manager"
 HOMEPAGE="http://www.compiz.org/"
 
 LICENSE="GPL-2 LGPL-2.1 MIT"
-SLOT="0.9"
+SLOT="0"
 
 IUSE="+cairo debug dbus fuse gles gnome gtk kde +svg test"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
@@ -90,6 +85,9 @@ RDEPEND="${COMMONDEPEND}
 	x11-apps/mesa-progs
 	x11-apps/xvinfo
 	x11-themes/hicolor-icon-theme"
+
+S="${WORKDIR}/${P}"
+
 PATCHES=(
 	"${FILESDIR}/access_violation.patch"
 )
