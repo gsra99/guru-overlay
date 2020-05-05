@@ -132,7 +132,7 @@ src_configure() {
 }
 
 src_install() {
-	cmake-utils_src_install -Wno-dev
+	cmake-utils_src_install -w no-dev
 	python_fix_shebang "${ED}"
 	python_optimize
 }
