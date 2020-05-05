@@ -127,13 +127,12 @@ src_configure() {
 		-DCOMPIZ_BUILD_WITH_RPATH=Off
 		-DCOMPIZ_BUILD_TESTING=Off
 		-DCOMPIZ_WERROR=Off
-		-Wno-dev
 	)
 	cmake-utils_src_configure
 }
 
 src_install() {
-	cmake-utils_src_install
+	cmake-utils_src_install -Wno-dev
 	python_fix_shebang "${ED}"
 	python_optimize
 }
