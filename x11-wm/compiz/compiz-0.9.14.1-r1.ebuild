@@ -88,9 +88,9 @@ RDEPEND="${COMMONDEPEND}
 
 S="${WORKDIR}/${P}"
 
-#PATCHES=(
-#	"${FILESDIR}/access_violation.patch"
-#)
+PATCHES=(
+	"${FILESDIR}/access_violation.patch"
+)
 
 pkg_pretend() {
 	if [[ ${MERGE_TYPE} != binary ]]; then
