@@ -107,8 +107,7 @@ pkg_setup() {
 src_prepare() {
 	cmake-utils_src_prepare
 	sed -i \
-		-e 's|CYTHON_BIN cython3|CYTHON_BIN cython|' \
-#		-e "s|/lib/python|/$(get_libdir)/python|" \
+		's/CYTHON_BIN cython3/CYTHON_BIN cython/g' \
 		compizconfig/compizconfig-python/CMakeLists.txt || die
 	eapply_user
 }
