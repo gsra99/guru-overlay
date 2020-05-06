@@ -107,8 +107,7 @@ pkg_setup() {
 src_prepare() {
 	cmake-utils_src_prepare
 	sed -i \
-		-e 's|CYTHON_BIN cython3|CYTHON_BIN cython|' \
-		-e "s|/lib/python|/$(get_libdir)/python|" \
+		's/CYTHON_BIN cython3/CYTHON_BIN cython/g' \
 		compizconfig/compizconfig-python/CMakeLists.txt || die
 	eapply_user
 }
@@ -117,7 +116,7 @@ src_configure() {
 	use debug && CMAKE_BUILD_TYPE=Debug
 	local mycmakeargs=(
 		-DUSE_GLES=$(usex gles)
-		-DUSE_GNOME=$(usex gnome)
+		-DUSE_GNOME=$(usex gtk)
 		-DUSE_METACITY=$(usex gnome)
 		-DUSE_GTK=$(usex gtk)
 		-DCMAKE_BUILD_TYPE=Release
