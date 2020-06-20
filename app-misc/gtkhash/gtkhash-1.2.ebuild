@@ -75,8 +75,8 @@ pkg_setup() {
 }
 
 src_prepare() {
-	sed -e "s/thunarx-\${with_thunarx}/thunarx-$(_get_thunarx_ver)/" \
-		-i configure.ac || die 'sed filed!'
+#	sed -e "s/thunarx-\${with_thunarx}/thunarx-$(_get_thunarx_ver)/" \
+#		-i configure.ac || die 'sed filed!'
 
 	eautoreconf
 	default
