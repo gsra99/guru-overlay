@@ -28,7 +28,7 @@ QA_PREBUILT="/opt/${PN}/masterpdfeditor5
 S="${WORKDIR}/${PN}-${PV%%.*}"
 
 src_prepare() {
-	rpm_src_unpack
+	rpm_src_unpack ${S}
 	sed -i 's/libpath=$(cd "$(dirname "$0")"; pwd)/libpath=$(cd "$(dirname $(readlink -f `which "$0"`))"; pwd)/' "${WORKDIR}"/*/masterpdfeditor5.sh || die
 	sed -i 's/dirname=`dirname $0`/dirname=$libpath/' "${WORKDIR}"/*/masterpdfeditor5.sh || die
 
