@@ -15,7 +15,7 @@ KEYWORDS="~amd64"
 RESTRICT="mirror"
 
 RDEPEND="
-	>=dev-qt/qtgui-5.14.2[eglfs]
+	>=dev-qt/qtgui-5.9.8:5[eglfs]
 	>=media-gfx/sane-backends-1.0"
 
 QA_PREBUILT="/opt/${PN}/masterpdfeditor5
