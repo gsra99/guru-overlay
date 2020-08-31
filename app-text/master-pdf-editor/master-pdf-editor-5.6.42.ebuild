@@ -41,6 +41,7 @@ src_prepare() {
 
 src_install() {
 	insinto /opt/${PN}
+	cd ${S}/opt/${PN}-${PV%%.*}
 	doins -r fonts iconengines imageformats lang lib platforms platformthemes printsupport stamps templates masterpdfeditor5.png
 
 	exeinto /opt/${PN}
