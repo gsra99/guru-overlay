@@ -25,17 +25,16 @@ QA_PREBUILT="/opt/${PN}/masterpdfeditor5
 	/opt/${PN}/imageformats/*.so*
 "
 
-#S="${WORKDIR}/${PN}-${PV%%.*}"
-s="${WORKDIR}"
+S="${WORKDIR}/${PN}-${PV%%.*}"
 
-#src_unpack() {
-#	mkdir ${S} && cd ${S}
-#	rpm_src_unpack
-#}
+src_unpack() {
+	mkdir ${S} && cd ${S}
+	rpm_src_unpack
+}
 
 src_prepare() {
-	sed -i 's/libpath=$(cd "$(dirname "$0")"; pwd)/libpath=$(cd "$(dirname $(readlink -f `which "$0"`))"; pwd)/' "${WORKDIR}"/opt/*/masterpdfeditor5.sh || die
-	sed -i 's/dirname=`dirname $0`/dirname=$libpath/' "${WORKDIR}"/opt/*/masterpdfeditor5.sh || die
+	sed -i 's/libpath=$(cd "$(dirname "$0")"; pwd)/libpath=$(cd "$(dirname $(readlink -f `which "$0"`))"; pwd)/' "${S}"/opt/*/masterpdfeditor5.sh || die
+	sed -i 's/dirname=`dirname $0`/dirname=$libpath/' "${S}"/opt/*/masterpdfeditor5.sh || die
 
 	eapply_user
 }
