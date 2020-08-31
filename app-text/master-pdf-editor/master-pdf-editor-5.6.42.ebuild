@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit desktop rpm xdg-utils
+inherit rpm xdg-utils
 
 DESCRIPTION="A complete solution for viewing and editing PDF files"
 HOMEPAGE="https://code-industry.net/free-pdf-editor/"
@@ -47,11 +47,6 @@ src_install() {
 	exeinto /opt/${PN}
 	doexe masterpdfeditor5 masterpdfeditor5.sh
 	dosym ../${PN}/masterpdfeditor5.sh /opt/bin/masterpdfeditor5
-
-#	make_desktop_entry "masterpdfeditor5 %f" \
-#		"Master PDF Editor ${PV}" /opt/${PN}/masterpdfeditor5.png \
-#		"Office;Graphics;Viewer" \
-#		"MimeType=application/pdf;application/x-bzpdf;application/x-gzpdf;\nTerminal=false"
 
 	cd ${S}
 	doins -r usr
