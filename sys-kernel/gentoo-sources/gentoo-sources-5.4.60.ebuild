@@ -17,9 +17,7 @@ IUSE="experimental"
 DESCRIPTION="Full sources including the Gentoo patchset for the ${KV_MAJOR}.${KV_MINOR} kernel tree"
 SRC_URI="${KERNEL_URI} ${GENPATCHES_URI} ${ARCH_URI}"
 
-UNIPATCH_LIST="
-	${FILESDIR}/10001-xhci-testpatch-Don-t-clear-TT-buffer-on-ep0-protocol.patch
-	${FILESDIR}/10002-Fix-a-typo-in-prevoius-patch.patch"
+UNIPATCH_LIST="${FILESDIR}/0001-snd-usb-audio.patch"
 
 src_prepare() {
 	kernel-2_src_prepare
