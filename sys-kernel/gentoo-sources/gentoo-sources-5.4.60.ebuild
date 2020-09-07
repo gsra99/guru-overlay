@@ -17,6 +17,7 @@ IUSE="experimental"
 DESCRIPTION="Full sources including the Gentoo patchset for the ${KV_MAJOR}.${KV_MINOR} kernel tree"
 SRC_URI="${KERNEL_URI} ${GENPATCHES_URI} ${ARCH_URI}"
 
+UNIPATCH_LIST="${FILESDIR}/10001-snd-usb-audio.patch"
 UNIPATCH_STRICTORDER="${FILESDIR}/10001-snd-usb-audio.patch"
 
 src_prepare() {
