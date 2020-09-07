@@ -21,6 +21,7 @@ UNIPATCH_STRICTORDER="${FILESDIR}/10001-snd-usb-audio.patch"
 
 src_prepare() {
 	kernel-2_src_prepare
+	unipatch
 }
 
 pkg_postinst() {
