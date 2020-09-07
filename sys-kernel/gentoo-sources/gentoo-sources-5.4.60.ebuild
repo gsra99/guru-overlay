@@ -24,6 +24,7 @@ UNIPATCH_LIST="
 
 src_prepare() {
 	kernel-2_src_prepare
+	default
 	unipatch
 }
 
