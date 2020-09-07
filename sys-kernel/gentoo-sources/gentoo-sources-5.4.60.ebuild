@@ -21,7 +21,6 @@ UNIPATCH_LIST="${FILESDIR}/0001-snd-usb-audio.patch"
 
 src_prepare() {
 	kernel-2_src_prepare
-	unipatch
 }
 
 pkg_postinst() {
