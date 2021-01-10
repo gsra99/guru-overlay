@@ -151,8 +151,8 @@ src_prepare() {
 	default
 
 	# Skip test that cannot work with sandbox, bug #501846
-	sed -i -e '/lock-autospawn-test /d' src/Makefile.am || die
-	sed -i -e 's/lock-autospawn-test$(EXEEXT) //' src/Makefile.in || die
+	# sed -i -e '/lock-autospawn-test /d' src/Makefile.am || die
+	# sed -i -e 's/lock-autospawn-test$(EXEEXT) //' src/Makefile.in || die
 
 	eautoreconf
 }
