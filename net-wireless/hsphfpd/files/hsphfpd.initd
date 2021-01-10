@@ -1,0 +1,29 @@
+#!/sbin/openrc-run
+# Copyright 2020 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+name="hsphfpd daemon"
+description="hsphfpd daemon"
+command=/usr/bin/hsphfpd.pl
+command_args="${hsphfpd_args}"
+pidfile=/var/run/hsphfpd
+log=/run/hsphfpd.log
+
+depend() {
+    after dbus bluetooth
+}
+
+start() {
+  ebegin "Starting hsphfpd"
+  start-stop-daemon --start --background --exec "${command}" \
+    --make-pidfile --pidfile "${pidfile}" --name hsphfpd \
+    --stdout "${log}" --stderr "${log}"
+  eend $?
+}
+
+stop() {
+  ebegin "Stopping hsphfpd"
+  start-stop-daemon --stop --exec "${command}" \
+    --pidfile "${pidfile}" --name hsphfpd
+  eend $?
+}

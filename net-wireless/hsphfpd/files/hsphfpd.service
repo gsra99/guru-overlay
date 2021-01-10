@@ -1,0 +1,16 @@
+[Unit]
+Description=Hsphsfd service
+After=bluetooth.target
+
+[Service]
+Type=dbus
+BusName=org.hsphfpd
+ExecStart=/usr/bin/hsphfpd.pl
+StandardOutput=file:/run/hsphfpd.log
+StandardError=file:/run/hsphfpd.log
+Restart=always
+LimitNPROC=1
+
+[Install]
+WantedBy=bluetooth.target
+
