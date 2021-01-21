@@ -10,7 +10,7 @@ inherit mate git-r3
 if [[ ${PV} != 9999 ]]; then
 	KEYWORDS="~amd64 ~arm ~arm64 ~x86"
 	SRC_URI=""
-	EGIT_REPO="https://github.com/mate-desktop/marco.git"
+	EGIT_REPO_URI="https://github.com/mate-desktop/marco.git"
 	EGIT_BRANCH="1.24"
 	EGIT_COMMIT="634057c2feed37d466d0740df32ff38fb2f5cfe1"
 fi
