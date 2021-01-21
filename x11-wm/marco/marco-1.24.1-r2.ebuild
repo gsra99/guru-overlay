@@ -64,8 +64,26 @@ DEPEND="${COMMON_DEPEND}
 "
 
 src_prepare() {
+	debug-print-function ${FUNCNAME} "$@"
+
+	local force_autoreconf=${MATE_FORCE_AUTORECONF}
 	force_autoreconf="true"
-	mate_src_prepare
+
+	gen_chksum() {
+		find '(' -name 'Makefile.am' \
+			-o -name 'configure.ac' \
+			-o -name 'configure.in' ')' \
+			-exec cksum {} + | sort -k2
+	}
+
+	local chksum=$(gen_chksum)
+
+	gnome2_src_prepare "$@"
+
+	if [[ "${force_autoreconf}" == "true" ]] || [[ ${chksum} != $(gen_chksum) ]]; then
+		want_mate_doc && ematedocize
+		AT_NOELIBTOOLIZE="yes" eautoreconf # gnome2_src_prepare calls elibtoolize
+	fi
 }
 
 src_configure() {
