@@ -63,6 +63,11 @@ DEPEND="${COMMON_DEPEND}
 	xinerama? ( x11-base/xorg-proto )
 "
 
+src_prepare() {
+	force_autoreconf="true"
+	mate_src_prepare
+}
+
 src_configure() {
 	mate_src_configure \
 		--enable-compositor \
