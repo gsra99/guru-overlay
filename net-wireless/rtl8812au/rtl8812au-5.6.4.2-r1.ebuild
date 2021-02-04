@@ -34,17 +34,8 @@ S="${EGIT_CHECKOUT_DIR}"
 pkg_setup() {
 	linux-info_pkg_setup
 	kernel_is -ge 5 10 0 && die "Kernels 5.10.0 or higher are not supported"
-	MODULE_NAMES="8812au(net/wireless:${S}:${S})"
+	MODULE_NAMES="88XXau(net/wireless:${S}:${S})"
 	BUILD_TARGETS="clean all"
 	BUILD_PARAMS="KVER=${KV_FULL}"
 	linux-mod_pkg_setup
 }
-
-#src_compile() {
-#	set_arch_to_kernel
-#	KSRC="${KV_DIR}" KVER="${KV_FULL}" emake
-#}
-
-#src_install() {
-#	linux-mod_src_install
-#}
