@@ -6,7 +6,7 @@ inherit eutils linux-info linux-mod
 
 DESCRIPTION="Broadcom's IEEE 802.11a/b/g/n hybrid Linux device driver"
 HOMEPAGE="https://www.broadcom.com/support/802.11"
-SRC_URI="https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/bcmwl/${PV}+bdcom-0ubuntu7~20.04.1/bcmwl_${PV}+bdcom.orig.tar.gz"
+SRC_URI="https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/bcmwl/6.30.223.271+bdcom-0ubuntu7/bcmwl_6.30.223.271+bdcom.orig.tar.gz"
 
 LICENSE="Broadcom"
 KEYWORDS="-* ~amd64"
