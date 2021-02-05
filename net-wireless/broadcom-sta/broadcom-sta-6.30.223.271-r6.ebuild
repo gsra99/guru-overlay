@@ -71,6 +71,7 @@ pkg_setup() {
 }
 
 src_prepare() {
+	default
 	cd ${S}
 	mv Makefile src/Makefile
 	cd src
