@@ -70,6 +70,12 @@ pkg_setup() {
 	linux-mod_pkg_setup
 }
 
+src_prepare() {
+	cd ${S}
+	mv Makefile src/Makefile
+	cd src
+}
+
 src_install() {
 	linux-mod_src_install
 
