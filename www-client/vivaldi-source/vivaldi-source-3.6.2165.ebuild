@@ -16,8 +16,8 @@ HOMEPAGE="https://vivaldi.com/"
 PATCHSET="3"
 PATCHSET_NAME="chromium-88-patchset-${PATCHSET}"
 SRC_URI="https://vivaldi.com/source/${PN}_${PV}.tar.xz
-	https://files.pythonhosted.org/packages/ed/7b/bbf89ca71e722b7f9464ebffe4b5ee20a9e5c9a555a56e2d3914bb9119a6/setuptools-44.1.0.zip
-	https://github.com/stha09/chromium-patches/releases/download/${PATCHSET_NAME}/${PATCHSET_NAME}.tar.xz"
+	https://files.pythonhosted.org/packages/ed/7b/bbf89ca71e722b7f9464ebffe4b5ee20a9e5c9a555a56e2d3914bb9119a6/setuptools-44.1.0.zip"
+#	https://github.com/stha09/chromium-patches/releases/download/${PATCHSET_NAME}/${PATCHSET_NAME}.tar.xz"
 S=${WORKDIR}/${PN}
 
 LICENSE="BSD"
@@ -230,12 +230,12 @@ src_prepare() {
 	# Calling this here supports resumption via FEATURES=keepwork
 	python_setup
 
-	local PATCHES=(
-		"${WORKDIR}/patches"
-		"${FILESDIR}/chromium-89-webcodecs-deps.patch"
-		"${FILESDIR}/chromium-89-EnumTable-crash.patch"
-		"${FILESDIR}/chromium-shim_headers.patch"
-	)
+#	local PATCHES=(
+#		"${WORKDIR}/patches"
+#		"${FILESDIR}/chromium-89-webcodecs-deps.patch"
+#		"${FILESDIR}/chromium-89-EnumTable-crash.patch"
+#		"${FILESDIR}/chromium-shim_headers.patch"
+#	)
 
 	default
 
