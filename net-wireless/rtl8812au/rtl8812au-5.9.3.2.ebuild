@@ -9,7 +9,7 @@ DESCRIPTION=""
 HOMEPAGE=""
 
 MY_PN="rtl8812AU"
-EGIT_REPO_URI="https://github.com/aircrack-ng/rtl8812au.git"
+EGIT_REPO_URI="https://github.com/gordboy/rtl8812au-5.9.3.2.git"
 #EGIT_BRANCH="v${PV}"
 EGIT_COMMIT="d1bf6dfdef9a14ee80768a80df1852312cee7925"
 EGIT_CHECKOUT_DIR="${WORKDIR}/${MY_PN}-${PV}"
