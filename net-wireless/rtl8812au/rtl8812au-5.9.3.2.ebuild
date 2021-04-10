@@ -33,7 +33,7 @@ S="${EGIT_CHECKOUT_DIR}"
 
 pkg_setup() {
 	linux-info_pkg_setup
-	kernel_is -ge 5 10 0 && die "Kernels 5.10.0 or higher are not supported"
+	kernel_is -ge 5 12 0 && die "Kernels 5.10.0 or higher are not supported"
 	MODULE_NAMES="88XXau(net/wireless:${S}:${S})"
 	BUILD_TARGETS="clean all"
 	BUILD_PARAMS="KVER=${KV_FULL}"
