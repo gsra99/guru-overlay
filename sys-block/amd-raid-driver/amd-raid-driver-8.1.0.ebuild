@@ -17,7 +17,7 @@ IUSE=""
 
 DEPEND=""
 RDEPEND="${DEPEND}"
-S="${WORKDIR}/${MY_PV}"
+S="${WORKDIR}/recipe"
 
 pkg_setup() {
 	linux-info_pkg_setup
