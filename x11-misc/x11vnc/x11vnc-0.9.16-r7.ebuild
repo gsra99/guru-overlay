@@ -7,7 +7,7 @@ inherit autotools git-r3
 
 DESCRIPTION="VNC server for real X displays"
 HOMEPAGE="https://libvnc.github.io/"
-EGIT_URI="https://github.com/LibVNC/x11vnc.git"
+EGIT_REPO_URI="https://github.com/LibVNC/x11vnc.git"
 EGIT_COMMIT="f07df92816ef10b7382a542125955df7f4156a5c"
 
 LICENSE="GPL-2+-with-openssl-exception"
