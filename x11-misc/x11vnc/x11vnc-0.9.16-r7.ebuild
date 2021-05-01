@@ -3,11 +3,12 @@
 
 EAPI=7
 
-inherit autotools
+inherit autotools git-r3
 
 DESCRIPTION="VNC server for real X displays"
 HOMEPAGE="https://libvnc.github.io/"
-SRC_URI="https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/${PN}/${PV}-7/${PN}_${PV}.orig.tar.gz -> ${P}-7.tar.gz"
+EGIT_URI="https://github.com/LibVNC/x11vnc.git"
+EGIT_COMMIT="f07df92816ef10b7382a542125955df7f4156a5c"
 
 LICENSE="GPL-2+-with-openssl-exception"
 SLOT="0"
@@ -37,13 +38,13 @@ RDEPEND="${COMMON_DEPEND}
 	dev-lang/tk:0
 "
 
-PATCHES=(
-	"${FILESDIR}"/${P}-crypto.patch # https://github.com/LibVNC/x11vnc/issues/86
-	"${FILESDIR}"/${P}-anonymous-ssl.patch # https://github.com/LibVNC/x11vnc/pull/85
-	"${FILESDIR}"/${P}-libressl.patch
-	"${FILESDIR}"/${P}-fno-common.patch
-	"${FILESDIR}"/${P}-CVE-2020-29074.patch
-)
+#PATCHES=(
+#	"${FILESDIR}"/${P}-crypto.patch # https://github.com/LibVNC/x11vnc/issues/86
+#	"${FILESDIR}"/${P}-anonymous-ssl.patch # https://github.com/LibVNC/x11vnc/pull/85
+#	"${FILESDIR}"/${P}-libressl.patch
+#	"${FILESDIR}"/${P}-fno-common.patch
+#	"${FILESDIR}"/${P}-CVE-2020-29074.patch
+#)
 
 src_prepare() {
 	default
