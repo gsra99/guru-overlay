@@ -37,13 +37,13 @@ RDEPEND="${COMMON_DEPEND}
 	dev-lang/tk:0
 "
 
-#PATCHES=(
-#	"${FILESDIR}"/${P}-crypto.patch # https://github.com/LibVNC/x11vnc/issues/86
-#	"${FILESDIR}"/${P}-anonymous-ssl.patch # https://github.com/LibVNC/x11vnc/pull/85
-#	"${FILESDIR}"/${P}-libressl.patch
-#	"${FILESDIR}"/${P}-fno-common.patch
-#	"${FILESDIR}"/${P}-CVE-2020-29074.patch
-#)
+PATCHES=(
+	"${FILESDIR}"/${P}-crypto.patch # https://github.com/LibVNC/x11vnc/issues/86
+	"${FILESDIR}"/${P}-anonymous-ssl.patch # https://github.com/LibVNC/x11vnc/pull/85
+	"${FILESDIR}"/${P}-libressl.patch
+	"${FILESDIR}"/${P}-fno-common.patch
+	"${FILESDIR}"/${P}-CVE-2020-29074.patch
+)
 
 src_prepare() {
 	default
@@ -54,9 +54,9 @@ src_configure() {
 	# --without-v4l because of missing video4linux 2.x support wrt #389079
 	local myconf=(
 		--without-v4l
-		--without-xkeyboard
-		--without-fbpm
-		--without-dpms
+#		--without-xkeyboard
+#		--without-fbpm
+#		--without-dpms
 		$(use_with crypt)
 		$(use_with fbcon fbdev)
 		$(use_with ssl)
