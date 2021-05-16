@@ -1,7 +1,7 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 inherit linux-info udev vcs-snapshot
 
@@ -78,7 +78,7 @@ src_install() {
 		dodir /usr/share/cups/model/samsung
 		insinto /usr/share/cups/model/samsung
 		doins noarch/share/ppd/*.ppd
-		gzip -9 "${ED}"usr/share/cups/model/samsung/*.ppd || die
+		gzip -9 "${ED}"/usr/share/cups/model/samsung/*.ppd || die
 
 		dodir /usr/share/cups/profiles/samsung
 		insinto /usr/share/cups/profiles/samsung
