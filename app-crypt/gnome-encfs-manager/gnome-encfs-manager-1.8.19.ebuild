@@ -1,13 +1,14 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 inherit autotools gnome2 vala
 
+MY_PV=$(ver_cut 1-2)
 DESCRIPTION="The Gnome Encfs Manager (or short GEncfsM) is an easy to use manager and mounter for encfs stashes"
 HOMEPAGE="https://moritzmolch.com/apps/gencfsm/"
-SRC_URI="https://launchpad.net/gencfsm/trunk/1.8/+download/${PN}_${PV}.tar.xz"
+SRC_URI="https://launchpad.net/gencfsm/trunk/${MY_PV}/+download/${PN}_${PV}.tar.xz"
 
 LICENSE="GPL-2"
 SLOT="0"
