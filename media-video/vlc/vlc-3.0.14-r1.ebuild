@@ -237,7 +237,7 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-3.0.11.1-configure_lua_version.patch
 	"${FILESDIR}"/${PN}-3.0.11.1-srt-1.4.2.patch # bug 758062
 	"${FILESDIR}"/${PN}-3.0.13-srt-1.3.0.patch
-	"${FILESDIR}"/${PN}-vlc-3.0.4-fullscreen-bug.patch
+	"${FILESDIR}"/${PN}-3.0.4-fullscreen-bug.patch
 )
 
 DOCS=( AUTHORS THANKS NEWS README doc/fortunes.txt )
