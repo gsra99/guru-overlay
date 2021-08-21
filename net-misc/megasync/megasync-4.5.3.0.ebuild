@@ -58,11 +58,11 @@ DEPEND="
 	dev-qt/qtimageformats:5
 	dev-qt/qtsvg:5
 	dev-qt/qtx11extras:5
+	<media-video/ffmpeg-4.4-r1
 "
 BDEPEND="
 	dev-lang/swig
 	dev-qt/linguist-tools
-	<media-video/ffmpeg-4.4-r1
 "
 
 DOCS=( CREDITS.md README.md )
