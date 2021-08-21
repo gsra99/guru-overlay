@@ -62,6 +62,7 @@ DEPEND="
 BDEPEND="
 	dev-lang/swig
 	dev-qt/linguist-tools
+	<media-video/ffmpeg-4.4-r1
 "
 
 DOCS=( CREDITS.md README.md )
