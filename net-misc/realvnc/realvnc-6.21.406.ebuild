@@ -16,6 +16,8 @@ RESTRICT="mirror"
 
 inherit rpm eutils xdg-utils
 
+RDEPEND="virtual/libcrypt:="
+
 S="${WORKDIR}"
 #REVISION=42122
 
