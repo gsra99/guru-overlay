@@ -29,7 +29,7 @@ fi
 
 LICENSE="MEGA"
 SLOT="0"
-IUSE="+cryptopp +curl +sqlite +zlib dolphin examples freeimage java nautilus php python readline threads thunar"
+IUSE="+cryptopp +curl +sqlite +zlib dolphin examples +freeimage java nautilus php python readline threads thunar"
 
 RDEPEND="
 	app-arch/xz-utils
