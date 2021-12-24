@@ -118,7 +118,8 @@ src_configure() {
 		$(use_enable php) \
 		$(use_enable python) \
 		"--enable-chat" \
-		"--enable-gcc-hardening"
+		"--enable-gcc-hardening" \
+		"--with-java-include-dir=/usr/lib/jvm/$(java-config -f)/include"
 	cd "${S}/src"
 
 	local myeqmakeargs=(
