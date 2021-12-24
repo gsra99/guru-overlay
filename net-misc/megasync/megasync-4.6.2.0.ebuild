@@ -17,10 +17,10 @@ if [[ ${PV} == 9999 ]];then
 	EGIT_BRANCH="master"
 	EGIT_SUBMODULES=( '*' )
 else
-	MEGA_SDK="v3.9.6b" # release of src/MEGASync/mega submodule
+	MEGA_SDK="3.9.6b" # release of src/MEGASync/mega submodule
 	SRC_URI="
 		https://github.com/meganz/MEGAsync/archive/v${PV}_CentOS7.tar.gz -> ${P}.tar.gz
-		https://github.com/meganz/sdk/archive/${MEGA_SDK}.tar.gz -> ${PN}-sdk-${PV}.tar.gz
+		https://github.com/meganz/sdk/archive/v${MEGA_SDK}.tar.gz -> ${PN}-sdk-${PV}.tar.gz
 	"
 	KEYWORDS="~amd64 ~x86"
 	# 4.6.2.0 has no dedicated linux tag
