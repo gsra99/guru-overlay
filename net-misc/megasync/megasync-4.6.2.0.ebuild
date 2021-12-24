@@ -83,9 +83,9 @@ src_prepare() {
 		eapply -Np1 "${FILESDIR}/${P}_pdfium.patch"
 		cd "${S}"
 	fi
-	if has_version ">=media-video/ffmpeg-4.4" && [ -e "${FILESDIR}/${P}_ffmpeg.patch" ]; then
-		eapply "${FILESDIR}/${P}_ffmpeg.patch"
-	fi
+#	if has_version ">=media-video/ffmpeg-4.4" && [ -e "${FILESDIR}/${P}_ffmpeg.patch" ]; then
+#		eapply "${FILESDIR}/${P}_ffmpeg.patch"
+#	fi
 	if use dolphin; then
 		# use the kde5 CMakeLists instead of the kde 4 version
 		mv src/MEGAShellExtDolphin/CMakeLists_kde5.txt src/MEGAShellExtDolphin/CMakeLists.txt || die
