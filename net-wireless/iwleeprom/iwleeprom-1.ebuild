@@ -20,7 +20,7 @@ RDEPEND="${DEPEND}"
 S="${WORKDIR}/${PN}/branches/atheros"
 
 src_install () {
-	doman ${S}/${PN}.8.gz
+#	doman ${S}/${PN}.8.gz
 	dosbin ${S}/${PN}
 	fperms 4755 /usr/sbin/iwleeprom
 }
