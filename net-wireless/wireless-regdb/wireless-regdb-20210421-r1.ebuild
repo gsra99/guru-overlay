@@ -17,7 +17,7 @@ DEPEND="dev-python/m2crypto"
 
 src_prepare() {
 	cd ${S}
-	rm sforshee.key.pub.pem
+	rm sforshee.*
 	eapply_user
 }
 
