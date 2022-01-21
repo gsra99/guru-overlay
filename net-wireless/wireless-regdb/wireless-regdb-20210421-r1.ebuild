@@ -15,28 +15,29 @@ KEYWORDS="~alpha amd64 arm arm64 ~ia64 ~mips ppc ppc64 ~riscv sparc x86"
 
 DEPEND="dev-python/m2crypto"
 
-#src_compile() {
-#	einfo "Recompiling regulatory.bin from db.txt would break CRDA verify. Installing unmodified binary version."
-#}
+src_prepare() {
+	cd ${S}
+	rm sforshee.key.pub.pem
+}
 
-#src_install() {
+src_install() {
 	# This file is not ABI-specific, and crda itself always hardcodes
 	# this path.  So install into a common location for all ABIs to use.
-#	insinto /usr/lib/crda
-#	doins regulatory.bin
+	insinto /usr/lib/crda
+	doins regulatory.bin
 
-#	insinto /etc/wireless-regdb/pubkeys
-#	doins sforshee.key.pub.pem
+	insinto /etc/wireless-regdb/pubkeys
+	doins *.key.pub.pem
 
 	# Linux 4.15 now complains if the firmware loader
 	# can't find these files #643520
-#	insinto /lib/firmware
-#	doins regulatory.db
-#	doins regulatory.db.p7s
+	insinto /lib/firmware
+	doins regulatory.db
+	doins regulatory.db.p7s
 
-#	doman regulatory.bin.5
-#	dodoc README db.txt
-#}
+	doman regulatory.bin.5
+	dodoc README db.txt
+}
 
 post_src_install() {
 	einfo "Recompile CRDA (net-wireless/crds) as verification will fail otherwise."
