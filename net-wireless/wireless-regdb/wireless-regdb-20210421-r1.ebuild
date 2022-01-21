@@ -43,6 +43,8 @@ src_install() {
 	dodoc README db.txt
 }
 
-post_src_install() {
-	einfo "Recompile CRDA (net-wireless/crds) as verification will fail otherwise."
+post_pkginst() {
+	ewarn "Please run:"
+	ewarn "emerge -1 net-wireless/crda"
+	ewarn "As CRDA verify will be broken."
 }
