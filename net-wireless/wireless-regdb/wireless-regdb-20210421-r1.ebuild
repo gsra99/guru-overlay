@@ -37,3 +37,7 @@ DEPEND="dev-python/m2crypto"
 #	doman regulatory.bin.5
 #	dodoc README db.txt
 #}
+
+post_src_install() {
+	einfo "Recompile CRDA (net-wireless/crds) as verification will fail otherwise."
+}
