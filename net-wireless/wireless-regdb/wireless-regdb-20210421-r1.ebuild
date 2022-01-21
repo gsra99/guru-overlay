@@ -30,6 +30,9 @@ src_install() {
 	insinto /etc/wireless-regdb/pubkeys
 	doins *.key.pub.pem
 
+	insinto /etc/wireless-regdb/certs
+	doins *.x509.pem
+
 	# Linux 4.15 now complains if the firmware loader
 	# can't find these files #643520
 	insinto /lib/firmware
