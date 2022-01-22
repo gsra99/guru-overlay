@@ -43,7 +43,7 @@ src_install() {
 	dodoc README db.txt
 }
 
-post_pkginst() {
+pkg_postinst() {
 	ewarn "Please run:"
 	ewarn "emerge -1 net-wireless/crda"
 	ewarn "As CRDA verify will be broken."
