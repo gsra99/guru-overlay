@@ -47,6 +47,8 @@ src_install() {
 
 	insinto /etc/wireless-regdb/certs
 	doins *.x509.pem
+
+	insinto /lib/firmware/certs
 	doins *.hex
 
 	# Linux 4.15 now complains if the firmware loader
