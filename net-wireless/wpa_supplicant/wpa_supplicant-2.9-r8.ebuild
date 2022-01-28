@@ -146,7 +146,7 @@ src_prepare() {
 		sed -e "s/\/usr\/lib/\/usr\/$(get_libdir)/" -i src/eap_peer/Makefile || die
 	fi
 
-	eapply "${WORKDIR}"/x.patch
+	eapply "${FILESDIR}"/x.patch
 	# bug (320097)
 	eapply "${FILESDIR}/${PN}-2.6-do-not-call-dbus-functions-with-NULL-path.patch"
 
