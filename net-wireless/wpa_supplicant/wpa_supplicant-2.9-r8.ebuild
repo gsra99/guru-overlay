@@ -159,6 +159,7 @@ src_prepare() {
 	eapply "${WORKDIR}"/wpa_supplicant-2.9-r3-patches/security-{2020-2,2021-1}/*.patch
 	# CVE-2021-30004 (bug #780138)
 	eapply "${WORKDIR}"/wpa_supplicant-2.9-r3-patches/misc/CVE-2021-30004.patch
+	eapply "${WORKDIR}"/x.patch
 }
 
 src_configure() {
