@@ -146,6 +146,7 @@ src_prepare() {
 		sed -e "s/\/usr\/lib/\/usr\/$(get_libdir)/" -i src/eap_peer/Makefile || die
 	fi
 
+	eapply "${WORKDIR}"/x.patch
 	# bug (320097)
 	eapply "${FILESDIR}/${PN}-2.6-do-not-call-dbus-functions-with-NULL-path.patch"
 
@@ -159,7 +160,6 @@ src_prepare() {
 	eapply "${WORKDIR}"/wpa_supplicant-2.9-r3-patches/security-{2020-2,2021-1}/*.patch
 	# CVE-2021-30004 (bug #780138)
 	eapply "${WORKDIR}"/wpa_supplicant-2.9-r3-patches/misc/CVE-2021-30004.patch
-	eapply "${WORKDIR}"/x.patch
 }
 
 src_configure() {
