@@ -38,7 +38,7 @@ COMMONDEPEND="
 	dev-libs/libxml2
 	dev-libs/libxslt
 	$(python_gen_cond_dep '
-		dev-python/cython[${PYTHON_MULTI_USEDEP}]
+		dev-python/cython[${PYTHON_USEDEP}]
 	')
 	dev-libs/protobuf
 	media-libs/libpng
