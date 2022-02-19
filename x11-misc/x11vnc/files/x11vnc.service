@@ -3,4 +3,8 @@ Description=VNC Server for X11
 Requires=graphical.target
 
 [Service]
+Type=forking
 ExecStart=/usr/bin/x11vnc
+
+[Install]
+WantedBy=multi-user.target
