@@ -20,12 +20,10 @@ KEYWORDS="~amd64 ~x86"
 DEPEND="
 	virtual/udev
 	gnustep-base/gnustep-base
-	gnustep-base/gnustep-corebase
 	gnustep-base/gnustep-gui"
 RDEPEND="
 	virtual/udev
 	gnustep-base/gnustep-base
-	gnustep-base/gnustep-corebase
 	gnustep-base/gnustep-gui
 	dev-libs/libkqueue
 	dev-libs/libdispatch
