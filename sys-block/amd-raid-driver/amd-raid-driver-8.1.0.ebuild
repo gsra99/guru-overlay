@@ -7,7 +7,7 @@ inherit linux-info linux-mod eutils
 
 DESCRIPTION=""
 HOMEPAGE=""
-MY_PV="${PV}-0~202012061007-pkg28~ubuntu21.04.1"
+MY_PV="${PV}-0~202112171601-pkg29~ubuntu22.04.1"
 SRC_URI="https://launchpad.net/~thopiekar/+archive/ubuntu/rcraid/+sourcefiles/rcraid/${MY_PV}/rcraid_${MY_PV}.tar.xz"
 
 LICENSE=""
@@ -21,7 +21,7 @@ S="${WORKDIR}/recipe"
 
 pkg_setup() {
 	linux-info_pkg_setup
-	kernel_is -ge 5 12 0 && die "Kernels 5.12.0 or higher are not supported"
+	kernel_is -ge 5 16 0 && die "Kernels 5.16.0 or higher are not supported"
 	MODULE_NAMES="rcraid(misc:${S}:${S}/src)"
 	BUILD_TARGETS="clean all"
 	BUILD_PARAMS="-C src KVERS=${KV_FULL}"
