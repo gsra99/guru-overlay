@@ -1,5 +1,5 @@
 
-EAPI="2"
+EAPI="7"
 
 DESCRIPTION="Common files for Canon printers"
 HOMEPAGE="http://www.canon-europe.com/"
@@ -14,11 +14,14 @@ RDEPEND=""
 
 DEPEND="app-arch/rpm2targz"
 
-if [[ "$(uname -m)" = "x86_64" ]]; then
-	S="${WORKDIR}/cndrvcups-common-${PV}-1.x86_64"
-else
-	S="${WORKDIR}/cndrvcups-common-${PV}-1.i386"
-fi
+x86?	S="${WORKDIR}/cndrvcups-common-${PV}-1.i386
+amd64?	S="${WORKDIR}/cndrvcups-common-${PV}-1.x86_64
+
+#if [[ "$(uname -m)" = "x86_64" ]]; then
+#	S="${WORKDIR}/cndrvcups-common-${PV}-1.x86_64"
+#else
+#	S="${WORKDIR}/cndrvcups-common-${PV}-1.i386"
+#fi
 
 src_unpack()
 {
