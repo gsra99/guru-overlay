@@ -1,6 +1,8 @@
 
 EAPI="7"
 
+inherit multilib
+
 DESCRIPTION="Driver for Canon printers"
 HOMEPAGE="http://www.canon-europe.com/"
 SRC_URI="http://gdlp01.c-wss.com/gds/6/0100004596/05/linux-capt-drv-v271-uken.tar.gz"
@@ -11,18 +13,12 @@ KEYWORDS="~x86 ~amd64"
 IUSE=""
 
 RDEPEND="=net-print/cndrvcups-common-bin-3.21
-	 amd64? (
-		app-emulation/emul-linux-x86-baselibs
-		app-emulation/emul-linux-x86-popt
-         )
-	 !amd64? (
-		 dev-libs/popt
-                 dev-libs/libxml2
-	 )
-	 net-print/cups
-         net-libs/gnutls
-         sys-libs/zlib
-         x11-libs/pangox-compat"
+	dev-libs/popt
+        dev-libs/libxml2
+	net-print/cups
+        net-libs/gnutls
+        sys-libs/zlib
+        x11-libs/pangox-compat"
 
 DEPEND="app-arch/rpm2targz"
 
