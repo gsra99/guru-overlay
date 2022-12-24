@@ -10,7 +10,7 @@ SRC_URI="http://gdlp01.c-wss.com/gds/6/0100004596/05/linux-capt-drv-v271-uken.ta
 LICENSE="Canon-EULA"
 SLOT="0"
 KEYWORDS="~x86 ~amd64"
-IUSE=""
+IUSE="systemd"
 
 RDEPEND="=net-print/cndrvcups-common-bin-3.21
 	dev-libs/popt[${MULTILIB_USEDEP}]
@@ -50,6 +50,14 @@ src_install() {
 		dodir /usr/libexec/
 		mv "${D}/usr/lib"/cups "${D}/usr/libexec"
 	        cp -r "${S}/usr/local/bin" "${S}/usr/local/lib" "${S}/usr/local/share" -t "${D}/usr"
+	fi
+
+	# Install startupscripts
+	if ! use systemd; then
+		newinitd "${FILESDIR}/cndrvcups-capt-init.d" ccpd
+	else
+		insinto /lib/systemd/system
+		doins "${FILESDIR}"/ccpd.service
 	fi
 }
 
