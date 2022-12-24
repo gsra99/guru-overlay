@@ -17,10 +17,10 @@ DEPEND="app-arch/rpm2targz"
 src_unpack() {
 	unpack ${A}
 	if [[ "$(uname -m)" = "x86_64" ]]; then
-		S="${WORKDIR}/cndrvcups-capt-${PV}-1.x86_64"
+		S="${WORKDIR}/cndrvcups-common-${PV}-1.x86_64"
 		rpmunpack "${WORKDIR}/linux-capt-drv-v271-uken/64-bit_Driver/RPM/cndrvcups-common-${PV}-1.x86_64.rpm"
 	else
-		S="${WORKDIR}/cndrvcups-capt-${PV}-1.i386"
+		S="${WORKDIR}/cndrvcups-common-${PV}-1.i386"
 		rpmunpack "${WORKDIR}/linux-capt-drv-v271-uken/32-bit_Driver/RPM/cndrvcups-common-${PV}-1.i386.rpm"
 	fi
 }
