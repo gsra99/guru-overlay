@@ -54,11 +54,15 @@ src_install() {
 
 	# Install startupscripts
 	if ! use systemd; then
-		newinitd "${FILESDIR}/cndrvcups-capt-init.d" ccpd
+		newinitd "${FILESDIR}"/cndrvcups-capt-init.d ccpd
 	else
 		insinto /lib/systemd/system
 		doins "${FILESDIR}"/ccpd.service
 	fi
+
+	# Install udev rules
+	insinto /lib/udev/rules.d
+	doins "${FILESDIR}"/85-canon-capt.rules
 }
 
 pkg_postinst() {
