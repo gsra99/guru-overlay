@@ -1,7 +1,7 @@
 
 EAPI="7"
 
-inherit multilib
+inherit multilib-minimal
 
 DESCRIPTION="Driver for Canon printers"
 HOMEPAGE="http://www.canon-europe.com/"
@@ -13,8 +13,8 @@ KEYWORDS="~x86 ~amd64"
 IUSE=""
 
 RDEPEND="=net-print/cndrvcups-common-bin-3.21
-	dev-libs/popt
-        dev-libs/libxml2
+	dev-libs/popt[${MULTILIB_USEDEP}]
+        dev-libs/libxml2[${MULTILIB_USEDEP}]
 	net-print/cups
         net-libs/gnutls
         sys-libs/zlib
