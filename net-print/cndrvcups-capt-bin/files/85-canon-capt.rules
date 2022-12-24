@@ -1,0 +1,2 @@
+KERNEL=="lp*", SUBSYSTEMS=="usb", ACTION=="add", ATTRS{idVendor}=="04a9", RUN+="/bin/bash /etc/init.d/ccpd start"
+KERNEL=="lp*", SUBSYSTEMS=="usb", ACTION=="remove", RUN+="/bin/bash /etc/init.d/ccpd stop"
