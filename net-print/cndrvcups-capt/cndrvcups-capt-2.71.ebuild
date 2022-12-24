@@ -100,10 +100,10 @@ src_unpack() {
 
 
 src_prepare() {
+	epatch "${FILESDIR}/cndrvcups-capt-2.60-1.patch"
+	sed -i 's@#include <cups/cups.h>@#include <cups/cups.h>\n#include <cups/ppd.h>@' Src/cndrvcups-capt-2.71/statusui/src/ppapdata.c
 
-    sed -i 's@#include <cups/cups.h>@#include <cups/cups.h>\n#include <cups/ppd.h>@' Src/cndrvcups-capt-2.71/statusui/src/ppapdata.c
-
-	eapply_user
+	default
 
 	S=${WORKDIR}/${SOURCES_NAME}/Src/cndrvcups-capt-2.71
 }
