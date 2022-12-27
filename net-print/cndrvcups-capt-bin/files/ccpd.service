@@ -1,6 +1,11 @@
 [Unit]
-Description=Canon Advanced Printing Technology (CAPT) backend daemon
+Description=Canon CAPT daemon
 Requires=cups.service
+After=cups.service
 
 [Service]
-ExecStart=/usr/sbin/ccpd
+Type=forking
+ExecStart=/usr/bin/ccpd
+
+[Install]
+WantedBy=printer.target

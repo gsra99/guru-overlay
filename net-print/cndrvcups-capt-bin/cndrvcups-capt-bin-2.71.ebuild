@@ -52,17 +52,17 @@ src_install() {
 	        cp -r "${S}/usr/local/bin" "${S}/usr/local/lib" "${S}/usr/local/share" -t "${D}/usr"
 	fi
 
-	# Install startupscripts
+	# Install startupscripts and udev rules
 	if ! use systemd; then
 		newinitd "${FILESDIR}"/cndrvcups-capt-init.d ccpd
+		insinto /lib/udev/rules.d
+		doins "${FILESDIR}"/85-canon-capt-openrc.rules
 	else
 		insinto /lib/systemd/system
 		doins "${FILESDIR}"/ccpd.service
+		insinto /lib/udev/rules.d
+		doins "${FILESDIR}"/85-canon-capt-systemd.rules
 	fi
-
-	# Install udev rules
-	insinto /lib/udev/rules.d
-	doins "${FILESDIR}"/85-canon-capt.rules
 }
 
 pkg_postinst() {
