@@ -66,34 +66,22 @@ src_install() {
 }
 
 pkg_postinst() {
-
-	# create fifo file for comunication with printer
-	if [[ ! -d "${ROOT}"/var/ccpd ]]; then
-		mkdir -p "${ROOT}"/var/ccpd
-	fi
-
-	if [ ! -e "${ROOT}"/var/ccpd/fifo0  ]; then
-		mkfifo  -m 600 "${ROOT}"/var/ccpd/fifo0
-	fi
-
-	chown lp:lp "${ROOT}"/var/ccpd/fifo0 || die
-
 	einfo "To get your printer working you need to restart cupsd"
 	einfo
-	einfo "/etc/init.d/cupsd restart"
+	einfo "/etc/init.d/cupsd restart or systemctl restart cups"
 	einfo
 	einfo "Now you can add your printer with either the webinterface or lpadmin"
 	einfo
-	einfo "/usr/sbin/lpadmin -p LBP3050 -m CNCUPSLBP3050CAPTK.ppd -v ccp:/var/ccpd/fifo0 -E"
+	einfo "lpadmin -p LBP6200d -m CNCUPSLBP6200CAPTK.ppd -v ccp://localhost:59687 -E"
 	einfo
-	einfo "Replace 3050 with either on of the following printers:"
+	einfo "Replace 6200 with either on of the following printers:"
 	einfo "1120 1210 2900 3000 3050 3200 3210 3300 5000 LBP5050"
 	einfo "LBP5100 LBP5100 LBP6000\6018 LBP6020 LBP6200 LBP6300n"
 	einfo "LBP6300 LBP6310 LBP7010C\7018C LBP7200C LBP7210C LBP9100C"
 	einfo
 	einfo "Now you must register the printer in ccpd, if connected with usb"
 	einfo
-	einfo "/usr/sbin/ccpdadmin -p LBP3050 -o /dev/usb/lp0"
+	einfo "ccpdadmin -p LBP6200d -o /dev/usb/lp0"
 	einfo
 	einfo
 	einfo "If you plan to use device /dev/usb/lp0 You will need to un-blacklist module usblp"
@@ -105,11 +93,11 @@ pkg_postinst() {
 	einfo
 	einfo "Now you can go ahead and start the ccpd daemon"
 	einfo
-	einfo "/etc/init.d/ccpd start"
+	einfo "/etc/init.d/ccpd start or systemctl start ccpd"
 	einfo
 	einfo "For monitoring printer use Gui tool: "
 	einfo
-	einfo "/usr/sbin/captstatusui -p LBP3050"
+	einfo "captstatusui -p LBP6200"
 	einfo
 	einfo
 	einfo "For more details and toubleshooting please see:"
