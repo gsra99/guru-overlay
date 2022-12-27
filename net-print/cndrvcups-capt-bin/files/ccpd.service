@@ -5,7 +5,7 @@ After=cups.service
 
 [Service]
 Type=forking
-ExecStart=/usr/bin/ccpd
+ExecStart=/usr/sbin/ccpd
 
 [Install]
 WantedBy=printer.target
