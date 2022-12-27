@@ -53,7 +53,7 @@ src_install() {
 	fi
 
 	# Install startupscripts and udev rules
-	if ! use systemd; then
+	if ! use systemd ; then
 		newinitd "${FILESDIR}"/cndrvcups-capt-init.d ccpd
 		insinto /lib/udev/rules.d
 		doins "${FILESDIR}"/85-canon-capt-openrc.rules
