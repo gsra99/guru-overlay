@@ -1,0 +1,97 @@
+From ece3cfd784681661144d73a8a1ff0534dcfbd393 Mon Sep 17 00:00:00 2001
+From: Shiba <not@telling.you>
+Date: Sun, 14 Feb 2021 15:46:12 +0100
+Subject: [PATCH] Backport 340.108 changes
+
+---
+ src/XF86Config-parser/Generate.c   | 20 ++++++++++++++++++--
+ src/XF86Config-parser/xf86Parser.h |  1 +
+ src/gtk+-2.x/ctkdisplayconfig.c    |  7 +++++--
+ 3 files changed, 24 insertions(+), 4 deletions(-)
+
+diff --git a/src/XF86Config-parser/Generate.c b/src/XF86Config-parser/Generate.c
+index cdd7054..94e5ce8 100644
+--- a/src/XF86Config-parser/Generate.c
++++ b/src/XF86Config-parser/Generate.c
+@@ -1322,7 +1322,9 @@ static int get_xserver_information(const char *versionString,
+                                    int *isModular,
+                                    int *autoloadsGLX,
+                                    int *supportsExtensionSection,
+-                                   int *xineramaPlusCompositeWorks)
++                                   int *xineramaPlusCompositeWorks,
++                                   const char **compositeExtensionName)
++
+ {
+ #define XSERVER_VERSION_FORMAT_1 "X Window System Version"
+ #define XSERVER_VERSION_FORMAT_2 "X.Org X Server"
+@@ -1413,6 +1415,18 @@ static int get_xserver_information(const char *versionString,
+         *xineramaPlusCompositeWorks = TRUE;
+     }
+ 
++    /*
++     * With X.Org xserver version 1.20, the name of the composite
++     * extension was changed from "Composite" to "COMPOSITE". As of
++     * that release extension names are case-sensitive so we must 
++     * ensure the correct case is used.
++     */
++    if (major == 1 && minor >= 20) {
++        *compositeExtensionName = "COMPOSITE";
++    } else {
++        *compositeExtensionName = "Composite";
++    }
++
+     return TRUE;
+ 
+ } /* get_xserver_information() */
+@@ -1449,6 +1463,7 @@ void xconfigGetXServerInUse(GenerateOptions *gop)
+     gop->supports_extension_section = FALSE;
+     gop->autoloads_glx = FALSE;
+     gop->xinerama_plus_composite_works = FALSE;
++    gop->compositeExtensionName = NULL;
+ 
+     /* run `X -version` with a PATH that hopefully includes the X binary */
+ 
+@@ -1479,7 +1494,8 @@ void xconfigGetXServerInUse(GenerateOptions *gop)
+                                         &dummy, /* isModular */
+                                         &gop->autoloads_glx,
+                                         &gop->supports_extension_section,
+-                                        &gop->xinerama_plus_composite_works);
++                                        &gop->xinerama_plus_composite_works,
++                                        &gop->compositeExtensionName);
+ 
+         if (found) {
+             if (isXorg) {
+diff --git a/src/XF86Config-parser/xf86Parser.h b/src/XF86Config-parser/xf86Parser.h
+index 89c1569..131876e 100644
+--- a/src/XF86Config-parser/xf86Parser.h
++++ b/src/XF86Config-parser/xf86Parser.h
+@@ -625,6 +625,7 @@ typedef struct {
+     int supports_extension_section;
+     int autoloads_glx;
+     int xinerama_plus_composite_works;
++    const char *compositeExtensionName;
+ 
+ } GenerateOptions;
+ 
+diff --git a/src/gtk+-2.x/ctkdisplayconfig.c b/src/gtk+-2.x/ctkdisplayconfig.c
+index 4ecc105..6df1c98 100644
+--- a/src/gtk+-2.x/ctkdisplayconfig.c
++++ b/src/gtk+-2.x/ctkdisplayconfig.c
+@@ -8764,9 +8764,12 @@ static int generateXConfig(CtkDisplayConfig *ctk_object, XConfigPtr *pConfig)
+             if (!config->extensions) {
+                 config->extensions = nvalloc(sizeof(XConfigExtensionsRec));
+             }
+-            xconfigRemoveNamedOption(&(config->extensions->options), "Composite",
++            xconfigRemoveNamedOption(&(config->extensions->options), 
++                                     go.compositeExtensionName,
+                                      NULL);
+-            xconfigAddNewOption(&config->extensions->options, "Composite", "Disable");
++            xconfigAddNewOption(&config->extensions->options, 
++                                go.compositeExtensionName, 
++                                "Disable");
+             nvfree(composite_disabled_str);
+         }
+     }
+-- 
+2.26.2
+
