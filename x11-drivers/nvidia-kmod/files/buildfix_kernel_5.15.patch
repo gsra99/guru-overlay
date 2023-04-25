@@ -1,0 +1,15 @@
+diff --git a/kernel/nv-drm.c b/kernel/nv-drm.c
+index 430bf49..af8a097 100644
+--- a/kernel/nv-drm.c
++++ b/kernel/nv-drm.c
+@@ -686,7 +686,9 @@ RM_STATUS NV_API_CALL nv_alloc_os_descriptor_handle(
+ #if defined(NV_DRM_GEM_OBJECT_PUT_UNLOCKED_PRESENT)
+     drm_gem_object_put_unlocked(&nv_obj->base);
+ #else
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 9, 0)
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 15, 0)
++    drm_gem_object_put(&nv_obj->base);
++#elif LINUX_VERSION_CODE >= KERNEL_VERSION(5, 9, 0)
+     drm_gem_object_put_locked(&nv_obj->base);
+ #else
+     drm_gem_object_unreference_unlocked(&nv_obj->base);

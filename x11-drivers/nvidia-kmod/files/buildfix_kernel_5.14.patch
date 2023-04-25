@@ -1,0 +1,271 @@
+diff --git a/kernel/nv-drm.c b/kernel/nv-drm.c
+index 0ae8817..430bf49 100644
+--- a/kernel/nv-drm.c
++++ b/kernel/nv-drm.c
+@@ -57,8 +57,11 @@
+ #if defined(NV_DRM_GET_PCI_DEV_PRESENT)
+ #define nv_drm_get_pci_dev drm_get_pci_dev
+ #else
++#if LINUX_VERSION_CODE < KERNEL_VERSION(5, 14, 0)
+ #include <drm/drm_agpsupport.h>
+-
++#else
++#include <drm/drm_legacy.h>
++#endif
+ #include "linux/dma-buf.h"
+ 
+ struct nv_drm_agp_head {
+@@ -82,6 +85,11 @@ struct nv_drm_agp_mem {
+     struct list_head head;
+ };
+ 
++struct nv_drm_extra_priv_data {
++    struct pci_dev *pdev;
++    struct drm_agp_head *agp;
++};
++
+ /*
+  * Code from drm_agp_init/nv_drm_{free,unbind}_agp
+  * Extracted from commit: 5b8b9d0c6d0e0f1993c6c56deaf9646942c49d94, file: drivers/gpu/drm/drm_agpsupport.c
+@@ -89,13 +97,24 @@ struct nv_drm_agp_mem {
+ struct drm_agp_head *nv_drm_agp_init(struct drm_device *dev)
+ {
+     struct nv_drm_agp_head *head = NULL;
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 14, 0)
++    struct nv_drm_extra_priv_data *extra = dev->dev_private;
++#endif
+ 
+     head = kzalloc(sizeof(*head), GFP_KERNEL);
+     if (!head)
+         return NULL;
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 14, 0)
++    head->bridge = agp_find_bridge(extra->pdev);
++#else
+     head->bridge = agp_find_bridge(dev->pdev);
++#endif
+     if (!head->bridge) {
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 14, 0)
++        head->bridge = agp_backend_acquire(extra->pdev);
++#else
+         head->bridge = agp_backend_acquire(dev->pdev);
++#endif
+         if (!head->bridge) {
+             kfree(head);
+             return NULL;
+@@ -133,48 +152,109 @@ int nv_drm_unbind_agp(struct agp_memory *handle)
+ static void nv_drm_pci_agp_init(struct drm_device *dev)
+ {
+     if (drm_core_check_feature(dev, DRIVER_USE_AGP)) {
+-        if (pci_find_capability(dev->pdev, PCI_CAP_ID_AGP))
+-            dev->agp = nv_drm_agp_init(dev);
+-        if (dev->agp) {
+-            dev->agp->agp_mtrr = arch_phys_wc_add(
+-                dev->agp->agp_info.aper_base,
+-                dev->agp->agp_info.aper_size *
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 14, 0)
++        struct nv_drm_extra_priv_data *extra = dev->dev_private;
++
++        if (pci_find_capability(extra->pdev, PCI_CAP_ID_AGP))
++            extra->agp = nv_drm_agp_init(dev);
++        if (extra->agp) {
++            extra->agp->agp_mtrr = arch_phys_wc_add(
++                extra->agp->agp_info.aper_base,
++                extra->agp->agp_info.aper_size *
++#else
++        struct nv_drm_extra_priv_data *extra = dev->dev_private;
++
++        if (pci_find_capability(extra->pdev, PCI_CAP_ID_AGP))
++            extra->agp = nv_drm_agp_init(dev);
++        if (extra->agp) {
++            extra->agp->agp_mtrr = arch_phys_wc_add(
++                extra->agp->agp_info.aper_base,
++                extra->agp->agp_info.aper_size *
++#endif
+                 1024 * 1024);
+         }
+     }
+ }
+ 
++#if LINUX_VERSION_CODE < KERNEL_VERSION(5, 14, 0)
++
++#else
++/* copied from v5.14.5 */
++int nv_drm_legacy_agp_release(struct drm_device *dev)
++{
++    struct nv_drm_extra_priv_data *extra = dev->dev_private;
++
++    if (!extra->agp || !extra->agp->acquired)
++        return -EINVAL;
++    agp_backend_release(extra->agp->bridge);
++    extra->agp->acquired = 0;
++    return 0;
++}
++#endif
++
+ void nv_drm_legacy_agp_clear(struct drm_device *dev)
+ {
+     struct nv_drm_agp_mem *entry, *tempe;
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 14, 0)
++    struct nv_drm_extra_priv_data *extra = dev->dev_private;
++#endif
+ 
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 14, 0)
++    if (!extra->agp)
++#else
+     if (!dev->agp)
++#endif
+         return;
+     if (!drm_core_check_feature(dev, DRIVER_LEGACY))
+         return;
+ 
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 14, 0)
++    list_for_each_entry_safe(entry, tempe, &extra->agp->memory, head) {
++#else
+     list_for_each_entry_safe(entry, tempe, &dev->agp->memory, head) {
++#endif
+         if (entry->bound)
+             nv_drm_unbind_agp(entry->memory);
+         nv_drm_free_agp(entry->memory, entry->pages);
+         kfree(entry);
+     }
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 14, 0)
++    INIT_LIST_HEAD(&extra->agp->memory);
++#else
+     INIT_LIST_HEAD(&dev->agp->memory);
++#endif
+ 
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 14, 0)
++    if (extra->agp->acquired)
++        nv_drm_legacy_agp_release(dev);
++    extra->agp->acquired = 0;
++    extra->agp->enabled = 0;
++#else
+     if (dev->agp->acquired)
+         drm_agp_release(dev);
+-
+     dev->agp->acquired = 0;
+     dev->agp->enabled = 0;
++#endif
+ }
+ 
+ void nv_drm_pci_agp_destroy(struct drm_device *dev)
+ {
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 14, 0)
++    struct nv_drm_extra_priv_data *extra = dev->dev_private;
++    if (extra->agp) {
++        arch_phys_wc_del(extra->agp->agp_mtrr);
++#else
+     if (dev->agp) {
+         arch_phys_wc_del(dev->agp->agp_mtrr);
++#endif
+         nv_drm_legacy_agp_clear(dev);
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 14, 0)
++        kfree(extra->agp);
++        extra->agp = NULL;
++#else
+         kfree(dev->agp);
+         dev->agp = NULL;
++#endif
+     }
+ }
+ 
+@@ -183,6 +263,9 @@ static int nv_drm_get_pci_dev(struct pci_dev *pdev,
+                struct drm_driver *driver)
+ {
+     struct drm_device *dev;
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 14, 0)
++    struct nv_drm_extra_priv_data *extra;
++#endif
+     int ret;
+ 
+     DRM_DEBUG("\n");
+@@ -191,11 +274,26 @@ static int nv_drm_get_pci_dev(struct pci_dev *pdev,
+     if (IS_ERR(dev))
+         return PTR_ERR(dev);
+ 
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 14, 0)
++    extra = kzalloc(sizeof(*extra), GFP_KERNEL);
++    if (IS_ERR(extra))
++        goto err_free;
++
++    extra->pdev = pdev;
++#endif
++
+     ret = pci_enable_device(pdev);
+     if (ret)
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 14, 0)
++        goto err_free2;
++
++    /* use the not used (i hope) dev_private to store deprecated/legacy pointers */
++    dev->dev_private = extra;
++#else
+         goto err_free;
+ 
+     dev->pdev = pdev;
++#endif
+ #ifdef __alpha__
+     dev->hose = pdev->sysdata;
+ #endif
+@@ -221,6 +319,10 @@ static int nv_drm_get_pci_dev(struct pci_dev *pdev,
+ err_agp:
+     nv_drm_pci_agp_destroy(dev);
+     pci_disable_device(pdev);
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 14, 0)
++err_free2:
++    kfree(extra);
++#endif
+ err_free:
+     drm_dev_put(dev);
+     return ret;
+@@ -303,10 +405,17 @@ static int nv_drm_load(
+ )
+ {
+     nv_linux_state_t *nvl;
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 14, 0)
++    struct nv_drm_extra_priv_data *extra = dev->dev_private;
++#endif
+ 
+     for (nvl = nv_linux_devices; nvl != NULL; nvl = nvl->next)
+     {
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 14, 0)
++        if (nvl->dev == extra->pdev)
++#else
+         if (nvl->dev == dev->pdev)
++#endif
+         {
+             nvl->drm = dev;
+             return 0;
+@@ -327,10 +436,17 @@ static int __nv_drm_unload(
+ )
+ {
+     nv_linux_state_t *nvl;
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 14, 0)
++    struct nv_drm_extra_priv_data *extra = dev->dev_private;
++#endif
+ 
+     for (nvl = nv_linux_devices; nvl != NULL; nvl = nvl->next)
+     {
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 14, 0)
++        if (nvl->dev == extra->pdev)
++#else
+         if (nvl->dev == dev->pdev)
++#endif
+         {
+             BUG_ON(nvl->drm != dev);
+             nvl->drm = NULL;
+diff --git a/kernel/os-interface.c b/kernel/os-interface.c
+index bb9b492..c557082 100644
+--- a/kernel/os-interface.c
++++ b/kernel/os-interface.c
+@@ -565,7 +565,11 @@ RM_STATUS NV_API_CALL os_delay(NvU32 MilliSeconds)
+         // the requested timeout has expired, loop until less
+         // than a jiffie of the desired delay remains.
+         //
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 14, 0)
++        current->__state = TASK_INTERRUPTIBLE;
++#else
+         current->state = TASK_INTERRUPTIBLE;
++#endif
+         do
+         {
+             schedule_timeout(jiffies);

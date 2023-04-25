@@ -1,0 +1,12 @@
+Section "OutputClass"
+	Identifier "Nvidia"
+	MatchDriver "nvidia-drm"
+	Driver "nvidia"
+	Option "NoLogo" "1"
+	Option "RegistryDwords" "EnableBrightnessControl=1"
+	ModulePath "@LIBDIR@/nvidia/xorg"
+EndSection
+
+Section "ServerFlags"
+	Option "IgnoreABI" "1"
+EndSection

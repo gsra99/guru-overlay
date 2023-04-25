@@ -1,0 +1,23 @@
+diff --git a/kernel/nv-linux.h b/kernel/nv-linux.h
+index a1d2c68..5e15463 100644
+--- a/kernel/nv-linux.h
++++ b/kernel/nv-linux.h
+@@ -757,11 +757,18 @@ extern nv_spinlock_t km_lock;
+                         0, 0, NULL, NULL);                      \
+     }
+ #elif (NV_KMEM_CACHE_CREATE_ARGUMENT_COUNT == 5)
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 16, 0)
++#define NV_KMEM_CACHE_CREATE(kmem_cache, name, type)            \
++    {                                                           \
++        kmem_cache = kmem_cache_create_usercopy(name, sizeof(type), 0, 0, 0, sizeof(type), NULL); \
++    }
++#else
+ #define NV_KMEM_CACHE_CREATE(kmem_cache, name, type)            \
+     {                                                           \
+         kmem_cache = kmem_cache_create(name, sizeof(type),      \
+                         0, 0, NULL);                            \
+     }
++#endif
+ #else
+ #error "NV_KMEM_CACHE_CREATE_ARGUMENT_COUNT value unrecognized!"
+ #endif

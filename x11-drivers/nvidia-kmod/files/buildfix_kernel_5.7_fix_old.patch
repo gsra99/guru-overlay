@@ -1,0 +1,80 @@
+Fix buildfix_kernel_5.7 on linux < 5.0
+diff --git a/kernel/nv-time.h b/kernel/nv-time.h
+index 780f8bc..e10632e 100644
+--- a/kernel/nv-time.h
++++ b/kernel/nv-time.h
+@@ -28,12 +28,16 @@
+ #include <linux/ktime.h>
+ #endif
+ 
++#if LINUX_VERSION_CODE < KERNEL_VERSION(5, 0, 0)
++static inline void nv_gettimeofday(struct timeval *tv)
++#else
+ struct nv_timeval {
+     __kernel_long_t      tv_sec;
+     __kernel_suseconds_t tv_usec;
+ };
+ 
+ static inline void nv_gettimeofday(struct nv_timeval *tv)
++#endif
+ {
+ #ifdef NV_DO_GETTIMEOFDAY_PRESENT
+     do_gettimeofday(tv);
+@@ -42,7 +46,11 @@ static inline void nv_gettimeofday(struct nv_timeval *tv)
+ 
+     ktime_get_real_ts64(&now);
+ 
++#if LINUX_VERSION_CODE < KERNEL_VERSION(5, 0, 0)
++    *tv = (struct timeval) {
++#else
+     *tv = (struct nv_timeval) {
++#endif
+         .tv_sec = now.tv_sec,
+         .tv_usec = now.tv_nsec/1000,
+     };
+diff --git a/kernel/os-interface.c b/kernel/os-interface.c
+index 0c0dc05..bb9b492 100644
+--- a/kernel/os-interface.c
++++ b/kernel/os-interface.c
+@@ -439,7 +439,11 @@ RM_STATUS NV_API_CALL os_get_current_time(
+     NvU32 *useconds
+ )
+ {
++#if LINUX_VERSION_CODE < KERNEL_VERSION(5, 0, 0)
++    struct timeval tm;
++#else
+     struct nv_timeval tm;
++#endif
+ 
+     nv_gettimeofday(&tm);
+ 
+@@ -474,7 +478,11 @@ RM_STATUS NV_API_CALL os_delay_us(NvU32 MicroSeconds)
+     unsigned long usec;
+ 
+ #ifdef NV_CHECK_DELAY_ACCURACY
++#if LINUX_VERSION_CODE < KERNEL_VERSION(5, 0, 0)
++    struct timeval tm1, tm2;
++#else
+     struct nv_timeval tm1, tm2;
++#endif
+ 
+     nv_gettimeofday(&tm1);
+ #endif
+@@ -514,9 +522,17 @@ RM_STATUS NV_API_CALL os_delay(NvU32 MilliSeconds)
+     unsigned long MicroSeconds;
+     unsigned long jiffies;
+     unsigned long mdelay_safe_msec;
++#if LINUX_VERSION_CODE < KERNEL_VERSION(5, 0, 0)
++    struct timeval tm_end, tm_aux;
++#else
+     struct nv_timeval tm_end, tm_aux;
++#endif
+ #ifdef NV_CHECK_DELAY_ACCURACY
++#if LINUX_VERSION_CODE < KERNEL_VERSION(5, 0, 0)
++    struct timeval tm_start;
++#else
+     struct nv_timeval tm_start;
++#endif
+ #endif
+ 
+     nv_gettimeofday(&tm_aux);

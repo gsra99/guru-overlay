@@ -1,0 +1,60 @@
+diff --git a/kernel/nv-linux.h b/kernel/nv-linux.h
+index 65edeaa..dd23410 100644
+--- a/kernel/nv-linux.h
++++ b/kernel/nv-linux.h
+@@ -669,11 +669,19 @@ extern nv_spinlock_t km_lock;
+ #  define KM_FREE_RECORD(a,b,c)
+ #endif
+ 
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 8, 0)
++#define NV_VMALLOC(ptr, size)                     \
++    {                                             \
++        (ptr) = __vmalloc(size, GFP_KERNEL);      \
++        VM_ALLOC_RECORD(ptr, size, "vm_vmalloc"); \
++    }
++#else
+ #define NV_VMALLOC(ptr, size)                               \
+     {                                                       \
+         (ptr) = __vmalloc(size, GFP_KERNEL, PAGE_KERNEL);   \
+         VM_ALLOC_RECORD(ptr, size, "vm_vmalloc");           \
+     }
++#endif
+ 
+ #define NV_VFREE(ptr, size)                         \
+     {                                               \
+diff --git a/kernel/nvidia-modules-common.mk b/kernel/nvidia-modules-common.mk
+index b94591b..0e4c228 100644
+--- a/kernel/nvidia-modules-common.mk
++++ b/kernel/nvidia-modules-common.mk
+@@ -222,6 +222,7 @@ build-sanity-checks:
+ define BUILD_MODULE_RULE
+  $(1): build-sanity-checks $(3)
+ 	@echo "NVIDIA: calling KBUILD..."; \
++	touch .nv-kernel.o.cmd; \
+ 	$$(MAKE) "CC=$$(CC)" NV_MODULE_SUFFIX=$$(strip $(2)) $$(KBUILD_PARAMS) modules; \
+ 	echo "NVIDIA: left KBUILD."; \
+ 	if ! [ -f $(1) ]; then \
+diff --git a/kernel/os-mlock.c b/kernel/os-mlock.c
+index 8a1fa2f..fc50543 100644
+--- a/kernel/os-mlock.c
++++ b/kernel/os-mlock.c
+@@ -44,11 +44,19 @@ RM_STATUS NV_API_CALL os_lock_user_pages(
+         return rmStatus;
+     }
+ 
++#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 8, 0)
++    down_read(&mm->mmap_lock);
++    ret = NV_GET_USER_PAGES((unsigned long)address,
++                            page_count, write, force, user_pages, NULL);
++    up_read(&mm->mmap_lock);
++    pinned = ret;
++#else
+     down_read(&mm->mmap_sem);
+     ret = NV_GET_USER_PAGES((unsigned long)address,
+                             page_count, write, force, user_pages, NULL);
+     up_read(&mm->mmap_sem);
+     pinned = ret;
++#endif
+ 
+     if (ret < 0)
+     {

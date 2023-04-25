@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>not@telling.you</email>
+		<name>Shiba</name>
+	</maintainer>
+	<use>
+		<flag name="static-libs">Install libXNVCtrl.a</flag>
+		<flag name="tools">Install <pkg>media-video/nvidia-settings</pkg></flag>
+		<flag name="X">Install the X.org driver, OpenGL libraries, XvMC libraries, and VDPAU libraries</flag>
+	</use>
+</pkgmetadata>

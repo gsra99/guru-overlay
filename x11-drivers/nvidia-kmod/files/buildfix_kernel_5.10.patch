@@ -1,0 +1,78 @@
+diff --git a/kernel/Makefile b/kernel/Makefile
+index 2597080..2b988e8 100644
+--- a/kernel/Makefile
++++ b/kernel/Makefile
+@@ -90,6 +90,7 @@ ifdef NV_BUILD_MODULE_INSTANCES
+ endif
+ 
+ COMPILE_TESTS = \
++	drm_prime_pages_to_sg_has_drm_device_arg \
+ 	remap_pfn_range \
+ 	vmap \
+ 	set_pages_uc \
+diff --git a/kernel/conftest.sh b/kernel/conftest.sh
+index a5225e5..82257a6 100755
+--- a/kernel/conftest.sh
++++ b/kernel/conftest.sh
+@@ -2269,6 +2269,30 @@ compile_test() {
+             compile_check_conftest "$CODE" "NV_DRM_DRIVER_PRIME_FLAG_PRESENT" "" "types"
+         ;;
+ 
++        drm_prime_pages_to_sg_has_drm_device_arg)
++            #
++            # Determine if drm_prime_pages_to_sg() has 'dev' argument.
++            #
++            # drm_prime_pages_to_sg() is updated to take 'dev' argument by commit
++            # 707d561f77b5 ("drm: allow limiting the scatter list size.").
++            #
++            CODE="
++            #if defined(NV_DRM_DRMP_H_PRESENT)
++            #include <drm/drmP.h>
++            #endif
++            #if defined(NV_DRM_DRM_PRIME_H_PRESENT)
++            #include <drm/drm_prime.h>
++            #endif
++
++            struct sg_table *drm_prime_pages_to_sg(struct drm_device *dev,
++                                                   struct page **pages,
++                                                   unsigned int nr_pages) {
++                return 0;
++            }"
++
++            compile_check_conftest "$CODE" "NV_DRM_PRIME_PAGES_TO_SG_HAS_DRM_DEVICE_ARG" "" "types"
++        ;;
++
+     esac
+ }
+ 
+diff --git a/kernel/nv-drm.c b/kernel/nv-drm.c
+index f0c1299..60b1f6e 100644
+--- a/kernel/nv-drm.c
++++ b/kernel/nv-drm.c
+@@ -358,6 +358,17 @@ static void nv_gem_free(
+     NV_KFREE(nv_obj, sizeof(*nv_obj));
+ }
+ 
++static inline struct sg_table*
++nv_drm_prime_pages_to_sg(struct drm_device *dev,
++                         struct page **pages, unsigned int nr_pages)
++{
++#if defined(NV_DRM_PRIME_PAGES_TO_SG_HAS_DRM_DEVICE_ARG)
++    return drm_prime_pages_to_sg(dev, pages, nr_pages);
++#else
++    return drm_prime_pages_to_sg(pages, nr_pages);
++#endif
++}
++
+ static struct sg_table* nv_gem_prime_get_sg_table(
+     struct drm_gem_object *obj
+ )
+@@ -365,7 +376,7 @@ static struct sg_table* nv_gem_prime_get_sg_table(
+     struct nv_gem_object *nv_obj = container_of(obj, struct nv_gem_object, base);
+     int page_count = obj->size >> PAGE_SHIFT;
+ 
+-    return drm_prime_pages_to_sg(nv_obj->pages, page_count);
++    return nv_drm_prime_pages_to_sg(obj->dev, nv_obj->pages, page_count);
+ }
+ 
+ static void* nv_gem_prime_vmap(

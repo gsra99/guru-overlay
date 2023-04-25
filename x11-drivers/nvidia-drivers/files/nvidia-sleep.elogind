@@ -1,0 +1,26 @@
+#!/bin/bash
+RUN_DIR=/var/run/nvidia-sleep
+XORG_VT_FILE="$RUN_DIR"/Xorg.vt_number
+
+_when=$1
+_action=$2
+
+if [[ $_action != suspend && $_action != hibernate ]] ; then
+	exit 0
+fi
+
+case $_when in
+	pre)
+		mkdir -p "$RUN_DIR"
+		fgconsole > "$XORG_VT_FILE"
+		chvt 63
+		;;
+	post)
+		if [[ -f $XORG_VT_FILE ]]; then
+			XORG_PID=$(cat "$XORG_VT_FILE")
+			rm "$XORG_VT_FILE"
+			# elogind must have finished resuming before switching back
+			(sleep 1; chvt "$XORG_PID") &
+		fi
+		;;
+esac
