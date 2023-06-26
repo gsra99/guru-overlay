@@ -1,10 +1,8 @@
 # guru-overlay
 ## Get it!
-### Layman
-If you don't know what `layman` is then please read the [documentation][docs-layman] first.
+### eselect-repository
 
-1. `emerge -av layman`
-2. `wget -O /etc/layman/overlays/guru-overlay.xml https://raw.githubusercontent.com/gsra99/guru-overlay/master/guru-overlay.xml`
-3. `layman -a guru-overlay`
+1. `emerge -av eselect-repository`
+2. `eselect repository add guru-overlay git https://github.com/gsra99/guru-overlay.git`
 
-[docs-layman]: http://www.gentoo.org/proj/en/overlays/userguide.xml
+[docs]: https://wiki.gentoo.org/wiki/Eselect/Repository
