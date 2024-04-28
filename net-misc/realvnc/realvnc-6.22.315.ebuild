@@ -1,25 +1,24 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=8
 
 DESCRIPTION="VNC Viewer for Unix/Linux platforms"
 HOMEPAGE="https://www.realvnc.com/en/"
 SRC_URI="
-amd64? ( https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-${PV}-Linux-x64.rpm )
-x86? ( https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-${PV}-Linux-x86.rpm )"
+amd64? ( https://downloads.realvnc.com/download/file/viewer.files/VNC-Viewer-${PV}-Linux-x64.rpm )
+x86? ( https://downloads.realvnc.com/download/file/viewer.files/VNC-Viewer-${PV}-Linux-x86.rpm )"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 RESTRICT="mirror"
 
-inherit rpm eutils xdg-utils
+inherit rpm xdg-utils
 
 RDEPEND="virtual/libcrypt:="
 
 S="${WORKDIR}"
-#REVISION=42122
 
 src_unpack() {
 	rpm_unpack ${A}
