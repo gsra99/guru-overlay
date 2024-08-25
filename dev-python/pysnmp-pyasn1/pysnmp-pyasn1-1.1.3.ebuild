@@ -25,6 +25,8 @@ BDEPEND="
 		dev-python/pytest-cov[${PYTHON_USEDEP}]
 	)"
 
+RDEPEND=">=dev-python/pyasn1-0.6.0[${PYTHON_USEDEP}]"
+
 python_test() {
 	py.test -v -v || die
 }
