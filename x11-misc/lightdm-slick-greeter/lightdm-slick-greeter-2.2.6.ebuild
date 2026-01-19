@@ -26,7 +26,6 @@ DEPEND="
 "
 RDEPEND="
 	${DEPEND}
-	sys-auth/elogind
 "
 BDEPEND="
 	$(vala_depend)
