@@ -22,7 +22,7 @@ DEPEND="
 	x11-libs/gdk-pixbuf
 	x11-libs/gtk+:3
 	x11-libs/pango
-	x11-misc/lightdm
+	x11-misc/lightdm[introspection]
 "
 RDEPEND="
 	${DEPEND}
