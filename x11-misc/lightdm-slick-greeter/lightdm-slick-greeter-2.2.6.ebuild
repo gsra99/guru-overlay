@@ -45,6 +45,7 @@ src_prepare() {
 
 src_configure() {
 	local emesonargs=(
+		-Dvala=true
 		$(meson_feature nls)
 	)
 	meson_src_configure
