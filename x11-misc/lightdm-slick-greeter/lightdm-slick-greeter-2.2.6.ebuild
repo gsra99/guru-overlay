@@ -14,7 +14,7 @@ S="${WORKDIR}/slick-greeter-${PV}"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
-IUSE="nls"
+IUSE=""
 
 DEPEND="
 	dev-libs/glib:2
@@ -29,9 +29,8 @@ RDEPEND="
 "
 BDEPEND="
 	$(vala_depend)
-	dev-util/intltool
 	virtual/pkgconfig
-	nls? ( sys-devel/gettext )
+	sys-devel/gettext
 "
 
 src_prepare() {
@@ -40,9 +39,6 @@ src_prepare() {
 }
 
 src_configure() {
-	local emesonargs=(
-		$(meson_feature nls)
-	)
 	meson_src_configure
 }
 
