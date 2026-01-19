@@ -19,7 +19,7 @@ IUSE="nls"
 
 DEPEND="
 	dev-libs/glib:2
-	dev-libs/liblightdm-gobject
+	x11-misc/lightdm
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf
 	x11-libs/gtk+:3
