@@ -12,6 +12,8 @@ DESCRIPTION="Slick-looking LightDM greeter"
 HOMEPAGE="https://github.com/linuxmint/slick-greeter"
 SRC_URI="https://github.com/linuxmint/slick-greeter/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
+S="${WORKDIR}/slick-greeter-${PV}"
+
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~arm64"
