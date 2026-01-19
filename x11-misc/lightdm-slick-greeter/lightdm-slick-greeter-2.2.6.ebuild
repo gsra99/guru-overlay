@@ -5,7 +5,7 @@ EAPI=8
 
 VALA_MIN_API_VERSION="0.20"
 
-inherit autotools mate vala
+inherit autotools gnome2-utils vala
 
 MY_PN="${PN#lightdm-}"
 DESCRIPTION="A slick-looking LightDM greeter"
