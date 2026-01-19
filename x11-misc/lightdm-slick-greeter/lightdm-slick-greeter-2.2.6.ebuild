@@ -1,6 +1,3 @@
-# Copyright 1999-2024 Gentoo Authors
-# Distributed under the terms of the GNU General Public License v2
-
 # Copyright 2026
 # Distributed under the terms of the GNU General Public License v2
 
@@ -21,15 +18,15 @@ IUSE="nls"
 
 DEPEND="
 	dev-libs/glib:2
-	x11-misc/lightdm
 	x11-libs/cairo
 	x11-libs/gdk-pixbuf
 	x11-libs/gtk+:3
 	x11-libs/pango
+	x11-misc/lightdm
 "
 RDEPEND="
 	${DEPEND}
-	x11-misc/lightdm
+	sys-auth/elogind
 "
 BDEPEND="
 	$(vala_depend)
