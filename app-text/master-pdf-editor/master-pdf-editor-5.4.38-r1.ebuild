@@ -16,7 +16,6 @@ RESTRICT="mirror"
 
 RDEPEND="
 	>=media-gfx/sane-backends-1.0
-	dev-qt/qtbase:6[gui]
 "
 	#dev-qt/qtcore:5
 	#dev-qt/qtdbus:5
