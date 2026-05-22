@@ -16,10 +16,11 @@ RESTRICT="mirror"
 
 RDEPEND="
 	>=media-gfx/sane-backends-1.0
-	dev-qt/qtcore:5
-	dev-qt/qtdbus:5
-	dev-qt/qtgui:5
+	>=dev-qt/qtgui-5.9.8:5[eglfs]
 "
+	#dev-qt/qtcore:5
+	#dev-qt/qtdbus:5
+	#dev-qt/qtgui:5
 
 QA_PREBUILT="/opt/${PN}/masterpdfeditor5
 	/opt/${PN}/lib/*.so*
